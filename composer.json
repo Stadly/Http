@@ -1,0 +1,58 @@
+{
+    "name": "Stadly/Http",
+    "type": "library",
+    "description": "File serving made easy. A PHP library for serving files from any file system over HTTP, with support for conditional and ranged requests.",
+    "keywords": [
+        "Stadly",
+        "Http"
+    ],
+    "homepage": "https://github.com/Stadly/Http",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Magnar Ovedal Myrtveit",
+            "email": "magnar@myrtveit.com",
+            "homepage": "https://github.com/Stadly",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~5.6|~7.0"
+    },
+    "require-dev": {
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "phpstan/phpstan": "^0.9.2",
+        "phpunit/phpunit": ">=5.4.3",
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "suggest": {
+        "league/flysystem": "To use the abstract filesystem Flysystem."
+    },
+    "autoload": {
+        "psr-4": {
+            "Stadly\\Http\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stadly\\Http\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": [
+            "parallel-lint src tests --exclude vendor",
+            "phpcs src tests -p --standard=psr2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
+            "phpstan analyse src tests -l max",
+            "phpunit"
+        ],
+        "fix-style": "phpcbf --standard=psr2 --no-patch -p src tests"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Common;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Stadly\Http\Header\Exception\InvalidFormat;
-use Stadly\Http\Header\Exception\InvalidName;
-use Stadly\Http\Header\Exception\InvalidValue;
 
 /**
  * @coversDefaultClass \Stadly\Http\Header\Common\Header
@@ -32,7 +30,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithEmptyName(): void
     {
-        $this->expectException(InvalidName::class);
+        $this->expectException(InvalidArgumentException::class);
         
         new Header('', 'bar');
     }
@@ -42,7 +40,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithInvalidName(): void
     {
-        $this->expectException(InvalidName::class);
+        $this->expectException(InvalidArgumentException::class);
         
         new Header('f o o', 'bar');
     }
@@ -63,7 +61,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithInvalidValue(): void
     {
-        $this->expectException(InvalidValue::class);
+        $this->expectException(InvalidArgumentException::class);
         
         new Header('foo', '€ rate');
     }
@@ -73,7 +71,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithEmptyNameFromString(): void
     {
-        $this->expectException(InvalidFormat::class);
+        $this->expectException(InvalidArgumentException::class);
         
         Header::fromString(': bar');
     }
@@ -83,7 +81,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithInvalidNameFromString(): void
     {
-        $this->expectException(InvalidFormat::class);
+        $this->expectException(InvalidArgumentException::class);
         
         Header::fromString('f o o: bar');
     }
@@ -104,7 +102,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithInvalidValueFromString(): void
     {
-        $this->expectException(InvalidFormat::class);
+        $this->expectException(InvalidArgumentException::class);
         
         Header::fromString('foo: € rate');
     }
@@ -125,7 +123,7 @@ final class HeaderTest extends TestCase
      */
     public function testCannotConstructHeaderFromStringWithWhitespaceAroundName(): void
     {
-        $this->expectException(InvalidFormat::class);
+        $this->expectException(InvalidArgumentException::class);
         
         Header::fromString("\t  foo  \t:bar");
     }
@@ -181,7 +179,7 @@ final class HeaderTest extends TestCase
     {
         $header = new Header('foo', 'bar');
         
-        $this->expectException(InvalidName::class);
+        $this->expectException(InvalidArgumentException::class);
         
         $header->setName('');
     }
@@ -193,7 +191,7 @@ final class HeaderTest extends TestCase
     {
         $header = new Header('foo', 'bar');
         
-        $this->expectException(InvalidName::class);
+        $this->expectException(InvalidArgumentException::class);
         
         $header->setName('f o o');
     }
@@ -241,7 +239,7 @@ final class HeaderTest extends TestCase
     {
         $header = new Header('foo', 'bar');
         
-        $this->expectException(InvalidValue::class);
+        $this->expectException(InvalidArgumentException::class);
         
         $header->setValue('€ rate');
     }

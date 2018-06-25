@@ -28,7 +28,7 @@ final class ContentType implements HeaderInterface
      */
     public function __construct(MediaType $mediaType)
     {
-        $this->mediaType = $mediaType;
+        $this->setMediaType($mediaType);
     }
 
     /**
@@ -56,80 +56,20 @@ final class ContentType implements HeaderInterface
     }
 
     /**
-     * @return string Type.
+     * @return MediaType Media type.
      */
-    public function getType(): string
+    public function getMediaType(): MediaType
     {
-        return $this->mediaType->getType();
+        return $this->mediaType;
     }
 
     /**
-     * Set type.
+     * Set media type.
      *
-     * @param string $type Type.
-     * @throws InvalidArgumentException If the type is invalid.
+     * @param MediaType $mediaType Media type.
      */
-    public function setType(string $type): void
+    public function setMediaType(MediaType $mediaType): void
     {
-        $this->mediaType->setType($type);
-    }
-
-    /**
-     * @return string Subtype.
-     */
-    public function getSubtype(): string
-    {
-        return $this->mediaType->getSubtype();
-    }
-
-    /**
-     * Set subtype.
-     *
-     * @param string $subtype Subtype.
-     * @throws InvalidArgumentException If the subtype is invalid.
-     */
-    public function setSubtype(string $subtype): void
-    {
-        $this->mediaType->setSubtype($subtype);
-    }
-
-    /**
-     * @param string $name Parameter name.
-     * @return bool Whether the parameter exists.
-     */
-    public function hasParameter(string $name): bool
-    {
-        return $this->mediaType->hasParameter($name);
-    }
-
-    /**
-     * @param string $name Parameter name.
-     * @return Parameter Parameter.
-     * @throws OutOfBoundsException If the parameter does not exist.
-     */
-    public function getParameter(string $name): Parameter
-    {
-        return $this->mediaType->getParameter($name);
-    }
-
-    /**
-     * Set parameters.
-     *
-     * @param Parameter ...$parameters Parameters to set.
-     */
-    public function setParameter(Parameter ...$parameters): void
-    {
-        $this->mediaType->setParameter(...$parameters);
-    }
-
-    /**
-     * Unset parameters.
-     *
-     * @param string ...$names Parameter names.
-     * @throws OutOfBoundsException If a parameter does not exist.
-     */
-    public function unsetParameter(string ...$names): void
-    {
-        $this->mediaType->unsetParameter(...$names);
+        $this->mediaType = $mediaType;
     }
 }

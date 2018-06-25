@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Common;
 
-use InvalidArgumentException;
-use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 use Stadly\Http\Header\Value\MediaType;
 use Stadly\Http\Header\Value\MediaType\Parameter;
@@ -109,257 +107,27 @@ final class ContentTypeTest extends TestCase
     }
 
     /**
-     * @covers ::getType
+     * @covers ::getMediaType
      */
-    public function testCanGetType(): void
+    public function testCanGetMediaType(): void
     {
-        $contentType = new ContentType(new MediaType('text', 'html'));
+        $mediaType = new MediaType('text', 'html');
+        $contentType = new ContentType($mediaType);
         
-        self::assertSame('text', $contentType->getType());
+        self::assertSame($mediaType, $contentType->getMediaType());
     }
 
     /**
-     * @covers ::setType
+     * @covers ::setMediaType
      */
-    public function testCanSetType(): void
+    public function testCanSetMediaType(): void
     {
-        $contentType = new ContentType(new MediaType('multipart', 'html'));
+        $mediaType = new MediaType('multipart', 'html');
+        $contentType = new ContentType($mediaType);
         
         $contentTypeSetType = new ContentType(new MediaType('text', 'html'));
-        $contentTypeSetType->setType('multipart');
+        $contentTypeSetType->setMediaType($mediaType);
 
         self::assertEquals($contentType, $contentTypeSetType);
-    }
-
-    /**
-     * @covers ::setType
-     */
-    public function testCannotSetEmptyType(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html'));
-        
-        $this->expectException(InvalidArgumentException::class);
-        
-        $contentType->setType('');
-    }
-
-    /**
-     * @covers ::setType
-     */
-    public function testCannotSetInvalidType(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html'));
-        
-        $this->expectException(InvalidArgumentException::class);
-        
-        $contentType->setType('f o o');
-    }
-
-    /**
-     * @covers ::getSubtype
-     */
-    public function testCanGetSubtype(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html'));
-        
-        self::assertSame('html', $contentType->getSubtype());
-    }
-
-    /**
-     * @covers ::setSubtype
-     */
-    public function testCanSetSubtype(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'form-data'));
-
-        $contentTypeSetSubtype = new ContentType(new MediaType('text', 'html'));
-        $contentTypeSetSubtype->setSubtype('form-data');
-
-        self::assertEquals($contentType, $contentTypeSetSubtype);
-    }
-
-    /**
-     * @covers ::setSubtype
-     */
-    public function testCannotSetEmptySubtype(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html'));
-        
-        $this->expectException(InvalidArgumentException::class);
-        
-        $contentType->setSubtype('');
-    }
-
-    /**
-     * @covers ::setSubtype
-     */
-    public function testCannotSetInvalidSubtype(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html'));
-        
-        $this->expectException(InvalidArgumentException::class);
-        
-        $contentType->setSubtype('f o o');
-    }
-
-    /**
-     * @covers ::hasParameter
-     */
-    public function testHasExistingParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        
-        self::assertTrue($contentType->hasParameter('foo'));
-    }
-
-    /**
-     * @covers ::hasParameter
-     */
-    public function testDoesNotHaveNonExistingParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        
-        self::assertFalse($contentType->hasParameter('bar'));
-    }
-
-    /**
-     * @covers ::getParameter
-     */
-    public function testCanGetParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        $parameter = new Parameter('foo', 'bar');
-        
-        self::assertEquals($parameter, $contentType->getParameter('foo'));
-    }
-
-    /**
-     * @covers ::getParameter
-     */
-    public function testCannotGetNonExistingParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        
-        $this->expectException(OutOfBoundsException::class);
-        
-        $contentType->getParameter('bar');
-    }
-
-    /**
-     * @covers ::setParameter
-     */
-    public function testCanSetParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        
-        $contentTypeSetParameter = new ContentType(new MediaType('text', 'html'));
-        $contentTypeSetParameter->setParameter(new Parameter('foo', 'bar'));
-
-        self::assertEquals($contentType, $contentTypeSetParameter);
-    }
-
-    /**
-     * @covers ::setParameter
-     */
-    public function testCanSetExistingParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'foo')));
-        
-        $contentTypeSetParameter = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        $contentTypeSetParameter->setParameter(new Parameter('foo', 'foo'));
-
-        self::assertEquals($contentType, $contentTypeSetParameter);
-    }
-
-    /**
-     * @covers ::setParameter
-     */
-    public function testCanSetMultipleParameters(): void
-    {
-        $contentType = new ContentType(new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
-        ));
-        
-        $contentTypeSetParameter = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        $contentTypeSetParameter->setParameter(new Parameter('test', 'foo bar'), new Parameter('bar', 'foo'));
-
-        self::assertEquals($contentType, $contentTypeSetParameter);
-    }
-
-    /**
-     * @covers ::unsetParameter
-     */
-    public function testCanUnsetParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html'));
-        
-        $contentTypeUnsetParameter = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        $contentTypeUnsetParameter->unsetParameter('foo');
-
-        self::assertEquals($contentType, $contentTypeUnsetParameter);
-    }
-
-    /**
-     * @covers ::unsetParameter
-     */
-    public function testCannotUnsetNonExistingParameter(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('foo', 'bar')));
-        
-        $this->expectException(OutOfBoundsException::class);
-        
-        $contentType->unsetParameter('bar');
-    }
-
-    /**
-     * @covers ::unsetParameter
-     */
-    public function testCanUnsetMultipleParameters(): void
-    {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('test', 'foo bar')));
-        
-        $contentTypeUnsetParameter = new ContentType(new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
-        ));
-        $contentTypeUnsetParameter->unsetParameter('foo', 'bar');
-
-        self::assertEquals($contentType, $contentTypeUnsetParameter);
-    }
-
-    /**
-     * @covers ::unsetParameter
-     */
-    public function testNothingIsUnsetWhenUnsettingMultipleParametersWhereOneIsNonExisting(): void
-    {
-        $contentType = new ContentType(new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
-        ));
-
-        $contentTypeUnsetParameter = new ContentType(new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
-        ));
-        try {
-            $contentTypeUnsetParameter->unsetParameter('foo', 'qwerty', 'bar');
-        } catch (OutOfBoundsException $exception) {
-            // 'qwerty' is not found.
-        }
-
-        self::assertEquals($contentType, $contentTypeUnsetParameter);
     }
 }

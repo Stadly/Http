@@ -78,12 +78,12 @@ final class MediaType
      */
     public function __toString(): string
     {
-        $value = $this->type.'/'.$this->subtype;
+        $mediaType = $this->type.'/'.$this->subtype;
         if (!empty($this->parameters)) {
-            $value .= '; '.implode('; ', $this->parameters);
+            $mediaType .= '; '.implode('; ', $this->parameters);
         }
 
-        return $value;
+        return $mediaType;
     }
 
     /**

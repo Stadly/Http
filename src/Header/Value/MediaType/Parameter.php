@@ -35,7 +35,12 @@ final class Parameter
      */
     public function __construct(string $name, string $value)
     {
-        $this->setName($name);
+        // Not possible to change name, since it may be used as key in arrays.
+        if (utf8_decode($name) !== $name || !preg_match('{^'.Rfc7230::TOKEN.'$}', $name)) {
+            throw new InvalidArgumentException("Invalid name: $name");
+        }
+        $this->name = $name;
+        
         $this->setValue($value);
     }
 
@@ -75,19 +80,6 @@ final class Parameter
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name Name.
-     * @throws InvalidArgumentException If the name is invalid.
-     */
-    public function setName(string $name): void
-    {
-        if (utf8_decode($name) !== $name || !preg_match('{^'.Rfc7230::TOKEN.'$}', $name)) {
-            throw new InvalidArgumentException("Invalid name: $name");
-        }
-
-        $this->name = $name;
     }
 
     /**

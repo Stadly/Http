@@ -190,43 +190,6 @@ final class ParameterTest extends TestCase
     }
 
     /**
-     * @covers ::setName
-     */
-    public function testCanSetName(): void
-    {
-        $parameter = new Parameter('baz', 'bar');
-        
-        $parameterSetName = new Parameter('foo', 'bar');
-        $parameterSetName->setName('baz');
-
-        self::assertEquals($parameter, $parameterSetName);
-    }
-
-    /**
-     * @covers ::setName
-     */
-    public function testCannotSetEmptyName(): void
-    {
-        $parameter = new Parameter('foo', 'bar');
-        
-        $this->expectException(InvalidArgumentException::class);
-        
-        $parameter->setName('');
-    }
-
-    /**
-     * @covers ::setName
-     */
-    public function testCannotSetInvalidName(): void
-    {
-        $parameter = new Parameter('foo', 'bar');
-        
-        $this->expectException(InvalidArgumentException::class);
-        
-        $parameter->setName('f o o');
-    }
-
-    /**
      * @covers ::getValue
      */
     public function testCanGetValue(): void

@@ -15,7 +15,7 @@ abstract class Rfc7232
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (ETag)
      */
-    public const ETAG = '(?:'.Rfc7230::OWS.self::ENTITY_TAG.Rfc7230::OWS.')';
+    public const ETAG = self::ENTITY_TAG;
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (entity-tag)

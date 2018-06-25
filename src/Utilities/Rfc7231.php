@@ -16,22 +16,23 @@ abstract class Rfc7231
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.1 (media-type)
      */
     public const MEDIA_TYPE = '(?:'.self::TYPE.'/'.self::SUBTYPE
-        . '(?:'.Rfc7230::OWS.';'.Rfc7230::OWS.self::PARAMETER.')*)';
+        . '(?<PARAMETERS>(?:'.Rfc7230::OWS.';'.Rfc7230::OWS.self::PARAMETER.')*))';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.1 (type)
      */
-    public const TYPE = Rfc7230::TOKEN;
+    public const TYPE = '(?<TYPE>'.Rfc7230::TOKEN.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.1 (subtype)
      */
-    public const SUBTYPE = Rfc7230::TOKEN;
+    public const SUBTYPE = '(?<SUBTYPE>'.Rfc7230::TOKEN.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.1 (parameter)
      */
-    public const PARAMETER = '(?:'.Rfc7230::TOKEN.'=(?:'.Rfc7230::TOKEN.'|'.Rfc7230::QUOTED_STRING.'))';
+    public const PARAMETER = '(?<PARAMETER>(?<NAME>'.Rfc7230::TOKEN.')='
+        . '(?<VALUE>'.Rfc7230::TOKEN.'|'.Rfc7230::QUOTED_STRING.'))';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.2 (charset)
@@ -41,5 +42,5 @@ abstract class Rfc7231
     /**
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.5 (Content-Type)
      */
-    public const CONTENT_TYPE = '(?:'.Rfc7230::OWS.self::MEDIA_TYPE.Rfc7230::OWS.')';
+    public const CONTENT_TYPE = self::MEDIA_TYPE;
 }

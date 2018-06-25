@@ -63,7 +63,7 @@ final class HeaderTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         
-        new Header('foo', '€ rate');
+        new Header('foo', '€-rate');
     }
 
     /**
@@ -104,7 +104,7 @@ final class HeaderTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         
-        Header::fromString('foo: € rate');
+        Header::fromString('foo: €-rate');
     }
 
     /**
@@ -241,6 +241,6 @@ final class HeaderTest extends TestCase
         
         $this->expectException(InvalidArgumentException::class);
         
-        $header->setValue('€ rate');
+        $header->setValue('€-rate');
     }
 }

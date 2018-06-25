@@ -7,7 +7,7 @@ namespace Stadly\Http\Header;
 interface HeaderInterface
 {
     /**
-     * @return string Header field string representation.
+     * @return string String representation of the header field.
      */
     public function __toString(): string;
 

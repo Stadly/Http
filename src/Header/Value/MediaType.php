@@ -38,8 +38,6 @@ final class MediaType
      * @param string $type Type.
      * @param string $subtype Subtype.
      * @param Parameter ...$parameters Parameters.
-     * @throws InvalidArgumentException If the type is invalid.
-     * @throws InvalidArgumentException If the subtype is invalid.
      */
     public function __construct(string $type, string $subtype, Parameter ...$parameters)
     {
@@ -53,12 +51,11 @@ final class MediaType
      *
      * @param string $mediaType Media type string.
      * @return self Media type generated based on the string.
-     * @throws InvalidArgumentException If the media type string is invalid.
      */
     public static function fromString(string $mediaType): self
     {
         $regEx = '{^'.Rfc7231::MEDIA_TYPE.'$}';
-        if (utf8_decode($mediaType) !== $mediaType || !preg_match($regEx, $mediaType, $matches)) {
+        if (utf8_decode($mediaType) !== $mediaType || 1 !== preg_match($regEx, $mediaType, $matches)) {
             throw new InvalidArgumentException("Invalid media type: $mediaType");
         }
         
@@ -79,7 +76,7 @@ final class MediaType
     public function __toString(): string
     {
         $mediaType = $this->type.'/'.$this->subtype;
-        if (!empty($this->parameters)) {
+        if ([] !== $this->parameters) {
             $mediaType .= '; '.implode('; ', $this->parameters);
         }
 
@@ -98,11 +95,10 @@ final class MediaType
      * Set type.
      *
      * @param string $type Type.
-     * @throws InvalidArgumentException If the type is invalid.
      */
     public function setType(string $type): void
     {
-        if (utf8_decode($type) !== $type || !preg_match('{^'.Rfc7231::TYPE.'$}', $type)) {
+        if (utf8_decode($type) !== $type || 1 !== preg_match('{^'.Rfc7231::TYPE.'$}', $type)) {
             throw new InvalidArgumentException("Invalid type: $type");
         }
 
@@ -121,11 +117,10 @@ final class MediaType
      * Set subtype.
      *
      * @param string $subtype Subtype.
-     * @throws InvalidArgumentException If the subtype is invalid.
      */
     public function setSubtype(string $subtype): void
     {
-        if (utf8_decode($subtype) !== $subtype || !preg_match('{^'.Rfc7231::SUBTYPE.'$}', $subtype)) {
+        if (utf8_decode($subtype) !== $subtype || 1 !== preg_match('{^'.Rfc7231::SUBTYPE.'$}', $subtype)) {
             throw new InvalidArgumentException("Invalid subtype: $subtype");
         }
 

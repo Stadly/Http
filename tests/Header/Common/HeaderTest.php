@@ -19,10 +19,11 @@ final class HeaderTest extends TestCase
      */
     public function testCanConstructHeader(): void
     {
-        new Header('foo', 'bar');
+        $header = new Header('foo', 'bar');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $headerConstruct = new Header('foo', 'bar');
+        self::assertEquals($header, $headerConstruct);
     }
 
     /**
@@ -50,10 +51,11 @@ final class HeaderTest extends TestCase
      */
     public function testCanConstructHeaderWithEmptyValue(): void
     {
-        new Header('foo', '');
+        $header = new Header('foo', '');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $headerConstruct = new Header('foo', '');
+        self::assertEquals($header, $headerConstruct);
     }
 
     /**

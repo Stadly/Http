@@ -61,7 +61,7 @@ final class IfMatch implements HeaderInterface
      */
     public function isAny(): bool
     {
-        return empty($this->entityTags);
+        return [] === $this->entityTags;
     }
 
     /**

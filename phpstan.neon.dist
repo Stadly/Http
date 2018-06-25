@@ -1,0 +1,12 @@
+parameters:
+    level: max
+    paths:
+        - src
+    exceptionRules:
+        checkedExceptions:
+            - RuntimeException
+    
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - vendor/pepakriz/phpstan-exception-rules/extension.neon

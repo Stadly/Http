@@ -20,10 +20,11 @@ final class ContentTypeTest extends TestCase
      */
     public function testCanConstructContentType(): void
     {
-        new ContentType(new MediaType('text', 'html'));
+        $contentType = new ContentType(new MediaType('text', 'html'));
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $contentTypeConstruct = new ContentType(new MediaType('text', 'html'));
+        self::assertEquals($contentType, $contentTypeConstruct);
     }
 
     /**

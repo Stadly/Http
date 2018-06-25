@@ -28,7 +28,8 @@ before_script:
 script:
   - vendor/bin/parallel-lint --exclude vendor .
   - vendor/bin/phpcs --standard=psr2 src tests
-  - vendor/bin/phpstan analyse -l max src tests
+  - vendor/bin/phpstan analyse
+  - vendor/bin/phpstan analyse -c phpstan.dev.neon.dist
   - vendor/bin/phpunit
 
 after_script:

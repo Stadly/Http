@@ -19,10 +19,11 @@ final class EntityTagTest extends TestCase
      */
     public function testCanConstructEntityTag(): void
     {
-        new EntityTag('foo');
+        $entityTag = new EntityTag('foo');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $entityTagConstruct = new EntityTag('foo');
+        self::assertEquals($entityTag, $entityTagConstruct);
     }
 
     /**
@@ -30,10 +31,11 @@ final class EntityTagTest extends TestCase
      */
     public function testCanConstructEmptyEntityTag(): void
     {
-        new EntityTag('');
+        $entityTag = new EntityTag('');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $entityTagConstruct = new EntityTag('');
+        self::assertEquals($entityTag, $entityTagConstruct);
     }
 
     /**
@@ -51,10 +53,11 @@ final class EntityTagTest extends TestCase
      */
     public function testCanConstructWeakEntityTag(): void
     {
-        new EntityTag('foo', /*isWeak*/true);
+        $entityTag = new EntityTag('foo', /*isWeak*/true);
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $entityTagConstruct = new EntityTag('foo', /*isWeak*/true);
+        self::assertEquals($entityTag, $entityTagConstruct);
     }
 
     /**

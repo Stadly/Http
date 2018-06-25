@@ -19,10 +19,11 @@ final class ParameterTest extends TestCase
      */
     public function testCanConstructParameter(): void
     {
-        new Parameter('foo', 'bar');
+        $parameter = new Parameter('foo', 'bar');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $parameterConstruct = new Parameter('foo', 'bar');
+        self::assertEquals($parameter, $parameterConstruct);
     }
 
     /**
@@ -50,10 +51,11 @@ final class ParameterTest extends TestCase
      */
     public function testCanConstructParameterWithEmptyValue(): void
     {
-        new Parameter('foo', '');
+        $parameter = new Parameter('foo', '');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $parameterConstruct = new Parameter('foo', '');
+        self::assertEquals($parameter, $parameterConstruct);
     }
 
     /**

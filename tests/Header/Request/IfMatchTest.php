@@ -19,10 +19,11 @@ final class IfMatchTest extends TestCase
      */
     public function testCanConstructIfMatchWithoutEntityTags(): void
     {
-        new IfMatch();
+        $ifMatch = new IfMatch();
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $ifMatchConstruct = new IfMatch();
+        self::assertEquals($ifMatch, $ifMatchConstruct);
     }
 
     /**
@@ -30,10 +31,11 @@ final class IfMatchTest extends TestCase
      */
     public function testCanConstructIfMatchWithSingleEntityTag(): void
     {
-        new IfMatch(new EntityTag('foo'));
+        $ifMatch = new IfMatch(new EntityTag('foo'));
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $ifMatchConstruct = new IfMatch(new EntityTag('foo'));
+        self::assertEquals($ifMatch, $ifMatchConstruct);
     }
 
     /**
@@ -41,7 +43,7 @@ final class IfMatchTest extends TestCase
      */
     public function testCanConstructIfMatchWithMultipleEntityTags(): void
     {
-        new IfMatch(
+        $ifMatch = new IfMatch(
             new EntityTag('foo'),
             new EntityTag('bar', /*isWeak*/true),
             new EntityTag('entity-tag'),
@@ -49,7 +51,13 @@ final class IfMatchTest extends TestCase
         );
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $ifMatchConstruct = new IfMatch(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        );
+        self::assertEquals($ifMatch, $ifMatchConstruct);
     }
 
     /**

@@ -29,8 +29,6 @@ final class Header implements HeaderInterface
      *
      * @param string $name Header field name.
      * @param string $value Header field value.
-     * @throws InvalidArgumentException If the header field name is invalid.
-     * @throws InvalidArgumentException If the header field value is invalid.
      */
     public function __construct(string $name, string $value)
     {
@@ -43,11 +41,10 @@ final class Header implements HeaderInterface
      *
      * @param string $header Header field string.
      * @return self Header generated based on the string.
-     * @throws InvalidArgumentException If the header field string is invalid.
      */
     public static function fromString(string $header): self
     {
-        if (utf8_decode($header) !== $header || !preg_match('{^'.Rfc7230::HEADER_FIELD.'$}', $header, $matches)) {
+        if (utf8_decode($header) !== $header || 1 !== preg_match('{^'.Rfc7230::HEADER_FIELD.'$}', $header, $matches)) {
             throw new InvalidArgumentException("Invalid header field: $header");
         }
         
@@ -82,11 +79,10 @@ final class Header implements HeaderInterface
      * Set header field name.
      *
      * @param string $name Header field name.
-     * @throws InvalidArgumentException If the header field name is invalid.
      */
     public function setName(string $name): void
     {
-        if (utf8_decode($name) !== $name || !preg_match('{^'.Rfc7230::FIELD_NAME.'$}', $name)) {
+        if (utf8_decode($name) !== $name || 1 !== preg_match('{^'.Rfc7230::FIELD_NAME.'$}', $name)) {
             throw new InvalidArgumentException("Invalid header field name: $name");
         }
 
@@ -97,11 +93,10 @@ final class Header implements HeaderInterface
      * Set header field value.
      *
      * @param string $value Header field value.
-     * @throws InvalidArgumentException If the header field value is invalid.
      */
     public function setValue(string $value): void
     {
-        if (utf8_decode($value) !== $value || !preg_match('{^'.Rfc7230::FIELD_VALUE.'$}', $value)) {
+        if (utf8_decode($value) !== $value || 1 !== preg_match('{^'.Rfc7230::FIELD_VALUE.'$}', $value)) {
             throw new InvalidArgumentException("Invalid header field value: $value");
         }
 

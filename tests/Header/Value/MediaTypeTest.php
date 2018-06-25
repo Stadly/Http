@@ -21,10 +21,11 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanConstructMediaType(): void
     {
-        new MediaType('foo', 'bar');
+        $mediaType = new MediaType('foo', 'bar');
         
         // Force generation of code coverage
-        self::assertTrue(true);
+        $mediaTypeConstruct = new MediaType('foo', 'bar');
+        self::assertEquals($mediaType, $mediaTypeConstruct);
     }
 
     /**

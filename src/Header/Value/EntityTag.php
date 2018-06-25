@@ -29,12 +29,11 @@ final class EntityTag
      *
      * @param string $value Entity tag value.
      * @param bool $isWeak Whether the entity tag is a weak validator.
-     * @throws InvalidArgumentException If the entity tag is invalid.
      */
     public function __construct(string $value, bool $isWeak = false)
     {
         // Not possible to change value, since it may be used as key in arrays.
-        if (utf8_decode($value) !== $value || !preg_match('{^'.Rfc7232::ETAGC.'*$}', $value)) {
+        if (utf8_decode($value) !== $value || 1 !== preg_match('{^'.Rfc7232::ETAGC.'*$}', $value)) {
             throw new InvalidArgumentException("Invalid entity tag: $value");
         }
         $this->value = $value;
@@ -47,12 +46,11 @@ final class EntityTag
      *
      * @param string $entityTag Entity tag string.
      * @return self Entity tag generated based on the string.
-     * @throws InvalidArgumentException If the entity tag is invalid.
      */
     public static function fromString(string $entityTag): self
     {
         $regEx = '{^'.Rfc7232::ENTITY_TAG.'$}';
-        if (utf8_decode($entityTag) !== $entityTag || !preg_match($regEx, $entityTag, $matches)) {
+        if (utf8_decode($entityTag) !== $entityTag || 1 !== preg_match($regEx, $entityTag, $matches)) {
             throw new InvalidArgumentException("Invalid entity tag: $entityTag");
         }
 

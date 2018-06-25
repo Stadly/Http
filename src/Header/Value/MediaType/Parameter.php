@@ -30,13 +30,11 @@ final class Parameter
      *
      * @param string $name Name.
      * @param string $value Value.
-     * @throws InvalidArgumentException If the name is invalid.
-     * @throws InvalidArgumentException If the value is invalid.
      */
     public function __construct(string $name, string $value)
     {
         // Not possible to change name, since it may be used as key in arrays.
-        if (utf8_decode($name) !== $name || !preg_match('{^'.Rfc7230::TOKEN.'$}', $name)) {
+        if (utf8_decode($name) !== $name || 1 !== preg_match('{^'.Rfc7230::TOKEN.'$}', $name)) {
             throw new InvalidArgumentException("Invalid name: $name");
         }
         $this->name = $name;
@@ -49,11 +47,11 @@ final class Parameter
      *
      * @param string $parameter Parameter string.
      * @return self Parameter generated based on the string.
-     * @throws InvalidArgumentException If the parameter string is invalid.
      */
     public static function fromString(string $parameter): self
     {
-        if (utf8_decode($parameter) !== $parameter || !preg_match('{^'.Rfc7231::PARAMETER.'$}', $parameter, $matches)) {
+        $regEx = '{^'.Rfc7231::PARAMETER.'$}';
+        if (utf8_decode($parameter) !== $parameter || 1 !== preg_match($regEx, $parameter, $matches)) {
             throw new InvalidArgumentException("Invalid parameter: $parameter");
         }
 
@@ -92,14 +90,13 @@ final class Parameter
 
     /**
      * @param string $value Value
-     * @throws InvalidArgumentException If the value is invalid.
      */
     public function setValue(string $value): void
     {
         $preparedValue = self::prepareValue($value);
 
         $regEx = '{^(?:'.Rfc7230::TOKEN.'|'.Rfc7230::QUOTED_STRING.')$}';
-        if (utf8_decode($preparedValue) !== $preparedValue || !preg_match($regEx, $preparedValue)) {
+        if (utf8_decode($preparedValue) !== $preparedValue || 1 !== preg_match($regEx, $preparedValue)) {
             throw new InvalidArgumentException("Invalid value: $value");
         }
 
@@ -114,7 +111,7 @@ final class Parameter
      */
     private static function prepareValue(string $value): string
     {
-        if (preg_match('{^'.Rfc7230::TOKEN.'$}', $value)) {
+        if (1 === preg_match('{^'.Rfc7230::TOKEN.'$}', $value)) {
             return $value;
         }
 

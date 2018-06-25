@@ -25,12 +25,12 @@ abstract class Rfc7232
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (weak)
      */
-    public const WEAK = '(?:W/)';
+    public const WEAK = '(?<WEAK>W/)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (opaque-tag)
      */
-    public const OPAQUE_TAG = '(?:'.Rfc5234::DQUOTE.self::ETAGC.'*'.Rfc5234::DQUOTE.')';
+    public const OPAQUE_TAG = '(?:'.Rfc5234::DQUOTE.'(?<ETAGCS>'.self::ETAGC.'*)'.Rfc5234::DQUOTE.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (etagc)

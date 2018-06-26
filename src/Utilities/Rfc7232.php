@@ -20,7 +20,7 @@ abstract class Rfc7232
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (entity-tag)
      */
-    public const ENTITY_TAG = '(?:'.self::WEAK.'?'.self::OPAQUE_TAG.')';
+    public const ENTITY_TAG = '(?<ENTITY_TAG>'.self::WEAK.'?'.self::OPAQUE_TAG.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (weak)

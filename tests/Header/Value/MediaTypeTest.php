@@ -208,6 +208,16 @@ final class MediaTypeTest extends TestCase
     }
 
     /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructMediaTypeWithInvalidParameterFromString(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        
+        MediaType::fromString('foo/bar; foo=€-rate');
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertMediaTypeWithoutParametersToString(): void

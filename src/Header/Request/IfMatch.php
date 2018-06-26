@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
-use Stadly\Http\Header\Value\EntityTag;
+use Stadly\Http\Header\Value\EntityTagSet;
 
 /**
  * Class for handling the HTTP header field If-Match.
@@ -14,18 +14,18 @@ use Stadly\Http\Header\Value\EntityTag;
 final class IfMatch implements HeaderInterface
 {
     /**
-     * @var EntityTag[] Entity tags.
+     * @var EntityTagSet Entity tag set.
      */
-    private $entityTags = [];
+    private $entityTagSet;
 
     /**
      * Constructor.
      *
-     * @param EntityTag ...$entityTags EntityTags. No entity tags represents any entity tag (`*`).
+     * @param EntityTagSet $entityTagSet Set of entity tags.
      */
-    public function __construct(EntityTag ...$entityTags)
+    public function __construct(EntityTagSet $entityTagSet)
     {
-        $this->add(...$entityTags);
+        $this->setEntityTagSet($entityTagSet);
     }
 
     /**
@@ -49,97 +49,24 @@ final class IfMatch implements HeaderInterface
      */
     public function getValue(): string
     {
-        if ($this->isAny()) {
-            return '*';
-        }
-
-        return implode(', ', $this->entityTags);
+        return (string)$this->entityTagSet;
     }
 
     /**
-     * @return bool Whether the If-Match header field represents any entity tag.
+     * @return EntityTagSet Set of entity tags.
      */
-    public function isAny(): bool
+    public function getEntityTagSet(): EntityTagSet
     {
-        return [] === $this->entityTags;
+        return $this->entityTagSet;
     }
 
     /**
-     * Add entity tags to the If-Match header field.
+     * Set entity tag set.
      *
-     * @param EntityTag ...$entityTags Entity tags to add.
+     * @param EntityTagSet $entityTagSet Set of entity tags.
      */
-    public function add(EntityTag ...$entityTags): void
+    public function setEntityTagSet(EntityTagSet $entityTagSet): void
     {
-        foreach ($entityTags as $entityTag) {
-            $this->entityTags[$entityTag->getValue()] = $entityTag;
-        }
-    }
-
-    /**
-     * Remove entity tags from the If-Match header field.
-     * Specify entity tag values that should be removed, such as `foo`, not `W/"foo"`.
-     *
-     * @param string ...$values Entity tag values to remove.
-     */
-    public function remove(string ...$values): void
-    {
-        foreach ($values as $value) {
-            unset($this->entityTags[$value]);
-        }
-    }
-
-    /**
-     * Remove all entity tags from the If-Match header field.
-     */
-    public function clear(): void
-    {
-        $this->entityTags = [];
-    }
-
-    /**
-     * @param EntityTag|null $entityTag Entity tag to compare with.
-     * @return bool Whether the If-Match header field matches the entity tag when using strong comparison.
-     */
-    public function compareStrongly(?EntityTag $entityTag): bool
-    {
-        if ($this->isAny()) {
-            return true;
-        }
-        
-        if (null === $entityTag) {
-            return false;
-        }
-        
-        foreach ($this->entityTags as $entityTagI) {
-            if ($entityTag->compareStrongly($entityTagI)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param EntityTag|null $entityTag Entity tag to compare with.
-     * @return bool Whether the If-Match header field matches the entity tag when using weak comparison.
-     */
-    public function compareWeakly(?EntityTag $entityTag): bool
-    {
-        if ($this->isAny()) {
-            return true;
-        }
-
-        if (null === $entityTag) {
-            return false;
-        }
-        
-        foreach ($this->entityTags as $entityTagntityTagI) {
-            if ($entityTag->compareWeakly($entityTagntityTagI)) {
-                return true;
-            }
-        }
-
-        return false;
+        $this->entityTagSet = $entityTagSet;
     }
 }

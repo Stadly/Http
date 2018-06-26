@@ -59,10 +59,10 @@ final class MediaType
             throw new InvalidArgumentException("Invalid media type: $mediaType");
         }
         
-        $parameterRexEx = '{'.Rfc7230::OWS.';'.Rfc7230::OWS.Rfc7231::PARAMETER.'}';
-        $parameters = [];
+        $parameterRexEx = '{'.Rfc7231::PARAMETER.'}';
         preg_match_all($parameterRexEx, $matches['PARAMETERS'], $parameterMatches);
-        
+
+        $parameters = [];
         foreach ($parameterMatches['PARAMETER'] as $parameter) {
             $parameters[] = Parameter::fromString($parameter);
         }

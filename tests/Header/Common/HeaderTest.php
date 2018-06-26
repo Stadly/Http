@@ -20,7 +20,7 @@ final class HeaderTest extends TestCase
     public function testCanConstructHeader(): void
     {
         $header = new Header('foo', 'bar');
-        
+
         // Force generation of code coverage
         $headerConstruct = new Header('foo', 'bar');
         self::assertEquals($header, $headerConstruct);
@@ -32,7 +32,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderWithEmptyName(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new Header('', 'bar');
     }
 
@@ -42,7 +42,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderWithInvalidName(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new Header('f o o', 'bar');
     }
 
@@ -52,7 +52,7 @@ final class HeaderTest extends TestCase
     public function testCanConstructHeaderWithEmptyValue(): void
     {
         $header = new Header('foo', '');
-        
+
         // Force generation of code coverage
         $headerConstruct = new Header('foo', '');
         self::assertEquals($header, $headerConstruct);
@@ -64,7 +64,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderWithInvalidValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new Header('foo', '€-rate');
     }
 
@@ -85,7 +85,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderWithEmptyNameFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Header::fromString(': bar');
     }
 
@@ -95,7 +95,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderWithInvalidNameFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Header::fromString('f o o: bar');
     }
 
@@ -106,7 +106,7 @@ final class HeaderTest extends TestCase
     {
         $header = new Header('foo', '');
         $headerFromString = Header::fromString('foo:');
-        
+
         self::assertEquals($header, $headerFromString);
     }
 
@@ -116,7 +116,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderWithInvalidValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Header::fromString('foo: €-rate');
     }
 
@@ -126,7 +126,7 @@ final class HeaderTest extends TestCase
     public function testCannotConstructHeaderFromStringWithWhitespaceAroundName(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Header::fromString("\t  foo  \t:bar");
     }
 
@@ -157,7 +157,7 @@ final class HeaderTest extends TestCase
     public function testCanGetName(): void
     {
         $header = new Header('foo', 'bar');
-        
+
         self::assertSame('foo', $header->getName());
     }
 
@@ -167,7 +167,7 @@ final class HeaderTest extends TestCase
     public function testCanSetName(): void
     {
         $header = new Header('baz', 'bar');
-        
+
         $headerSetName = new Header('foo', 'bar');
         $headerSetName->setName('baz');
 
@@ -180,9 +180,9 @@ final class HeaderTest extends TestCase
     public function testCannotSetEmptyName(): void
     {
         $header = new Header('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $header->setName('');
     }
 
@@ -192,9 +192,9 @@ final class HeaderTest extends TestCase
     public function testCannotSetInvalidName(): void
     {
         $header = new Header('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $header->setName('f o o');
     }
 
@@ -204,7 +204,7 @@ final class HeaderTest extends TestCase
     public function testCanGetValue(): void
     {
         $header = new Header('foo', 'bar');
-        
+
         self::assertSame('bar', $header->getValue());
     }
 
@@ -240,9 +240,9 @@ final class HeaderTest extends TestCase
     public function testCannotSetInvalidValue(): void
     {
         $header = new Header('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $header->setValue('€-rate');
     }
 }

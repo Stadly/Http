@@ -21,7 +21,7 @@ final class IfMatchTest extends TestCase
     public function testCanConstructIfMatch(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         // Force generation of code coverage
         $ifMatchConstruct = new IfMatch(new EntityTagSet(new EntityTag('foo')));
         self::assertEquals($ifMatch, $ifMatchConstruct);
@@ -33,7 +33,7 @@ final class IfMatchTest extends TestCase
     public function testCanConvertIfMatchWithoutEntityTagsToString(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet());
-        
+
         self::assertSame('If-Match: *', (string)$ifMatch);
     }
 
@@ -43,7 +43,7 @@ final class IfMatchTest extends TestCase
     public function testCanConvertIfMatchWithSingleEntityTagToString(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         self::assertSame('If-Match: "foo"', (string)$ifMatch);
     }
 
@@ -58,7 +58,7 @@ final class IfMatchTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         ));
-        
+
         self::assertSame('If-Match: "foo", W/"bar", "entity-tag", ""', (string)$ifMatch);
     }
 
@@ -68,7 +68,7 @@ final class IfMatchTest extends TestCase
     public function testCanGetName(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         self::assertSame('If-Match', $ifMatch->getName());
     }
 
@@ -78,7 +78,7 @@ final class IfMatchTest extends TestCase
     public function testCanGetValueForIfMatchWithoutEntityTags(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet());
-        
+
         self::assertSame('*', $ifMatch->getValue());
     }
 
@@ -88,7 +88,7 @@ final class IfMatchTest extends TestCase
     public function testCanGetValueForIfMatchWithSingleEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         self::assertSame('"foo"', $ifMatch->getValue());
     }
 
@@ -103,7 +103,7 @@ final class IfMatchTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         ));
-        
+
         self::assertSame('"foo", W/"bar", "entity-tag", ""', $ifMatch->getValue());
     }
 
@@ -114,7 +114,7 @@ final class IfMatchTest extends TestCase
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $ifMatch = new IfMatch($entityTagSet);
-        
+
         self::assertSame($entityTagSet, $ifMatch->getEntityTagSet());
     }
 
@@ -125,7 +125,7 @@ final class IfMatchTest extends TestCase
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $ifMatch = new IfMatch($entityTagSet);
-        
+
         $ifMatchSetType = new IfMatch(new EntityTagSet(new EntityTag('bar')));
         $ifMatchSetType->setEntityTagSet($entityTagSet);
 

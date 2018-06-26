@@ -21,7 +21,7 @@ final class ContentTypeTest extends TestCase
     public function testCanConstructContentType(): void
     {
         $contentType = new ContentType(new MediaType('text', 'html'));
-        
+
         // Force generation of code coverage
         $contentTypeConstruct = new ContentType(new MediaType('text', 'html'));
         self::assertEquals($contentType, $contentTypeConstruct);
@@ -114,7 +114,7 @@ final class ContentTypeTest extends TestCase
     {
         $mediaType = new MediaType('text', 'html');
         $contentType = new ContentType($mediaType);
-        
+
         self::assertSame($mediaType, $contentType->getMediaType());
     }
 
@@ -125,7 +125,7 @@ final class ContentTypeTest extends TestCase
     {
         $mediaType = new MediaType('multipart', 'html');
         $contentType = new ContentType($mediaType);
-        
+
         $contentTypeSetType = new ContentType(new MediaType('text', 'html'));
         $contentTypeSetType->setMediaType($mediaType);
 

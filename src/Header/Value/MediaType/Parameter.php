@@ -38,7 +38,7 @@ final class Parameter
             throw new InvalidArgumentException("Invalid name: $name");
         }
         $this->name = $name;
-        
+
         $this->setValue($value);
     }
 
@@ -60,7 +60,7 @@ final class Parameter
         if (2 <= mb_strlen($value) && '"' === mb_substr($value, 0, 1) && '"' === mb_substr($value, -1)) {
             $value = stripslashes(mb_substr($value, 1, -1));
         }
-        
+
         return new self($matches['NAME'], $value);
     }
 

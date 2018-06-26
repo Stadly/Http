@@ -20,7 +20,7 @@ final class ETagTest extends TestCase
     public function testCanConstructETag(): void
     {
         $eTag = new ETag(new EntityTag('foo'));
-        
+
         // Force generation of code coverage
         $eTagConstruct = new ETag(new EntityTag('foo'));
         self::assertEquals($eTag, $eTagConstruct);
@@ -83,7 +83,7 @@ final class ETagTest extends TestCase
     {
         $entityTag = new EntityTag('foo');
         $eTag = new ETag($entityTag);
-        
+
         self::assertSame($entityTag, $eTag->getEntityTag());
     }
 
@@ -94,7 +94,7 @@ final class ETagTest extends TestCase
     {
         $entityTag = new EntityTag('bar');
         $eTag = new ETag($entityTag);
-        
+
         $eTagSetType = new ETag(new EntityTag('foo'));
         $eTagSetType->setEntityTag($entityTag);
 

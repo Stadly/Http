@@ -58,7 +58,7 @@ final class MediaType
         if (utf8_decode($mediaType) !== $mediaType || 1 !== preg_match($regEx, $mediaType, $matches)) {
             throw new InvalidArgumentException("Invalid media type: $mediaType");
         }
-        
+
         $parameterRexEx = '{'.Rfc7231::PARAMETER.'}';
         preg_match_all($parameterRexEx, $matches['PARAMETERS'], $parameterMatches);
 
@@ -66,7 +66,7 @@ final class MediaType
         foreach ($parameterMatches['PARAMETER'] as $parameter) {
             $parameters[] = Parameter::fromString($parameter);
         }
-        
+
         return new self($matches['TYPE'], $matches['SUBTYPE'], ...$parameters);
     }
 

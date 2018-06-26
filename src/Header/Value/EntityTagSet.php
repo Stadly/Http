@@ -54,7 +54,7 @@ final class EntityTagSet
         foreach ($entityTagMatches['ENTITY_TAG'] as $entityTag) {
             $entityTags[] = EntityTag::fromString($entityTag);
         }
-        
+
         return new self(...$entityTags);
     }
 

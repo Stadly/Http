@@ -20,7 +20,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanConstructEntityTagSetWithoutEntityTags(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         // Force generation of code coverage
         $entityTagSetConstruct = new EntityTagSet();
         self::assertEquals($entityTagSet, $entityTagSetConstruct);
@@ -32,7 +32,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanConstructEntityTagSetWithSingleEntityTag(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         // Force generation of code coverage
         $entityTagSetConstruct = new EntityTagSet(new EntityTag('foo'));
         self::assertEquals($entityTagSet, $entityTagSetConstruct);
@@ -49,7 +49,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        
+
         // Force generation of code coverage
         $entityTagSetConstruct = new EntityTagSet(
             new EntityTag('foo'),
@@ -67,7 +67,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet();
         $entityTagSetFromString = EntityTagSet::fromString('*');
-        
+
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
 
@@ -78,7 +78,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetFromString = EntityTagSet::fromString('"foo"');
-        
+
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
 
@@ -89,7 +89,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetFromString = EntityTagSet::fromString(",\t,  ,\"foo\",,");
-        
+
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
 
@@ -105,7 +105,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTagSetFromString = EntityTagSet::fromString('"foo",W/"bar","entity-tag",""');
-        
+
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
 
@@ -121,7 +121,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTagSetFromString = EntityTagSet::fromString("\"foo\",\t  W/\"bar\",,,\"entity-tag\"   , \t, \"\",,");
-        
+
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
 
@@ -131,7 +131,7 @@ final class EntityTagSetTest extends TestCase
     public function testCannotConstructEntityTagSetWithInvalidEntityTagFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         EntityTagSet::fromString('"f o o"');
     }
 
@@ -141,7 +141,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanConvertEntityTagSetWithoutEntityTagsToString(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         self::assertSame('*', (string)$entityTagSet);
     }
 
@@ -151,7 +151,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanConvertEntityTagSetWithSingleEntityTagToString(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         self::assertSame('"foo"', (string)$entityTagSet);
     }
 
@@ -166,7 +166,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        
+
         self::assertSame('"foo", W/"bar", "entity-tag", ""', (string)$entityTagSet);
     }
 
@@ -176,7 +176,7 @@ final class EntityTagSetTest extends TestCase
     public function testEntityTagSetWithoutEntityTagsRepresentsAnyEntityTag(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         self::assertTrue($entityTagSet->isAny());
     }
 
@@ -186,7 +186,7 @@ final class EntityTagSetTest extends TestCase
     public function testEntityTagSetWithSingleEntityTagDoesNotRepresentAnyEntityTag(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         self::assertFalse($entityTagSet->isAny());
     }
 
@@ -201,7 +201,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        
+
         self::assertFalse($entityTagSet->isAny());
     }
 
@@ -211,7 +211,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanAddNothing(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         $entityTagSetAdd = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetAdd->add();
 
@@ -224,7 +224,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanAddSingleEntityTag(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true));
-        
+
         $entityTagSetAdd = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetAdd->add(new EntityTag('bar', /*isWeak*/true));
 
@@ -242,7 +242,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        
+
         $entityTagSetAdd = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetAdd->add(new EntityTag('bar', /*isWeak*/true), new EntityTag('entity-tag'), new EntityTag(''));
 
@@ -255,7 +255,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanAddExistingEntityTag(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true));
-        
+
         $entityTagSetAdd = new EntityTagSet(new EntityTag('foo'), new EntityTag('bar'));
         $entityTagSetAdd->add(new EntityTag('bar', /*isWeak*/true));
 
@@ -268,7 +268,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanRemoveNothing(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         $entityTagSetRemove = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetRemove->remove();
 
@@ -281,7 +281,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanRemoveSingleEntityTag(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         $entityTagSetRemove = new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true));
         $entityTagSetRemove->remove('bar');
 
@@ -294,7 +294,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanRemoveMultipleEntityTags(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         $entityTagSetRemove = new EntityTagSet(
             new EntityTag('foo'),
             new EntityTag('bar', /*isWeak*/true),
@@ -312,7 +312,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanRemoveNonExistingEntityTag(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        
+
         $entityTagSetRemove = new EntityTagSet(
             new EntityTag('foo'),
             new EntityTag('bar', /*isWeak*/true),
@@ -330,7 +330,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanClearEntityTagSetWithoutEntityTags(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         $entityTagSetClear = new EntityTagSet();
         $entityTagSetClear->clear();
 
@@ -343,7 +343,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanClearEntityTagSetWithSingleEntityTag(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         $entityTagSetClear = new EntityTagSet(new EntityTag('foo'));
         $entityTagSetClear->clear();
 
@@ -356,7 +356,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanClearEntityTagSetWithMultipleEntityTags(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         $entityTagSetClear = new EntityTagSet(
             new EntityTag('foo'),
             new EntityTag('bar', /*isWeak*/true),
@@ -374,7 +374,7 @@ final class EntityTagSetTest extends TestCase
     public function testNullComparesStronglyToEmptyEntityTagSet(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         self::assertTrue($entityTagSet->compareStrongly(null));
     }
 
@@ -385,7 +385,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet();
         $entityTag = new EntityTag('foo');
-        
+
         self::assertTrue($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -396,7 +396,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet();
         $entityTag = new EntityTag('foo', /*isWeak*/true);
-        
+
         self::assertTrue($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -412,7 +412,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('foo');
-        
+
         self::assertTrue($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -428,7 +428,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('foo', /*isWeak*/true);
-        
+
         self::assertFalse($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -444,7 +444,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('bar');
-        
+
         self::assertFalse($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -460,7 +460,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('bar', /*isWeak*/true);
-        
+
         self::assertFalse($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -476,7 +476,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('test');
-        
+
         self::assertFalse($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -492,7 +492,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('test', /*isWeak*/true);
-        
+
         self::assertFalse($entityTagSet->compareStrongly($entityTag));
     }
 
@@ -507,7 +507,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        
+
         self::assertFalse($entityTagSet->compareStrongly(null));
     }
 
@@ -517,7 +517,7 @@ final class EntityTagSetTest extends TestCase
     public function testNullComparesWeaklyToEmptyEntityTagSet(): void
     {
         $entityTagSet = new EntityTagSet();
-        
+
         self::assertTrue($entityTagSet->compareWeakly(null));
     }
 
@@ -528,7 +528,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet();
         $entityTag = new EntityTag('foo');
-        
+
         self::assertTrue($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -539,7 +539,7 @@ final class EntityTagSetTest extends TestCase
     {
         $entityTagSet = new EntityTagSet();
         $entityTag = new EntityTag('foo', /*isWeak*/true);
-        
+
         self::assertTrue($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -555,7 +555,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('foo');
-        
+
         self::assertTrue($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -571,7 +571,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('foo', /*isWeak*/true);
-        
+
         self::assertTrue($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -587,7 +587,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('bar');
-        
+
         self::assertTrue($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -603,7 +603,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('bar', /*isWeak*/true);
-        
+
         self::assertTrue($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -619,7 +619,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('test');
-        
+
         self::assertFalse($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -635,7 +635,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTag = new EntityTag('test', /*isWeak*/true);
-        
+
         self::assertFalse($entityTagSet->compareWeakly($entityTag));
     }
 
@@ -650,7 +650,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        
+
         self::assertFalse($entityTagSet->compareWeakly(null));
     }
 }

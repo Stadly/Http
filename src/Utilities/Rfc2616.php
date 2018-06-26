@@ -111,7 +111,7 @@ abstract class Rfc2616
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (ctext)
      */
     public const CTEXT = "(?:[\x20-\x27\x2A-\x7E]|".self::LWS.')';
-    
+
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (quoted-string)
      */

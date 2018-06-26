@@ -20,7 +20,7 @@ final class ParameterTest extends TestCase
     public function testCanConstructParameter(): void
     {
         $parameter = new Parameter('foo', 'bar');
-        
+
         // Force generation of code coverage
         $parameterConstruct = new Parameter('foo', 'bar');
         self::assertEquals($parameter, $parameterConstruct);
@@ -32,7 +32,7 @@ final class ParameterTest extends TestCase
     public function testCanConstructQuotedParameter(): void
     {
         $parameter = new Parameter('foo', 'b a r');
-        
+
         // Force generation of code coverage
         $parameterConstruct = new Parameter('foo', 'b a r');
         self::assertEquals($parameter, $parameterConstruct);
@@ -44,7 +44,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithEmptyName(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new Parameter('', 'bar');
     }
 
@@ -54,7 +54,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithInvalidName(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new Parameter('f o o', 'bar');
     }
 
@@ -64,7 +64,7 @@ final class ParameterTest extends TestCase
     public function testCanConstructParameterWithEmptyValue(): void
     {
         $parameter = new Parameter('foo', '');
-        
+
         // Force generation of code coverage
         $parameterConstruct = new Parameter('foo', '');
         self::assertEquals($parameter, $parameterConstruct);
@@ -76,7 +76,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithInvalidValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new Parameter('foo', '€-rate');
     }
 
@@ -108,7 +108,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithEmptyNameFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Parameter::fromString('=bar');
     }
 
@@ -118,7 +118,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithInvalidNameFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Parameter::fromString('f o o=bar');
     }
 
@@ -128,7 +128,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithEmptyValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Parameter::fromString('foo=');
     }
 
@@ -149,7 +149,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithInvalidValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Parameter::fromString('foo=€-rate');
     }
 
@@ -159,7 +159,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithInvalidQuotedValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Parameter::fromString('foo="€-rate"');
     }
 
@@ -169,7 +169,7 @@ final class ParameterTest extends TestCase
     public function testCannotConstructParameterWithoutValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         Parameter::fromString('foo');
     }
 
@@ -199,7 +199,7 @@ final class ParameterTest extends TestCase
     public function testCanGetName(): void
     {
         $parameter = new Parameter('foo', 'bar');
-        
+
         self::assertSame('foo', $parameter->getName());
     }
 
@@ -209,7 +209,7 @@ final class ParameterTest extends TestCase
     public function testCanGetValue(): void
     {
         $parameter = new Parameter('foo', 'bar');
-        
+
         self::assertSame('bar', $parameter->getValue());
     }
 
@@ -245,9 +245,9 @@ final class ParameterTest extends TestCase
     public function testCannotSetInvalidValue(): void
     {
         $parameter = new Parameter('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $parameter->setValue('€-rate');
     }
 }

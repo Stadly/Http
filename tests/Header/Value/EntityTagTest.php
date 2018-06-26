@@ -20,7 +20,7 @@ final class EntityTagTest extends TestCase
     public function testCanConstructEntityTag(): void
     {
         $entityTag = new EntityTag('foo');
-        
+
         // Force generation of code coverage
         $entityTagConstruct = new EntityTag('foo');
         self::assertEquals($entityTag, $entityTagConstruct);
@@ -32,7 +32,7 @@ final class EntityTagTest extends TestCase
     public function testCanConstructWeakEntityTag(): void
     {
         $entityTag = new EntityTag('foo', /*isWeak*/true);
-        
+
         // Force generation of code coverage
         $entityTagConstruct = new EntityTag('foo', /*isWeak*/true);
         self::assertEquals($entityTag, $entityTagConstruct);
@@ -44,7 +44,7 @@ final class EntityTagTest extends TestCase
     public function testCanConstructEmptyEntityTag(): void
     {
         $entityTag = new EntityTag('');
-        
+
         // Force generation of code coverage
         $entityTagConstruct = new EntityTag('');
         self::assertEquals($entityTag, $entityTagConstruct);
@@ -56,7 +56,7 @@ final class EntityTagTest extends TestCase
     public function testCannotConstructInvalidEntityTag(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new EntityTag('f o o');
     }
 
@@ -67,7 +67,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag = new EntityTag('foo');
         $entityTagFromString = EntityTag::fromString('"foo"');
-        
+
         self::assertEquals($entityTag, $entityTagFromString);
     }
 
@@ -78,7 +78,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag = new EntityTag('bar', /*isWeak*/true);
         $entityTagFromString = EntityTag::fromString('W/"bar"');
-        
+
         self::assertEquals($entityTag, $entityTagFromString);
     }
 
@@ -89,7 +89,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag = new EntityTag('');
         $entityTagFromString = EntityTag::fromString('""');
-        
+
         self::assertEquals($entityTag, $entityTagFromString);
     }
 
@@ -99,7 +99,7 @@ final class EntityTagTest extends TestCase
     public function testCannotConstructInvalidEntityTagFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         EntityTag::fromString('"f o o"');
     }
 
@@ -109,7 +109,7 @@ final class EntityTagTest extends TestCase
     public function testCannotConstructEntityTagFromStringMissingQuotes(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         EntityTag::fromString('foo');
     }
 
@@ -119,7 +119,7 @@ final class EntityTagTest extends TestCase
     public function testCanConvertEntityTagToString(): void
     {
         $entityTag = new EntityTag('foo');
-        
+
         self::assertSame('"foo"', (string)$entityTag);
     }
 
@@ -129,7 +129,7 @@ final class EntityTagTest extends TestCase
     public function testCanConvertWeakEntityTagToString(): void
     {
         $entityTag = new EntityTag('bar', /*isWeak*/true);
-        
+
         self::assertSame('W/"bar"', (string)$entityTag);
     }
 
@@ -139,7 +139,7 @@ final class EntityTagTest extends TestCase
     public function testCanConvertEmptyEntityTagToString(): void
     {
         $entityTag = new EntityTag('');
-        
+
         self::assertSame('""', (string)$entityTag);
     }
 
@@ -149,7 +149,7 @@ final class EntityTagTest extends TestCase
     public function testStrongEntityTagIsNotWeak(): void
     {
         $entityTag = new EntityTag('foo');
-        
+
         self::assertFalse($entityTag->isWeak());
     }
 
@@ -159,7 +159,7 @@ final class EntityTagTest extends TestCase
     public function testWeakEntityTagIsWeak(): void
     {
         $entityTag = new EntityTag('bar', /*isWeak*/true);
-        
+
         self::assertTrue($entityTag->isWeak());
     }
 
@@ -172,7 +172,7 @@ final class EntityTagTest extends TestCase
 
         $entityTagSetWeak = new EntityTag('bar');
         $entityTagSetWeak->setWeak(true);
-        
+
         self::assertEquals($entityTag, $entityTagSetWeak);
     }
 
@@ -185,7 +185,7 @@ final class EntityTagTest extends TestCase
 
         $entityTagSetWeak = new EntityTag('foo', /*isWeak*/true);
         $entityTagSetWeak->setWeak(false);
-        
+
         self::assertEquals($entityTag, $entityTagSetWeak);
     }
 
@@ -195,7 +195,7 @@ final class EntityTagTest extends TestCase
     public function testCanGetValue(): void
     {
         $entityTag = new EntityTag('foo');
-        
+
         self::assertSame('foo', $entityTag->getValue());
     }
 
@@ -206,7 +206,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('foo');
-        
+
         self::assertTrue($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -217,7 +217,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('foo', /*isWeak*/true);
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -228,7 +228,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('bar');
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -239,7 +239,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('bar', /*isWeak*/true);
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -250,7 +250,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('test');
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -261,7 +261,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('test', /*isWeak*/true);
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -272,7 +272,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('test');
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -283,7 +283,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('test', /*isWeak*/true);
-        
+
         self::assertFalse($entityTag1->compareStrongly($entityTag2));
     }
 
@@ -294,7 +294,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('foo');
-        
+
         self::assertTrue($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -305,7 +305,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('foo', /*isWeak*/true);
-        
+
         self::assertTrue($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -316,7 +316,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('bar');
-        
+
         self::assertTrue($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -327,7 +327,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('bar', /*isWeak*/true);
-        
+
         self::assertTrue($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -338,7 +338,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('test');
-        
+
         self::assertFalse($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -349,7 +349,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('foo');
         $entityTag2 = new EntityTag('test', /*isWeak*/true);
-        
+
         self::assertFalse($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -360,7 +360,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('test');
-        
+
         self::assertFalse($entityTag1->compareWeakly($entityTag2));
     }
 
@@ -371,7 +371,7 @@ final class EntityTagTest extends TestCase
     {
         $entityTag1 = new EntityTag('bar', /*isWeak*/true);
         $entityTag2 = new EntityTag('test', /*isWeak*/true);
-        
+
         self::assertFalse($entityTag1->compareWeakly($entityTag2));
     }
 }

@@ -21,7 +21,7 @@ final class IfNoneMatchTest extends TestCase
     public function testCanConstructIfNoneMatch(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         // Force generation of code coverage
         $ifNoneMatchConstruct = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
         self::assertEquals($ifNoneMatch, $ifNoneMatchConstruct);
@@ -33,7 +33,7 @@ final class IfNoneMatchTest extends TestCase
     public function testCanConvertIfNoneMatchWithoutEntityTagsToString(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet());
-        
+
         self::assertSame('If-None-Match: *', (string)$ifNoneMatch);
     }
 
@@ -43,7 +43,7 @@ final class IfNoneMatchTest extends TestCase
     public function testCanConvertIfNoneMatchWithSingleEntityTagToString(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         self::assertSame('If-None-Match: "foo"', (string)$ifNoneMatch);
     }
 
@@ -58,7 +58,7 @@ final class IfNoneMatchTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         ));
-        
+
         self::assertSame('If-None-Match: "foo", W/"bar", "entity-tag", ""', (string)$ifNoneMatch);
     }
 
@@ -68,7 +68,7 @@ final class IfNoneMatchTest extends TestCase
     public function testCanGetName(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         self::assertSame('If-None-Match', $ifNoneMatch->getName());
     }
 
@@ -78,7 +78,7 @@ final class IfNoneMatchTest extends TestCase
     public function testCanGetValueForIfNoneMatchWithoutEntityTags(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet());
-        
+
         self::assertSame('*', $ifNoneMatch->getValue());
     }
 
@@ -88,7 +88,7 @@ final class IfNoneMatchTest extends TestCase
     public function testCanGetValueForIfNoneMatchWithSingleEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
-        
+
         self::assertSame('"foo"', $ifNoneMatch->getValue());
     }
 
@@ -103,7 +103,7 @@ final class IfNoneMatchTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         ));
-        
+
         self::assertSame('"foo", W/"bar", "entity-tag", ""', $ifNoneMatch->getValue());
     }
 
@@ -114,7 +114,7 @@ final class IfNoneMatchTest extends TestCase
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $ifNoneMatch = new IfNoneMatch($entityTagSet);
-        
+
         self::assertSame($entityTagSet, $ifNoneMatch->getEntityTagSet());
     }
 
@@ -125,7 +125,7 @@ final class IfNoneMatchTest extends TestCase
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $ifNoneMatch = new IfNoneMatch($entityTagSet);
-        
+
         $ifNoneMatchSetType = new IfNoneMatch(new EntityTagSet(new EntityTag('bar')));
         $ifNoneMatchSetType->setEntityTagSet($entityTagSet);
 

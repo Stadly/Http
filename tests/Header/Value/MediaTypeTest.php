@@ -22,7 +22,7 @@ final class MediaTypeTest extends TestCase
     public function testCanConstructMediaTypeWithoutParameters(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         // Force generation of code coverage
         $mediaTypeConstruct = new MediaType('foo', 'bar');
         self::assertEquals($mediaType, $mediaTypeConstruct);
@@ -34,7 +34,7 @@ final class MediaTypeTest extends TestCase
     public function testCanConstructMediaTypeWithSingleParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
-        
+
         // Force generation of code coverage
         $mediaTypeConstruct = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         self::assertEquals($mediaType, $mediaTypeConstruct);
@@ -51,7 +51,7 @@ final class MediaTypeTest extends TestCase
             new Parameter('baz', 'test'),
             new Parameter('qwerty', '1 2 3')
         );
-        
+
         // Force generation of code coverage
         $mediaTypeConstruct = new MediaType(
             'foo',
@@ -68,7 +68,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithEmptyType(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new MediaType('', 'bar');
     }
 
@@ -78,7 +78,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithInvalidType(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new MediaType('f o o', 'bar');
     }
 
@@ -88,7 +88,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithEmptySubtype(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new MediaType('foo', '');
     }
 
@@ -98,7 +98,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithInvalidSubtype(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         new MediaType('foo', 'b a r');
     }
 
@@ -147,7 +147,7 @@ final class MediaTypeTest extends TestCase
             new Parameter('qwerty', '1 2 3')
         );
         $mediaTypeFromString = MediaType::fromString('foo/bar;baz=test;qwerty="1 2 3"');
-        
+
         self::assertEquals($mediaType, $mediaTypeFromString);
     }
 
@@ -163,7 +163,7 @@ final class MediaTypeTest extends TestCase
             new Parameter('qwerty', '1 2 3')
         );
         $mediaTypeFromString = MediaType::fromString("foo/bar; \tbaz=test  \t;  qwerty=\"1 2 3\"");
-        
+
         self::assertEquals($mediaType, $mediaTypeFromString);
     }
 
@@ -173,7 +173,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithEmptyTypeFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         MediaType::fromString('/bar');
     }
 
@@ -183,7 +183,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithInvalidTypeFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         MediaType::fromString('f o o/bar');
     }
 
@@ -193,7 +193,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithEmptySubtypeFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         MediaType::fromString('foo/');
     }
 
@@ -203,7 +203,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithInvalidSubtypeFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         MediaType::fromString('foo/b a r');
     }
 
@@ -213,7 +213,7 @@ final class MediaTypeTest extends TestCase
     public function testCannotConstructMediaTypeWithInvalidParameterFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         MediaType::fromString('foo/bar; foo=€-rate');
     }
 
@@ -258,7 +258,7 @@ final class MediaTypeTest extends TestCase
     public function testCanGetType(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         self::assertSame('foo', $mediaType->getType());
     }
 
@@ -268,7 +268,7 @@ final class MediaTypeTest extends TestCase
     public function testCanSetType(): void
     {
         $mediaType = new MediaType('xyzzy', 'bar');
-        
+
         $mediaTypeSetType = new MediaType('foo', 'bar');
         $mediaTypeSetType->setType('xyzzy');
 
@@ -281,9 +281,9 @@ final class MediaTypeTest extends TestCase
     public function testCannotSetEmptyType(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $mediaType->setType('');
     }
 
@@ -293,9 +293,9 @@ final class MediaTypeTest extends TestCase
     public function testCannotSetInvalidType(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $mediaType->setType('f o o');
     }
 
@@ -305,7 +305,7 @@ final class MediaTypeTest extends TestCase
     public function testCanGetSubtype(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         self::assertSame('bar', $mediaType->getSubtype());
     }
 
@@ -328,9 +328,9 @@ final class MediaTypeTest extends TestCase
     public function testCannotSetEmptySubtype(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $mediaType->setSubtype('');
     }
 
@@ -340,9 +340,9 @@ final class MediaTypeTest extends TestCase
     public function testCannotSetInvalidSubtype(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         $this->expectException(InvalidArgumentException::class);
-        
+
         $mediaType->setSubtype('f o o');
     }
 
@@ -352,7 +352,7 @@ final class MediaTypeTest extends TestCase
     public function testHasExistingParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
-        
+
         self::assertTrue($mediaType->hasParameter('baz'));
     }
 
@@ -362,7 +362,7 @@ final class MediaTypeTest extends TestCase
     public function testDoesNotHaveNonExistingParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
-        
+
         self::assertFalse($mediaType->hasParameter('qwert'));
     }
 
@@ -373,7 +373,7 @@ final class MediaTypeTest extends TestCase
     {
         $parameter = new Parameter('baz', 'test');
         $mediaType = new MediaType('foo', 'bar', $parameter);
-        
+
         self::assertSame($parameter, $mediaType->getParameter('baz'));
     }
 
@@ -383,9 +383,9 @@ final class MediaTypeTest extends TestCase
     public function testCannotGetNonExistingParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
-        
+
         $this->expectException(OutOfBoundsException::class);
-        
+
         $mediaType->getParameter('qwerty');
     }
 
@@ -395,7 +395,7 @@ final class MediaTypeTest extends TestCase
     public function testCanSetParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
-        
+
         $mediaTypeSetParameter = new MediaType('foo', 'bar');
         $mediaTypeSetParameter->setParameter(new Parameter('baz', 'test'));
 
@@ -408,7 +408,7 @@ final class MediaTypeTest extends TestCase
     public function testCanSetExistingParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'asdf'));
-        
+
         $mediaTypeSetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         $mediaTypeSetParameter->setParameter(new Parameter('baz', 'asdf'));
 
@@ -427,7 +427,7 @@ final class MediaTypeTest extends TestCase
             new Parameter('qwerty', '1 2 3'),
             new Parameter('xyzzy', 'asdf')
         );
-        
+
         $mediaTypeSetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         $mediaTypeSetParameter->setParameter(new Parameter('qwerty', '1 2 3'), new Parameter('xyzzy', 'asdf'));
 
@@ -440,7 +440,7 @@ final class MediaTypeTest extends TestCase
     public function testCanUnsetParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar');
-        
+
         $mediaTypeUnsetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         $mediaTypeUnsetParameter->unsetParameter('baz');
 
@@ -453,7 +453,7 @@ final class MediaTypeTest extends TestCase
     public function testCanUnsetNonExistingParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
-        
+
         $mediaTypeUnsetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         $mediaTypeUnsetParameter->unsetParameter('fum');
 
@@ -466,7 +466,7 @@ final class MediaTypeTest extends TestCase
     public function testCanUnsetMultipleParameters(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('qwerty', '1 2 3'));
-        
+
         $mediaTypeUnsetParameter = new MediaType(
             'foo',
             'bar',

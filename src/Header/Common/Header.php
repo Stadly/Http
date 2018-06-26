@@ -47,7 +47,7 @@ final class Header implements HeaderInterface
         if (utf8_decode($header) !== $header || 1 !== preg_match('{^'.Rfc7230::HEADER_FIELD.'$}', $header, $matches)) {
             throw new InvalidArgumentException("Invalid header field: $header");
         }
-        
+
         return new self($matches['FIELD_NAME'], $matches['FIELD_VALUE']);
     }
 

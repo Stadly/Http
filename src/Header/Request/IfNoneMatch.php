@@ -7,11 +7,11 @@ namespace Stadly\Http\Header\Request;
 use Stadly\Http\Header\Value\EntityTag;
 
 /**
- * Class for handling the HTTP header field If-Match.
+ * Class for handling the HTTP header field If-None-Match.
  *
- * Specification: https://tools.ietf.org/html/rfc7232#section-3.1
+ * Specification: https://tools.ietf.org/html/rfc7232#section-3.2
  */
-final class IfMatch implements HeaderInterface
+final class IfNoneMatch implements HeaderInterface
 {
     /**
      * @var EntityTag[] Entity tags.
@@ -41,7 +41,7 @@ final class IfMatch implements HeaderInterface
      */
     public function getName(): string
     {
-        return 'If-Match';
+        return 'If-None-Match';
     }
 
     /**
@@ -57,7 +57,7 @@ final class IfMatch implements HeaderInterface
     }
 
     /**
-     * @return bool Whether the If-Match header field represents any entity tag.
+     * @return bool Whether the If-None-Match header field represents any entity tag.
      */
     public function isAny(): bool
     {
@@ -65,7 +65,7 @@ final class IfMatch implements HeaderInterface
     }
 
     /**
-     * Add entity tags to the If-Match header field.
+     * Add entity tags to the If-None-Match header field.
      *
      * @param EntityTag ...$entityTags Entity tags to add.
      */
@@ -77,7 +77,7 @@ final class IfMatch implements HeaderInterface
     }
 
     /**
-     * Remove entity tags from the If-Match header field.
+     * Remove entity tags from the If-None-Match header field.
      * Specify entity tag values that should be removed, such as `foo`, not `W/"foo"`.
      *
      * @param string ...$values Entity tag values to remove.
@@ -90,7 +90,7 @@ final class IfMatch implements HeaderInterface
     }
 
     /**
-     * Remove all entity tags from the If-Match header field.
+     * Remove all entity tags from the If-None-Match header field.
      */
     public function clear(): void
     {
@@ -99,7 +99,7 @@ final class IfMatch implements HeaderInterface
 
     /**
      * @param EntityTag|null $entityTag Entity tag to compare with.
-     * @return bool Whether the If-Match header field matches the entity tag when using strong comparison.
+     * @return bool Whether the If-None-Match header field matches the entity tag when using strong comparison.
      */
     public function compareStrongly(?EntityTag $entityTag): bool
     {
@@ -122,7 +122,7 @@ final class IfMatch implements HeaderInterface
 
     /**
      * @param EntityTag|null $entityTag Entity tag to compare with.
-     * @return bool Whether the If-Match header field matches the entity tag when using weak comparison.
+     * @return bool Whether the If-None-Match header field matches the entity tag when using weak comparison.
      */
     public function compareWeakly(?EntityTag $entityTag): bool
     {

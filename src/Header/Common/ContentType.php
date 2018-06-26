@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Common;
 
-use InvalidArgumentException;
-use OutOfBoundsException;
 use Stadly\Http\Header\Value\MediaType;
 use Stadly\Http\Header\Value\MediaType\Parameter;
 

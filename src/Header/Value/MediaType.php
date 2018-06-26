@@ -166,16 +166,9 @@ final class MediaType
      * Unset parameters.
      *
      * @param string ...$names Parameter names.
-     * @throws OutOfBoundsException If a parameter does not exist.
      */
     public function unsetParameter(string ...$names): void
     {
-        foreach ($names as $name) {
-            if (!$this->hasParameter($name)) {
-                throw new OutOfBoundsException("Parameter not found: $name");
-            }
-        }
-
         foreach ($names as $name) {
             unset($this->parameters[strtolower($name)]);
         }

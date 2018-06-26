@@ -440,13 +440,14 @@ final class MediaTypeTest extends TestCase
     /**
      * @covers ::unsetParameter
      */
-    public function testCannotUnsetNonExistingParameter(): void
+    public function testCanUnsetNonExistingParameter(): void
     {
         $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         
-        $this->expectException(OutOfBoundsException::class);
-        
-        $mediaType->unsetParameter('qwert');
+        $mediaTypeUnsetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        $mediaTypeUnsetParameter->unsetParameter('fum');
+
+        self::assertEquals($mediaType, $mediaTypeUnsetParameter);
     }
 
     /**
@@ -471,14 +472,12 @@ final class MediaTypeTest extends TestCase
     /**
      * @covers ::unsetParameter
      */
-    public function testNothingIsUnsetWhenUnsettingMultipleParametersWhereOneIsNonExisting(): void
+    public function testCanUnsetMultipleParametersWhereOneIsNonExisting(): void
     {
         $mediaType = new MediaType(
             'foo',
             'bar',
-            new Parameter('baz', 'test'),
-            new Parameter('qwerty', '1 2 3'),
-            new Parameter('xyzzy', 'asdf')
+            new Parameter('qwerty', '1 2 3')
         );
 
         $mediaTypeUnsetParameter = new MediaType(
@@ -488,11 +487,7 @@ final class MediaTypeTest extends TestCase
             new Parameter('qwerty', '1 2 3'),
             new Parameter('xyzzy', 'asdf')
         );
-        try {
-            $mediaTypeUnsetParameter->unsetParameter('baz', 'fum', 'xyzzy');
-        } catch (OutOfBoundsException $exception) {
-            // `fum` is not found.
-        }
+        $mediaTypeUnsetParameter->unsetParameter('baz', 'fum', 'xyzzy');
 
         self::assertEquals($mediaType, $mediaTypeUnsetParameter);
     }

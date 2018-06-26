@@ -29,6 +29,18 @@ final class EntityTagTest extends TestCase
     /**
      * @covers ::__construct
      */
+    public function testCanConstructWeakEntityTag(): void
+    {
+        $entityTag = new EntityTag('foo', /*isWeak*/true);
+        
+        // Force generation of code coverage
+        $entityTagConstruct = new EntityTag('foo', /*isWeak*/true);
+        self::assertEquals($entityTag, $entityTagConstruct);
+    }
+
+    /**
+     * @covers ::__construct
+     */
     public function testCanConstructEmptyEntityTag(): void
     {
         $entityTag = new EntityTag('');
@@ -49,24 +61,23 @@ final class EntityTagTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     */
-    public function testCanConstructWeakEntityTag(): void
-    {
-        $entityTag = new EntityTag('foo', /*isWeak*/true);
-        
-        // Force generation of code coverage
-        $entityTagConstruct = new EntityTag('foo', /*isWeak*/true);
-        self::assertEquals($entityTag, $entityTagConstruct);
-    }
-
-    /**
      * @covers ::fromString
      */
     public function testCanConstructEntityTagFromString(): void
     {
         $entityTag = new EntityTag('foo');
         $entityTagFromString = EntityTag::fromString('"foo"');
+        
+        self::assertEquals($entityTag, $entityTagFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructWeakEntityTagFromString(): void
+    {
+        $entityTag = new EntityTag('bar', /*isWeak*/true);
+        $entityTagFromString = EntityTag::fromString('W/"bar"');
         
         self::assertEquals($entityTag, $entityTagFromString);
     }
@@ -103,17 +114,6 @@ final class EntityTagTest extends TestCase
     }
 
     /**
-     * @covers ::fromString
-     */
-    public function testCanConstructWeakEntityTagFromString(): void
-    {
-        $entityTag = new EntityTag('bar', /*isWeak*/true);
-        $entityTagFromString = EntityTag::fromString('W/"bar"');
-        
-        self::assertEquals($entityTag, $entityTagFromString);
-    }
-
-    /**
      * @covers ::__toString
      */
     public function testCanConvertEntityTagToString(): void
@@ -126,21 +126,21 @@ final class EntityTagTest extends TestCase
     /**
      * @covers ::__toString
      */
-    public function testCanConvertEmptyEntityTagToString(): void
-    {
-        $entityTag = new EntityTag('');
-        
-        self::assertSame('""', (string)$entityTag);
-    }
-
-    /**
-     * @covers ::__toString
-     */
     public function testCanConvertWeakEntityTagToString(): void
     {
         $entityTag = new EntityTag('bar', /*isWeak*/true);
         
         self::assertSame('W/"bar"', (string)$entityTag);
+    }
+
+    /**
+     * @covers ::__toString
+     */
+    public function testCanConvertEmptyEntityTagToString(): void
+    {
+        $entityTag = new EntityTag('');
+        
+        self::assertSame('""', (string)$entityTag);
     }
 
     /**

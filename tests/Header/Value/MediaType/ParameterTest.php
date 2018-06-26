@@ -29,6 +29,18 @@ final class ParameterTest extends TestCase
     /**
      * @covers ::__construct
      */
+    public function testCanConstructQuotedParameter(): void
+    {
+        $parameter = new Parameter('foo', 'b a r');
+        
+        // Force generation of code coverage
+        $parameterConstruct = new Parameter('foo', 'b a r');
+        self::assertEquals($parameter, $parameterConstruct);
+    }
+
+    /**
+     * @covers ::__construct
+     */
     public function testCannotConstructParameterWithEmptyName(): void
     {
         $this->expectException(InvalidArgumentException::class);

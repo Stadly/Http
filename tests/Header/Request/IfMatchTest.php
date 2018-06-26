@@ -143,7 +143,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::isAny
      */
-    public function testIfMatchWithoutEntityTagsIsAnyEntityTag(): void
+    public function testIfMatchWithoutEntityTagsRepresentsAnyEntityTag(): void
     {
         $ifMatch = new IfMatch();
         
@@ -153,7 +153,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::isAny
      */
-    public function testIfMatchWithSingleEntityTagIsNotAnyEntityTag(): void
+    public function testIfMatchWithSingleEntityTagDoesNotRepresentAnyEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTag('foo'));
         
@@ -163,7 +163,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::isAny
      */
-    public function testIfMatchWithMultipleEntityTagsIsNotAnyEntityTag(): void
+    public function testIfMatchWithMultipleEntityTagsDoesNotRepresentAnyEntityTag(): void
     {
         $ifMatch = new IfMatch(
             new EntityTag('foo'),
@@ -222,7 +222,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::add
      */
-    public function testCanOverwriteEntityTag(): void
+    public function testCanAddExistingEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true));
         

@@ -19,12 +19,46 @@ final class MediaTypeTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCanConstructMediaType(): void
+    public function testCanConstructMediaTypeWithoutParameters(): void
     {
         $mediaType = new MediaType('foo', 'bar');
         
         // Force generation of code coverage
         $mediaTypeConstruct = new MediaType('foo', 'bar');
+        self::assertEquals($mediaType, $mediaTypeConstruct);
+    }
+
+    /**
+     * @covers ::__construct
+     */
+    public function testCanConstructMediaTypeWithSingleParameter(): void
+    {
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        
+        // Force generation of code coverage
+        $mediaTypeConstruct = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        self::assertEquals($mediaType, $mediaTypeConstruct);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructMediaTypeWithMultipleParameters(): void
+    {
+        $mediaType = new MediaType(
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3')
+        );
+        
+        // Force generation of code coverage
+        $mediaTypeConstruct = new MediaType(
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3')
+        );
         self::assertEquals($mediaType, $mediaTypeConstruct);
     }
 
@@ -71,6 +105,71 @@ final class MediaTypeTest extends TestCase
     /**
      * @covers ::fromString
      */
+    public function testCanConstructMediaTypeWithoutParametersFromString(): void
+    {
+        $mediaType = new MediaType('foo', 'bar');
+        $mediaTypeFromString = MediaType::fromString('foo/bar');
+
+        self::assertEquals($mediaType, $mediaTypeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructMediaTypeWithSingleParameterFromString(): void
+    {
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        $mediaTypeFromString = MediaType::fromString('foo/bar;baz=test');
+
+        self::assertEquals($mediaType, $mediaTypeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructMediaTypeWithSingleParameterFromStringWithWhitespace(): void
+    {
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        $mediaTypeFromString = MediaType::fromString("foo/bar\t ;  baz=test");
+
+        self::assertEquals($mediaType, $mediaTypeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructMediaTypeWithMultipleParametersFromString(): void
+    {
+        $mediaType = new MediaType(
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3')
+        );
+        $mediaTypeFromString = MediaType::fromString('foo/bar;baz=test;qwerty="1 2 3"');
+        
+        self::assertEquals($mediaType, $mediaTypeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructMediaTypeWithMultipleParametersFromStringWithWhitespace(): void
+    {
+        $mediaType = new MediaType(
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3')
+        );
+        $mediaTypeFromString = MediaType::fromString("foo/bar; \tbaz=test  \t;  qwerty=\"1 2 3\"");
+        
+        self::assertEquals($mediaType, $mediaTypeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
     public function testCannotConstructMediaTypeWithEmptyTypeFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -109,78 +208,13 @@ final class MediaTypeTest extends TestCase
     }
 
     /**
-     * @covers ::fromString
-     */
-    public function testCanConstructMediaTypeWithoutParametersFromString(): void
-    {
-        $mediaType = new MediaType('text', 'html');
-        $mediaTypeFromString = MediaType::fromString('text/html');
-
-        self::assertEquals($mediaType, $mediaTypeFromString);
-    }
-
-    /**
-     * @covers ::fromString
-     */
-    public function testCanConstructMediaTypeWithSingleParameterFromString(): void
-    {
-        $mediaType = new MediaType('text', 'html', new Parameter('charset', 'utf-8'));
-        $mediaTypeFromString = MediaType::fromString('text/html;charset=utf-8');
-
-        self::assertEquals($mediaType, $mediaTypeFromString);
-    }
-
-    /**
-     * @covers ::fromString
-     */
-    public function testCanConstructMediaTypeWithSingleParameterFromStringWithWhitespace(): void
-    {
-        $mediaType = new MediaType('text', 'html', new Parameter('charset', 'utf-8'));
-        $mediaTypeFromString = MediaType::fromString("text/html\t ;  charset=utf-8");
-
-        self::assertEquals($mediaType, $mediaTypeFromString);
-    }
-
-    /**
-     * @covers ::fromString
-     */
-    public function testCanConstructMediaTypeWithMultipleParametersFromString(): void
-    {
-        $mediaType = new MediaType(
-            'text',
-            'html',
-            new Parameter('charset', 'utf-8'),
-            new Parameter('boundary', 'abc def')
-        );
-        $mediaTypeFromString = MediaType::fromString('text/html;charset=utf-8;boundary="abc def"');
-        
-        self::assertEquals($mediaType, $mediaTypeFromString);
-    }
-
-    /**
-     * @covers ::fromString
-     */
-    public function testCanConstructMediaTypeWithMultipleParametersFromStringWithWhitespace(): void
-    {
-        $mediaType = new MediaType(
-            'text',
-            'html',
-            new Parameter('charset', 'utf-8'),
-            new Parameter('boundary', 'abc def')
-        );
-        $mediaTypeFromString = MediaType::fromString("text/html; \tcharset=utf-8  \t;  boundary=\"abc def\"");
-        
-        self::assertEquals($mediaType, $mediaTypeFromString);
-    }
-
-    /**
      * @covers ::__toString
      */
     public function testCanConvertMediaTypeWithoutParametersToString(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
 
-        self::assertSame('text/html', (string)$mediaType);
+        self::assertSame('foo/bar', (string)$mediaType);
     }
 
     /**
@@ -188,9 +222,9 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanConvertMediaTypeWithSingleParameterToString(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('charset', 'utf-8'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
 
-        self::assertSame('text/html; charset=utf-8', (string)$mediaType);
+        self::assertSame('foo/bar; baz=test', (string)$mediaType);
     }
 
     /**
@@ -199,13 +233,13 @@ final class MediaTypeTest extends TestCase
     public function testCanConvertMediaTypeWithMultipleParametersToString(): void
     {
         $mediaType = new MediaType(
-            'text',
-            'html',
-            new Parameter('charset', 'utf-8'),
-            new Parameter('boundary', 'abc def')
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3')
         );
 
-        self::assertSame('text/html; charset=utf-8; boundary="abc def"', (string)$mediaType);
+        self::assertSame('foo/bar; baz=test; qwerty="1 2 3"', (string)$mediaType);
     }
 
     /**
@@ -213,9 +247,9 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanGetType(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
-        self::assertSame('text', $mediaType->getType());
+        self::assertSame('foo', $mediaType->getType());
     }
 
     /**
@@ -223,10 +257,10 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanSetType(): void
     {
-        $mediaType = new MediaType('multipart', 'html');
+        $mediaType = new MediaType('xyzzy', 'bar');
         
-        $mediaTypeSetType = new MediaType('text', 'html');
-        $mediaTypeSetType->setType('multipart');
+        $mediaTypeSetType = new MediaType('foo', 'bar');
+        $mediaTypeSetType->setType('xyzzy');
 
         self::assertEquals($mediaType, $mediaTypeSetType);
     }
@@ -236,7 +270,7 @@ final class MediaTypeTest extends TestCase
      */
     public function testCannotSetEmptyType(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
         $this->expectException(InvalidArgumentException::class);
         
@@ -248,7 +282,7 @@ final class MediaTypeTest extends TestCase
      */
     public function testCannotSetInvalidType(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
         $this->expectException(InvalidArgumentException::class);
         
@@ -260,9 +294,9 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanGetSubtype(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
-        self::assertSame('html', $mediaType->getSubtype());
+        self::assertSame('bar', $mediaType->getSubtype());
     }
 
     /**
@@ -270,10 +304,10 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanSetSubtype(): void
     {
-        $mediaType = new MediaType('text', 'form-data');
+        $mediaType = new MediaType('foo', 'xyzzy');
 
-        $mediaTypeSetSubtype = new MediaType('text', 'html');
-        $mediaTypeSetSubtype->setSubtype('form-data');
+        $mediaTypeSetSubtype = new MediaType('foo', 'bar');
+        $mediaTypeSetSubtype->setSubtype('xyzzy');
 
         self::assertEquals($mediaType, $mediaTypeSetSubtype);
     }
@@ -283,7 +317,7 @@ final class MediaTypeTest extends TestCase
      */
     public function testCannotSetEmptySubtype(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
         $this->expectException(InvalidArgumentException::class);
         
@@ -295,7 +329,7 @@ final class MediaTypeTest extends TestCase
      */
     public function testCannotSetInvalidSubtype(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
         $this->expectException(InvalidArgumentException::class);
         
@@ -307,9 +341,9 @@ final class MediaTypeTest extends TestCase
      */
     public function testHasExistingParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'bar'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         
-        self::assertTrue($mediaType->hasParameter('foo'));
+        self::assertTrue($mediaType->hasParameter('baz'));
     }
 
     /**
@@ -317,9 +351,9 @@ final class MediaTypeTest extends TestCase
      */
     public function testDoesNotHaveNonExistingParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'bar'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         
-        self::assertFalse($mediaType->hasParameter('bar'));
+        self::assertFalse($mediaType->hasParameter('qwert'));
     }
 
     /**
@@ -327,10 +361,10 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanGetParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'bar'));
-        $parameter = new Parameter('foo', 'bar');
+        $parameter = new Parameter('baz', 'test');
+        $mediaType = new MediaType('foo', 'bar', $parameter);
         
-        self::assertEquals($parameter, $mediaType->getParameter('foo'));
+        self::assertSame($parameter, $mediaType->getParameter('baz'));
     }
 
     /**
@@ -338,11 +372,11 @@ final class MediaTypeTest extends TestCase
      */
     public function testCannotGetNonExistingParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'bar'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         
         $this->expectException(OutOfBoundsException::class);
         
-        $mediaType->getParameter('bar');
+        $mediaType->getParameter('qwerty');
     }
 
     /**
@@ -350,10 +384,10 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanSetParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'bar'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         
-        $mediaTypeSetParameter = new MediaType('text', 'html');
-        $mediaTypeSetParameter->setParameter(new Parameter('foo', 'bar'));
+        $mediaTypeSetParameter = new MediaType('foo', 'bar');
+        $mediaTypeSetParameter->setParameter(new Parameter('baz', 'test'));
 
         self::assertEquals($mediaType, $mediaTypeSetParameter);
     }
@@ -363,10 +397,10 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanSetExistingParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'foo'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'asdf'));
         
-        $mediaTypeSetParameter = new MediaType('text', 'html', new Parameter('foo', 'bar'));
-        $mediaTypeSetParameter->setParameter(new Parameter('foo', 'foo'));
+        $mediaTypeSetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        $mediaTypeSetParameter->setParameter(new Parameter('baz', 'asdf'));
 
         self::assertEquals($mediaType, $mediaTypeSetParameter);
     }
@@ -377,15 +411,15 @@ final class MediaTypeTest extends TestCase
     public function testCanSetMultipleParameters(): void
     {
         $mediaType = new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3'),
+            new Parameter('xyzzy', 'asdf')
         );
         
-        $mediaTypeSetParameter = new MediaType('text', 'html', new Parameter('foo', 'bar'));
-        $mediaTypeSetParameter->setParameter(new Parameter('test', 'foo bar'), new Parameter('bar', 'foo'));
+        $mediaTypeSetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        $mediaTypeSetParameter->setParameter(new Parameter('qwerty', '1 2 3'), new Parameter('xyzzy', 'asdf'));
 
         self::assertEquals($mediaType, $mediaTypeSetParameter);
     }
@@ -395,10 +429,10 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanUnsetParameter(): void
     {
-        $mediaType = new MediaType('text', 'html');
+        $mediaType = new MediaType('foo', 'bar');
         
-        $mediaTypeUnsetParameter = new MediaType('text', 'html', new Parameter('foo', 'bar'));
-        $mediaTypeUnsetParameter->unsetParameter('foo');
+        $mediaTypeUnsetParameter = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
+        $mediaTypeUnsetParameter->unsetParameter('baz');
 
         self::assertEquals($mediaType, $mediaTypeUnsetParameter);
     }
@@ -408,11 +442,11 @@ final class MediaTypeTest extends TestCase
      */
     public function testCannotUnsetNonExistingParameter(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('foo', 'bar'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('baz', 'test'));
         
         $this->expectException(OutOfBoundsException::class);
         
-        $mediaType->unsetParameter('bar');
+        $mediaType->unsetParameter('qwert');
     }
 
     /**
@@ -420,16 +454,16 @@ final class MediaTypeTest extends TestCase
      */
     public function testCanUnsetMultipleParameters(): void
     {
-        $mediaType = new MediaType('text', 'html', new Parameter('test', 'foo bar'));
+        $mediaType = new MediaType('foo', 'bar', new Parameter('qwerty', '1 2 3'));
         
         $mediaTypeUnsetParameter = new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3'),
+            new Parameter('xyzzy', 'asdf')
         );
-        $mediaTypeUnsetParameter->unsetParameter('foo', 'bar');
+        $mediaTypeUnsetParameter->unsetParameter('baz', 'xyzzy');
 
         self::assertEquals($mediaType, $mediaTypeUnsetParameter);
     }
@@ -440,24 +474,24 @@ final class MediaTypeTest extends TestCase
     public function testNothingIsUnsetWhenUnsettingMultipleParametersWhereOneIsNonExisting(): void
     {
         $mediaType = new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3'),
+            new Parameter('xyzzy', 'asdf')
         );
 
         $mediaTypeUnsetParameter = new MediaType(
-            'text',
-            'html',
-            new Parameter('foo', 'bar'),
-            new Parameter('test', 'foo bar'),
-            new Parameter('bar', 'foo')
+            'foo',
+            'bar',
+            new Parameter('baz', 'test'),
+            new Parameter('qwerty', '1 2 3'),
+            new Parameter('xyzzy', 'asdf')
         );
         try {
-            $mediaTypeUnsetParameter->unsetParameter('foo', 'qwerty', 'bar');
+            $mediaTypeUnsetParameter->unsetParameter('baz', 'fum', 'xyzzy');
         } catch (OutOfBoundsException $exception) {
-            // 'qwerty' is not found.
+            // `fum` is not found.
         }
 
         self::assertEquals($mediaType, $mediaTypeUnsetParameter);

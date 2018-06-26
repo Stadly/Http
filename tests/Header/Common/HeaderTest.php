@@ -71,6 +71,17 @@ final class HeaderTest extends TestCase
     /**
      * @covers ::fromString
      */
+    public function testCanConstructHeaderFromString(): void
+    {
+        $header = new Header('foo', 'bar');
+        $headerFromString = Header::fromString('foo:bar');
+
+        self::assertEquals($header, $headerFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
     public function testCannotConstructHeaderWithEmptyNameFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -107,17 +118,6 @@ final class HeaderTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         
         Header::fromString('foo: €-rate');
-    }
-
-    /**
-     * @covers ::fromString
-     */
-    public function testCanConstructHeaderFromString(): void
-    {
-        $header = new Header('foo', 'bar');
-        $headerFromString = Header::fromString('foo:bar');
-
-        self::assertEquals($header, $headerFromString);
     }
 
     /**

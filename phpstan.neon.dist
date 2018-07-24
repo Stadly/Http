@@ -5,7 +5,7 @@ parameters:
     exceptionRules:
         checkedExceptions:
             - RuntimeException
-    
+
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-deprecation-rules/rules.neon

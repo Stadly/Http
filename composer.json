@@ -17,17 +17,17 @@
         }
     ],
     "require": {
-        "php": "~5.6|~7.0"
+        "php": "^7.1"
     },
     "require-dev": {
         "jakub-onderka/php-parallel-lint": "^1.0",
-        "pepakriz/phpstan-exception-rules": "^0.1.1",
+        "pepakriz/phpstan-exception-rules": "^0.2",
         "phpstan/phpstan": "^0.10",
-        "phpstan/phpstan-deprecation-rules": "^0.10.0",
-        "phpstan/phpstan-phpunit": "^0.10.0",
-        "phpstan/phpstan-strict-rules": "^0.10.0",
-        "phpunit/phpunit": ">=5.4.3",
-        "squizlabs/php_codesniffer": "^3.3"
+        "phpstan/phpstan-deprecation-rules": "^0.10",
+        "phpstan/phpstan-phpunit": "^0.10",
+        "phpstan/phpstan-strict-rules": "^0.10",
+        "phpunit/phpunit": "^7.0",
+        "squizlabs/php_codesniffer": "^3.0"
     },
     "suggest": {
         "league/flysystem": "To use the abstract filesystem Flysystem."

@@ -9,11 +9,6 @@ env:
     - COMPOSER_FLAGS="--prefer-lowest --prefer-stable"
     - COMPOSER_FLAGS=""
 
-## Cache composer
-cache:
-  directories:
-    - $HOME/.composer/cache/files
-
 before_script:
   - travis_retry composer update --no-interaction --prefer-dist $COMPOSER_FLAGS
 

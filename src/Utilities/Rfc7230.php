@@ -106,14 +106,4 @@ abstract class Rfc7230
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (quoted-pair)
      */
     public const QUOTED_PAIR = '(?:\\\\(?:'.Rfc5234::HTAB.'|'.Rfc5234::SP.'|'.Rfc5234::VCHAR.'|'.self::OBS_TEXT.'))';
-
-    /**
-     * Specification: https://tools.ietf.org/html/rfc7230#section-7
-     */
-    public const ListDelimiter = '(?:('.self::OWS.',)+'.self::OWS.')';
-
-    /**
-     * Specification: https://tools.ietf.org/html/rfc7230#section-7
-     */
-    public const OptionalListDelimiter = '(?:('.self::OWS.',)*'.self::OWS.')';
 }

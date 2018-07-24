@@ -30,10 +30,9 @@ abstract class Rfc7233
     /**
      * Specification: https://tools.ietf.org/html/rfc7233#section-2.1 (byte-range-set)
      */
-    public const BYTE_RANGE_SET = '(?:'.Rfc7230::ListDelimiter.'?'
+    public const BYTE_RANGE_SET = '(?:(?:,'.Rfc7230::OWS.')*'
         . '(?:'.self::BYTE_RANGE_SPEC.'|'.self::SUFFIX_BYTE_RANGE_SPEC.')'
-        . '(?:'.Rfc7230::ListDelimiter.'(?:'.self::BYTE_RANGE_SPEC.'|'.self::SUFFIX_BYTE_RANGE_SPEC.'))*'
-        . Rfc7230::ListDelimiter.'?)';
+        . '(?:'.Rfc7230::OWS.',(?:'.Rfc7230::OWS.'(?:'.self::BYTE_RANGE_SPEC.'|'.self::SUFFIX_BYTE_RANGE_SPEC.'))?)*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7233#section-2.1 (byte-range-spec)

@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc7230
  */
-abstract class Rfc7230
+final class Rfc7230
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (header-field)

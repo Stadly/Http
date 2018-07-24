@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc7231
  */
-abstract class Rfc7231
+final class Rfc7231
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.1 (media-type)

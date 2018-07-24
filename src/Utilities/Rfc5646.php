@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc5646
  */
-abstract class Rfc5646
+final class Rfc5646
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc5646#section-2.1 (Language-Tag)

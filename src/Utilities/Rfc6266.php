@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc6266
  */
-abstract class Rfc6266
+final class Rfc6266
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc6266#section-4.1 (content-disposition)

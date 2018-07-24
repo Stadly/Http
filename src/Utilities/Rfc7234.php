@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc7234
  */
-abstract class Rfc7234
+final class Rfc7234
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc7234#section-1.2.1 (delta-seconds)

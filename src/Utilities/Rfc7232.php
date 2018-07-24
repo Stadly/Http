@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc7232
  */
-abstract class Rfc7232
+final class Rfc7232
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (ETag)

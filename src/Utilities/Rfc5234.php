@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc5234
  */
-abstract class Rfc5234
+final class Rfc5234
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (ALPHA)

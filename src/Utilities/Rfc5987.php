@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc5987
  */
-abstract class Rfc5987
+final class Rfc5987
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc5987#section-3.2.1 (parameter)

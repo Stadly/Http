@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc2616
  */
-abstract class Rfc2616
+final class Rfc2616
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (OCTET)

@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc8187
  */
-abstract class Rfc8187
+final class Rfc8187
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc8187#section-3.2.1 (ext-value)

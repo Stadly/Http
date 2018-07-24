@@ -10,7 +10,7 @@ namespace Stadly\Http\Utilities;
  *
  * https://tools.ietf.org/html/rfc7233
  */
-abstract class Rfc7233
+final class Rfc7233
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc7233#section-2 (range-unit)

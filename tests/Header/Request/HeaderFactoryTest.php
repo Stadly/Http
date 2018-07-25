@@ -2,25 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Stadly\Http\Header;
+namespace Stadly\Http\Header\Request;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\Http\Header\Common\Header;
 use Stadly\Http\Header\Common\ContentType;
-use Stadly\Http\Header\Request\IfMatch;
-use Stadly\Http\Header\Request\IfNoneMatch;
-use Stadly\Http\Header\Response\ETag;
 use Stadly\Http\Header\Value\EntityTag;
 use Stadly\Http\Header\Value\EntityTagSet;
 use Stadly\Http\Header\Value\MediaType;
 
 /**
- * @coversDefaultClass \Stadly\Http\Header\Factory
+ * @coversDefaultClass \Stadly\Http\Header\Request\HeaderFactory
  * @covers ::<protected>
  * @covers ::<private>
  */
-final class FactoryTest extends TestCase
+final class HeaderFactoryTest extends TestCase
 {
     /**
      * @covers ::fromString
@@ -28,7 +25,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructHeaderFromString(): void
     {
         $header = new Header('foo', 'bar');
-        $headerFromString = Factory::fromString('foo:bar');
+        $headerFromString = HeaderFactory::fromString('foo:bar');
 
         self::assertEquals($header, $headerFromString);
     }
@@ -40,7 +37,7 @@ final class FactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        Factory::fromString("\t foo\t  :bar");
+        HeaderFactory::fromString("\t foo\t  :bar");
     }
 
     /**
@@ -49,7 +46,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructHeaderFromStringWithWhitespaceAroundValue(): void
     {
         $header = new Header('foo', 'bar');
-        $headerFromString = Factory::fromString("foo: \t bar\t  ");
+        $headerFromString = HeaderFactory::fromString("foo: \t bar\t  ");
 
         self::assertEquals($header, $headerFromString);
     }
@@ -61,7 +58,7 @@ final class FactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        Factory::fromString('foo');
+        HeaderFactory::fromString('foo');
     }
 
     /**
@@ -71,7 +68,7 @@ final class FactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        Factory::fromString(':bar');
+        HeaderFactory::fromString(':bar');
     }
 
     /**
@@ -80,7 +77,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructHeaderWithEmptyValueFromString(): void
     {
         $header = new Header('foo', '');
-        $headerFromString = Factory::fromString('foo:');
+        $headerFromString = HeaderFactory::fromString('foo:');
 
         self::assertEquals($header, $headerFromString);
     }
@@ -91,7 +88,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructHeaderWithEmptyValueFromStringWithWhitespace(): void
     {
         $header = new Header('foo', '');
-        $headerFromString = Factory::fromString("foo: \t\t ");
+        $headerFromString = HeaderFactory::fromString("foo: \t\t ");
 
         self::assertEquals($header, $headerFromString);
     }
@@ -102,7 +99,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructContentTypeHeaderFromString(): void
     {
         $contentType = new ContentType(new MediaType('foo', 'bar'));
-        $contentTypeFromString = Factory::fromString('Content-Type: foo/bar');
+        $contentTypeFromString = HeaderFactory::fromString('Content-Type: foo/bar');
 
         self::assertEquals($contentType, $contentTypeFromString);
     }
@@ -113,7 +110,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructContentTypeHeaderFromStringWithLowercaseName(): void
     {
         $contentType = new ContentType(new MediaType('foo', 'bar'));
-        $contentTypeFromString = Factory::fromString('content-type: foo/bar');
+        $contentTypeFromString = HeaderFactory::fromString('content-type: foo/bar');
 
         self::assertEquals($contentType, $contentTypeFromString);
     }
@@ -124,7 +121,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructContentTypeHeaderFromStringWithUppercaseName(): void
     {
         $contentType = new ContentType(new MediaType('foo', 'bar'));
-        $contentTypeFromString = Factory::fromString('CONTENT-TYPE: foo/bar');
+        $contentTypeFromString = HeaderFactory::fromString('CONTENT-TYPE: foo/bar');
 
         self::assertEquals($contentType, $contentTypeFromString);
     }
@@ -134,10 +131,10 @@ final class FactoryTest extends TestCase
      */
     public function testCanConstructIfMatchHeaderFromString(): void
     {
-        $contentType = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
-        $contentTypeFromString = Factory::fromString('If-Match: "foo", W/"bar"');
+        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifMatchFromString = HeaderFactory::fromString('If-Match: "foo", W/"bar"');
 
-        self::assertEquals($contentType, $contentTypeFromString);
+        self::assertEquals($ifMatch, $ifMatchFromString);
     }
 
     /**
@@ -146,7 +143,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructIfMatchHeaderFromStringWithLowercaseName(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
-        $ifMatchFromString = Factory::fromString('if-match: "foo", W/"bar"');
+        $ifMatchFromString = HeaderFactory::fromString('if-match: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
     }
@@ -157,7 +154,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructIfMatchHeaderFromStringWithUppercaseName(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
-        $ifMatchFromString = Factory::fromString('IF-MATCH: "foo", W/"bar"');
+        $ifMatchFromString = HeaderFactory::fromString('IF-MATCH: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
     }
@@ -167,10 +164,10 @@ final class FactoryTest extends TestCase
      */
     public function testCanConstructIfNoneMatchHeaderFromString(): void
     {
-        $contentType = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
-        $contentTypeFromString = Factory::fromString('If-None-Match: "foo", W/"bar"');
+        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifNoneMatchFromString = HeaderFactory::fromString('If-None-Match: "foo", W/"bar"');
 
-        self::assertEquals($contentType, $contentTypeFromString);
+        self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
     }
 
     /**
@@ -179,7 +176,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructIfNoneMatchHeaderFromStringWithLowercaseName(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
-        $ifNoneMatchFromString = Factory::fromString('if-none-match: "foo", W/"bar"');
+        $ifNoneMatchFromString = HeaderFactory::fromString('if-none-match: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
     }
@@ -190,7 +187,7 @@ final class FactoryTest extends TestCase
     public function testCanConstructIfNoneMatchHeaderFromStringWithUppercaseName(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
-        $ifNoneMatchFromString = Factory::fromString('IF-NONE-MATCH: "foo", W/"bar"');
+        $ifNoneMatchFromString = HeaderFactory::fromString('IF-NONE-MATCH: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
     }
@@ -198,21 +195,10 @@ final class FactoryTest extends TestCase
     /**
      * @covers ::fromString
      */
-    public function testCanConstructETagHeaderFromString(): void
+    public function testCannotConstructETagHeaderFromString(): void
     {
-        $contentType = new ETag(new EntityTag('foo'));
-        $contentTypeFromString = Factory::fromString('ETag: "foo"');
-
-        self::assertEquals($contentType, $contentTypeFromString);
-    }
-
-    /**
-     * @covers ::fromString
-     */
-    public function testCanConstructETagHeaderFromStringWithLowercaseName(): void
-    {
-        $eTag = new ETag(new EntityTag('foo'));
-        $eTagFromString = Factory::fromString('etag: "foo"');
+        $eTag = new Header('ETag', '"foo"');
+        $eTagFromString = HeaderFactory::fromString('ETag: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
     }
@@ -220,10 +206,21 @@ final class FactoryTest extends TestCase
     /**
      * @covers ::fromString
      */
-    public function testCanConstructETagHeaderFromStringWithUppercaseName(): void
+    public function testCannotConstructETagHeaderFromStringWithLowercaseName(): void
     {
-        $eTag = new ETag(new EntityTag('foo'));
-        $eTagFromString = Factory::fromString('ETAG: "foo"');
+        $eTag = new Header('etag', '"foo"');
+        $eTagFromString = HeaderFactory::fromString('etag: "foo"');
+
+        self::assertEquals($eTag, $eTagFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructETagHeaderFromStringWithUppercaseName(): void
+    {
+        $eTag = new Header('ETAG', '"foo"');
+        $eTagFromString = HeaderFactory::fromString('ETAG: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
     }

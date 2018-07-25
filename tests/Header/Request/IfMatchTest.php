@@ -126,7 +126,7 @@ final class IfMatchTest extends TestCase
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $ifMatch = new IfMatch($entityTagSet);
 
-        $ifMatchSetType = new IfMatch(new EntityTagSet(new EntityTag('bar')));
+        $ifMatchSetType = new IfMatch(new EntityTagSet(new EntityTag('bar', /*isWeak*/true)));
         $ifMatchSetType->setEntityTagSet($entityTagSet);
 
         self::assertEquals($ifMatch, $ifMatchSetType);

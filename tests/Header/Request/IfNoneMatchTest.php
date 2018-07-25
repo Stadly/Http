@@ -126,7 +126,7 @@ final class IfNoneMatchTest extends TestCase
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
         $ifNoneMatch = new IfNoneMatch($entityTagSet);
 
-        $ifNoneMatchSetType = new IfNoneMatch(new EntityTagSet(new EntityTag('bar')));
+        $ifNoneMatchSetType = new IfNoneMatch(new EntityTagSet(new EntityTag('bar', /*isWeak*/true)));
         $ifNoneMatchSetType->setEntityTagSet($entityTagSet);
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchSetType);

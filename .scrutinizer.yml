@@ -23,9 +23,8 @@ checks:
 tools:
     external_code_coverage:
         timeout: 600
-        runs: 3
+        runs: 4
     php_loc: true
-    php_cpd: true
 
 build:
     nodes:

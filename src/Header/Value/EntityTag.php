@@ -49,7 +49,7 @@ final class EntityTag
      */
     public static function fromString(string $entityTag): self
     {
-        $regEx = '{^'.Rfc7232::ENTITY_TAG.'$}';
+        $regEx = '{^'.Rfc7232::ENTITY_TAG_CAPTURE.'$}';
         if (utf8_decode($entityTag) !== $entityTag || 1 !== preg_match($regEx, $entityTag, $matches)) {
             throw new InvalidArgumentException("Invalid entity tag: $entityTag");
         }

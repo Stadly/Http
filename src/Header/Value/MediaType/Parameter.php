@@ -50,7 +50,7 @@ final class Parameter
      */
     public static function fromString(string $parameter): self
     {
-        $regEx = '{^'.Rfc7231::PARAMETER.'$}';
+        $regEx = '{^'.Rfc7231::PARAMETER_CAPTURE.'$}';
         if (utf8_decode($parameter) !== $parameter || 1 !== preg_match($regEx, $parameter, $matches)) {
             throw new InvalidArgumentException("Invalid parameter: $parameter");
         }

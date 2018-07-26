@@ -54,12 +54,12 @@ final class MediaType
      */
     public static function fromString(string $mediaType): self
     {
-        $regEx = '{^'.Rfc7231::MEDIA_TYPE.'$}';
+        $regEx = '{^'.Rfc7231::MEDIA_TYPE_CAPTURE.'$}';
         if (utf8_decode($mediaType) !== $mediaType || 1 !== preg_match($regEx, $mediaType, $matches)) {
             throw new InvalidArgumentException("Invalid media type: $mediaType");
         }
 
-        $parameterRexEx = '{'.Rfc7231::PARAMETER.'}';
+        $parameterRexEx = '{'.Rfc7231::PARAMETER_CAPTURE.'}';
         preg_match_all($parameterRexEx, $matches['PARAMETERS'], $parameterMatches);
 
         $parameters = [];

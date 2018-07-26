@@ -21,7 +21,8 @@ final class HeaderFactory
      */
     public static function fromString(string $header): HeaderInterface
     {
-        if (utf8_decode($header) !== $header || 1 !== preg_match('{^'.Rfc7230::HEADER_FIELD.'$}', $header, $matches)) {
+        $regEx = '{^'.Rfc7230::HEADER_FIELD_CAPTURE.'$}';
+        if (utf8_decode($header) !== $header || 1 !== preg_match($regEx, $header, $matches)) {
             throw new InvalidArgumentException("Invalid header field: $header");
         }
 

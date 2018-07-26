@@ -15,17 +15,33 @@ final class Rfc7230
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (header-field)
      */
-    public const HEADER_FIELD = '(?<HEADER_FIELD>'.self::FIELD_NAME.':'.self::OWS.self::FIELD_VALUE.self::OWS.')';
+    public const HEADER_FIELD = '(?:'.self::FIELD_NAME.':'.self::OWS.self::FIELD_VALUE.self::OWS.')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (header-field)
+     */
+    public const HEADER_FIELD_CAPTURE
+        = '(?:'.self::FIELD_NAME_CAPTURE.':'.self::OWS.self::FIELD_VALUE_CAPTURE.self::OWS.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-name)
      */
-    public const FIELD_NAME = '(?<FIELD_NAME>'.self::TOKEN.')';
+    public const FIELD_NAME = self::TOKEN;
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-name)
+     */
+    public const FIELD_NAME_CAPTURE = '(?<FIELD_NAME>'.self::TOKEN.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-value)
      */
-    public const FIELD_VALUE = '(?<FIELD_VALUE>(?:'.self::FIELD_CONTENT.'|'.self::OBS_FOLD.')*)';
+    public const FIELD_VALUE = '(?:(?:'.self::FIELD_CONTENT.'|'.self::OBS_FOLD.')*)';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-value)
+     */
+    public const FIELD_VALUE_CAPTURE = '(?<FIELD_VALUE>(?:'.self::FIELD_CONTENT.'|'.self::OBS_FOLD.')*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-content)
@@ -34,7 +50,8 @@ final class Rfc7230
      * Original: field-vchar [ 1*( SP / HTAB ) field-vchar ]
      * Updated: field-vchar [ 1*( SP / HTAB / field-vchar ) field-vchar ]
      */
-    public const FIELD_CONTENT = '(?:'.self::FIELD_VCHAR
+    public const FIELD_CONTENT
+        = '(?:'.self::FIELD_VCHAR
         . '(?:(?:'.Rfc5234::SP.'|'.Rfc5234::HTAB.'|'.self::FIELD_VCHAR.')+'.self::FIELD_VCHAR.')?)';
 
     /**
@@ -79,8 +96,8 @@ final class Rfc7230
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (quoted-string)
      */
-    public const QUOTED_STRING = '(?:'.Rfc5234::DQUOTE
-        . '(?:'.self::QDTEXT.'|'.self::QUOTED_PAIR.')*'.Rfc5234::DQUOTE.')';
+    public const QUOTED_STRING
+        = '(?:'.Rfc5234::DQUOTE.'(?:'.self::QDTEXT.'|'.self::QUOTED_PAIR.')*'.Rfc5234::DQUOTE.')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (qdtext)
@@ -106,4 +123,49 @@ final class Rfc7230
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (quoted-pair)
      */
     public const QUOTED_PAIR = '(?:\\\\(?:'.Rfc5234::HTAB.'|'.Rfc5234::SP.'|'.Rfc5234::VCHAR.'|'.self::OBS_TEXT.'))';
+    
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7230#section-7 (#rule)
+     *
+     * This function produces the following rules:
+     * 0# element => [ ( *( "," OWS ) element *((OWS ",")+ OWS element ) | ",") *( OWS ",") ]
+     * x# element => *( "," OWS ) element <x-1>*((OWS ",")+ OWS element ) *( OWS ",")
+     *
+     * 0#0 element => [ "," *( OWS ",") ]
+     * 0#1 element => [ ( *( "," OWS ) element | "," ) *( OWS ",") ]
+     * 0#y element => [ ( *( "," OWS ) element *<y-1>((OWS ",")+ OWS element ) | "," ) *( OWS ",") ]
+     *
+     * 1#1 element => *( "," OWS ) element *( OWS ",")
+     * x#y element => *( "," OWS ) element <x-1>*<y-1>((OWS ",")+ OWS element ) *( OWS ",")
+     */
+    public static function hashRule(string $element, int $min = 0, int $max = null): string
+    {
+        assert(0 <= $min);
+        assert(null === $max || $min <= $max);
+
+        if (0 === $max) {
+            $regEx = ',';
+        } else {
+            $regEx = '(?:,'.Rfc7230::OWS.')*'.$element;
+            
+            if (1 !== $max) {
+                $minRepeat = max(0, $min-1);
+                $maxRepeat = null === $max ? '' : $max-1;
+
+                $regEx .= '(?:(?:'.Rfc7230::OWS.',)+'.Rfc7230::OWS.$element.'){'.$minRepeat.','.$maxRepeat.'}';
+            }
+
+            if (0 === $min) {
+                $regEx = '(?:'.$regEx.'|,)';
+            }
+        }
+
+        $regEx .= '(?:'.Rfc7230::OWS.',)*';
+
+        if (0 === $min) {
+            $regEx = '(?:'.$regEx.')?';
+        }
+
+        return $regEx;
+    }
 }

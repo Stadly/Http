@@ -20,14 +20,15 @@ final class Rfc5646
     /**
      * Specification: https://tools.ietf.org/html/rfc5646#section-2.1 (langtag)
      */
-    public const LANGTAG = '(?:'.self::LANGUAGE.'(?:-'.self::SCRIPT.')?(?:-'.self::REGION.')?'
+    public const LANGTAG
+        = '(?:'.self::LANGUAGE.'(?:-'.self::SCRIPT.')?(?:-'.self::REGION.')?'
         . '(?:-'.self::VARIANT.')*(?:-'.self::EXTENSION.')*(?:-'.self::PRIVATEUSE.')?)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc5646#section-2.1 (language)
      */
-    public const LANGUAGE = '(?:'.Rfc5234::ALPHA.'{2,3}(?:-'.self::EXTLANG.')?|'
-        . Rfc5234::ALPHA.'{4}|'.Rfc5234::ALPHA.'{5,8})';
+    public const LANGUAGE
+        = '(?:'.Rfc5234::ALPHA.'{2,3}(?:-'.self::EXTLANG.')?|'.Rfc5234::ALPHA.'{4}|'.Rfc5234::ALPHA.'{5,8})';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc5646#section-2.1 (extlang)
@@ -72,7 +73,8 @@ final class Rfc5646
     /**
      * Specification: https://tools.ietf.org/html/rfc5646#section-2.1 (irregular)
      */
-    public const IRREGULAR = '(?:en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|'
+    public const IRREGULAR
+        = '(?:en-GB-oed|i-ami|i-bnn|i-default|i-enochian|i-hak|i-klingon|i-lux|i-mingo|i-navajo|'
         . 'i-pwn|i-tao|i-tay|i-tsu|sgn-BE-FR|sgn-BE-NL|sgn-CH-DE)';
 
     /**

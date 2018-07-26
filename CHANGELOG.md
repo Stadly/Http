@@ -7,7 +7,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## NEXT - YYYY-MM-DD
 
 ### Added
-- Nothing
+- Separate RFC rules for capturing expressions.
+- Method for generating #rule expressions.
 
 ### Deprecated
 - Nothing

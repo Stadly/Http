@@ -40,14 +40,12 @@ final class EntityTagSet
             return new self();
         }
 
-        // *( "," OWS ) element *( OWS "," [ OWS element ] ) converted to contain `element` only once.
-        $regEx = '{^(?:,'.Rfc7230::OWS.')*'
-            . '(?:'.Rfc7232::ENTITY_TAG.'(?:'.Rfc7230::OWS.',(?:'.Rfc7230::OWS.'(?!$))?|$)+)+$}';
-        if (utf8_decode($entityTagSet) !== $entityTagSet || 1 !== preg_match($regEx, $entityTagSet, $matches)) {
+        $regEx = '{^'.Rfc7230::hashRule(Rfc7232::ENTITY_TAG, 1).'$}';
+        if (utf8_decode($entityTagSet) !== $entityTagSet || 1 !== preg_match($regEx, $entityTagSet)) {
             throw new InvalidArgumentException("Invalid set of entity tags: $entityTagSet");
         }
 
-        $entityTagRegEx = '{'.Rfc7232::ENTITY_TAG.'}';
+        $entityTagRegEx = '{'.Rfc7232::ENTITY_TAG_CAPTURE.'}';
         preg_match_all($entityTagRegEx, $entityTagSet, $entityTagMatches);
 
         $entityTags = [];

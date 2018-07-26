@@ -6,7 +6,7 @@ namespace Stadly\Http\Header\Common;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Stadly\Http\Header\Value\MediaType;
+use Stadly\Http\Header\Value\MediaType\MediaType;
 
 /**
  * @coversDefaultClass \Stadly\Http\Header\Common\HeaderFactory

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Common;
 
 use PHPUnit\Framework\TestCase;
-use Stadly\Http\Header\Value\MediaType;
+use Stadly\Http\Header\Value\MediaType\MediaType;
 use Stadly\Http\Header\Value\MediaType\Parameter;
 
 /**

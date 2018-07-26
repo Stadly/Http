@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Response;
 
-use Stadly\Http\Header\Value\EntityTag;
+use Stadly\Http\Header\Value\EntityTag\EntityTag;
 
 /**
  * Class for handling the HTTP header field ETag.

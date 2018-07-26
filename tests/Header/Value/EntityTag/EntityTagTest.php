@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Stadly\Http\Header\Value;
+namespace Stadly\Http\Header\Value\EntityTag;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \Stadly\Http\Header\Value\EntityTag
+ * @coversDefaultClass \Stadly\Http\Header\Value\EntityTag\EntityTag
  * @covers ::<protected>
  * @covers ::<private>
  */

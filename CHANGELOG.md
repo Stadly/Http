@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Separate RFC rules for capturing expressions.
 - Method for generating #rule expressions.
+- Change header value structure.
 
 ### Deprecated
 - Nothing

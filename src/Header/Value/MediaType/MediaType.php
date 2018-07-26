@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Stadly\Http\Header\Value;
+namespace Stadly\Http\Header\Value\MediaType;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
-use Stadly\Http\Header\Value\MediaType\Parameter;
-use Stadly\Http\Utilities\Rfc7230;
 use Stadly\Http\Utilities\Rfc7231;
 
 /**

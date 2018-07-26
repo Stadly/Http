@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Stadly\Http\Header\Value;
+namespace Stadly\Http\Header\Value\MediaType;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
-use Stadly\Http\Header\Value\MediaType\Parameter;
 
 /**
- * @coversDefaultClass \Stadly\Http\Header\Value\MediaType
+ * @coversDefaultClass \Stadly\Http\Header\Value\MediaType\MediaType
  * @covers ::<protected>
  * @covers ::<private>
  */

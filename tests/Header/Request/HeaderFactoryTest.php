@@ -8,9 +8,9 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\Http\Header\Common\Header;
 use Stadly\Http\Header\Common\ContentType;
-use Stadly\Http\Header\Value\EntityTag;
-use Stadly\Http\Header\Value\EntityTagSet;
-use Stadly\Http\Header\Value\MediaType;
+use Stadly\Http\Header\Value\EntityTag\EntityTag;
+use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
+use Stadly\Http\Header\Value\MediaType\MediaType;
 
 /**
  * @coversDefaultClass \Stadly\Http\Header\Request\HeaderFactory

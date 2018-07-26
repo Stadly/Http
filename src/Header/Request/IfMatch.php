@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
-use Stadly\Http\Header\Value\EntityTagSet;
+use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 
 /**
  * Class for handling the HTTP header field If-Match.

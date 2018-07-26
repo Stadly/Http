@@ -6,7 +6,7 @@ namespace Stadly\Http\Header\Response;
 
 use InvalidArgumentException;
 use Stadly\Http\Header\Common\HeaderFactory as CommonHeaderFactory;
-use Stadly\Http\Header\Value\EntityTag;
+use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Utilities\Rfc7230;
 
 /**

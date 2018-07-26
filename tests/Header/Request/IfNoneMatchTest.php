@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Request;
 
 use PHPUnit\Framework\TestCase;
-use Stadly\Http\Header\Value\EntityTag;
-use Stadly\Http\Header\Value\EntityTagSet;
+use Stadly\Http\Header\Value\EntityTag\EntityTag;
+use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 
 /**
  * @coversDefaultClass \Stadly\Http\Header\Request\IfNoneMatch

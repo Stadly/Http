@@ -1,6 +1,5 @@
 {
     "name": "Stadly/Http",
-    "version": "0.1.0",
     "type": "library",
     "description": "File serving made easy. A PHP library for serving files from any file system over HTTP, with support for conditional and ranged requests.",
     "keywords": [

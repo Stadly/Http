@@ -89,7 +89,7 @@ final class EntityTagSet
     }
 
     /**
-     * Remove entity tags from the entity tag set.
+     * Remove entity tags from the entity tag set. An empty entity tag set represents any entity tag (`*`).
      * Specify entity tag values that should be removed, such as `foo`, not `W/"foo"`.
      *
      * @param string ...$values Entity tag values to remove.
@@ -102,7 +102,7 @@ final class EntityTagSet
     }
 
     /**
-     * Remove all entity tags from the entity tag set.
+     * Remove all entity tags from the entity tag set. The entity tag set will represent any entity tag (`*`).
      */
     public function clear(): void
     {

@@ -61,14 +61,57 @@ final class EntityTagSetTest extends TestCase
     }
 
     /**
+     * @covers ::__construct
+     */
+    public function testDuplicateEntityTagsAreRemovedWhenConstructingEntityTagSet(): void
+    {
+        $entityTagSet = new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('bar'),
+            new EntityTag('entity-tag'),
+            new EntityTag(''),
+            new EntityTag('bar', /*isWeak*/true)
+        );
+
+        $entityTagSetConstruct = new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        );
+        self::assertEquals($entityTagSet, $entityTagSetConstruct);
+    }
+
+    /**
      * @covers ::fromString
      */
-    public function testCanConstructEntityTagSetWithoutEntityTagsFromString(): void
+    public function testCanConstructEntityTagSetRepresentingAnyEntityTagFromString(): void
     {
         $entityTagSet = new EntityTagSet();
         $entityTagSetFromString = EntityTagSet::fromString('*');
 
         self::assertEquals($entityTagSet, $entityTagSetFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructEntityTagSetWithoutEntityTagsFromString(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        EntityTagSet::fromString('');
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructEntityTagSetWithoutEntityTagsFromStringWithWhitespace(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        EntityTagSet::fromString(",\t,  ,,,");
     }
 
     /**
@@ -121,6 +164,22 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('')
         );
         $entityTagSetFromString = EntityTagSet::fromString("\"foo\",\t  W/\"bar\",,,\"entity-tag\"   , \t, \"\",,");
+
+        self::assertEquals($entityTagSet, $entityTagSetFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testDuplicateEntityTagsAreRemovedWhenConstructingEntityTagSetFromString(): void
+    {
+        $entityTagSet = new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        );
+        $entityTagSetFromString = EntityTagSet::fromString('"foo",W/"bar","bar","entity-tag","",W/"bar"');
 
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
@@ -252,11 +311,11 @@ final class EntityTagSetTest extends TestCase
     /**
      * @covers ::add
      */
-    public function testCanAddExistingEntityTag(): void
+    public function testAddingExistingEntityTagOverwrites(): void
     {
-        $entityTagSet = new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true));
+        $entityTagSet = new EntityTagSet(new EntityTag('bar', /*isWeak*/true), new EntityTag('foo'));
 
-        $entityTagSetAdd = new EntityTagSet(new EntityTag('foo'), new EntityTag('bar'));
+        $entityTagSetAdd = new EntityTagSet(new EntityTag('bar'), new EntityTag('foo'));
         $entityTagSetAdd->add(new EntityTag('bar', /*isWeak*/true));
 
         self::assertEquals($entityTagSet, $entityTagSetAdd);

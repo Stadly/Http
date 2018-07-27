@@ -11,6 +11,8 @@ use Stadly\Http\Header\Common\ContentType;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 use Stadly\Http\Header\Value\MediaType\MediaType;
+use Stadly\Http\Header\Value\Range\ByteRange;
+use Stadly\Http\Header\Value\Range\ByteRangeSet;
 
 /**
  * @coversDefaultClass \Stadly\Http\Header\Request\HeaderFactory
@@ -223,5 +225,38 @@ final class HeaderFactoryTest extends TestCase
         $eTagFromString = HeaderFactory::fromString('ETAG: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructRangeHeaderFromString(): void
+    {
+        $range = new Range(new ByteRangeSet(new ByteRange(10, 100)));
+        $rangeFromString = HeaderFactory::fromString('Range: bytes=10-100');
+
+        self::assertEquals($range, $rangeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructRangeHeaderFromStringWithLowercaseName(): void
+    {
+        $range = new Range(new ByteRangeSet(new ByteRange(10, 100)));
+        $rangeFromString = HeaderFactory::fromString('range: bytes=10-100');
+
+        self::assertEquals($range, $rangeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructRangeHeaderFromStringWithUppercaseName(): void
+    {
+        $range = new Range(new ByteRangeSet(new ByteRange(10, 100)));
+        $rangeFromString = HeaderFactory::fromString('RANGE: bytes=10-100');
+
+        self::assertEquals($range, $rangeFromString);
     }
 }

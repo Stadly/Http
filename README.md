@@ -72,7 +72,7 @@ $ composer test
  - [ ] Host                    https://tools.ietf.org/html/rfc7230#section-5.4
  - [ ] Max-Forwards            https://tools.ietf.org/html/rfc7231#section-5.1.2
  - [ ] Pragma                  https://tools.ietf.org/html/rfc7234#section-5.4         x
- - [ ] Range                   https://tools.ietf.org/html/rfc7233#section-3.1         x
+ - [x] Range                   https://tools.ietf.org/html/rfc7233#section-3.1
  - [ ] TE                      https://tools.ietf.org/html/rfc7230#section-4.3
 
 #### Conditionals

@@ -220,4 +220,37 @@ final class HeaderFactoryTest extends TestCase
 
         self::assertEquals($eTag, $eTagFromString);
     }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructRangeHeaderFromString(): void
+    {
+        $range = new Header('Range', 'bytes=10-100');
+        $rangeFromString = HeaderFactory::fromString('Range: bytes=10-100');
+
+        self::assertEquals($range, $rangeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructRangeHeaderFromStringWithLowercaseName(): void
+    {
+        $range = new Header('range', 'bytes=10-100');
+        $rangeFromString = HeaderFactory::fromString('range: bytes=10-100');
+
+        self::assertEquals($range, $rangeFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCannotConstructRangeHeaderFromStringWithUppercaseName(): void
+    {
+        $range = new Header('RANGE', 'bytes=10-100');
+        $rangeFromString = HeaderFactory::fromString('RANGE: bytes=10-100');
+
+        self::assertEquals($range, $rangeFromString);
+    }
 }

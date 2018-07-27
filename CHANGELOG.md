@@ -10,6 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Separate RFC rules for capturing expressions.
 - Method for generating #rule expressions.
 - Change header value structure.
+- Range HTTP header.
 
 ### Deprecated
 - Nothing

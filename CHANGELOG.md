@@ -9,13 +9,16 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Nothing
 
+### Changed
+- Nothing
+
 ### Deprecated
 - Nothing
 
-### Fixed
+### Removed
 - Nothing
 
-### Removed
+### Fixed
 - Nothing
 
 ### Security

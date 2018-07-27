@@ -70,10 +70,11 @@ final class ByteRange
         }
         
         $firstByte = '' === $matches['FIRST_BYTE_POS'] ? null : intval($matches['FIRST_BYTE_POS']);
-        $lastByte = '' === ($matches['LAST_BYTE_POS'] ?? '') ? null : intval($matches['LAST_BYTE_POS']);
         
-        if (null === $firstByte && null === $lastByte) {
+        if (null === $firstByte) {
             $lastByte = intval($matches['SUFFIX_LENGTH']);
+        } else {
+            $lastByte = '' === ($matches['LAST_BYTE_POS'] ?? '') ? null : intval($matches['LAST_BYTE_POS']);
         }
            
         return new self($firstByte, $lastByte);

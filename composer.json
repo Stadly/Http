@@ -1,5 +1,6 @@
 {
     "name": "Stadly/Http",
+    "version": "0.1.0",
     "type": "library",
     "description": "File serving made easy. A PHP library for serving files from any file system over HTTP, with support for conditional and ranged requests.",
     "keywords": [
@@ -50,7 +51,8 @@
             "phpstan analyse -c phpstan.dev.neon.dist",
             "phpunit"
         ],
-        "fix-style": "phpcbf --standard=psr2 --no-patch -p src tests"
+        "check-style": "phpcs -p --standard=psr2 src tests",
+        "fix-style": "phpcbf -p --standard=psr2 --no-patch src tests"
     },
     "extra": {
         "branch-alias": {

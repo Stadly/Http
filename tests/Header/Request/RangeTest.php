@@ -81,7 +81,7 @@ final class RangeTest extends TestCase
     public function testCannotGetValueForRangeWithoutRanges(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         $range = new Range(new ByteRangeSet());
 
         $range->getValue();

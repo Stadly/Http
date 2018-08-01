@@ -133,7 +133,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructIfMatchHeaderFromString(): void
     {
-        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true)));
         $ifMatchFromString = HeaderFactory::fromString('If-Match: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
@@ -144,7 +144,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructIfMatchHeaderFromStringWithLowercaseName(): void
     {
-        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true)));
         $ifMatchFromString = HeaderFactory::fromString('if-match: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
@@ -155,7 +155,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructIfMatchHeaderFromStringWithUppercaseName(): void
     {
-        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifMatch = new IfMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true)));
         $ifMatchFromString = HeaderFactory::fromString('IF-MATCH: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
@@ -166,7 +166,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructIfNoneMatchHeaderFromString(): void
     {
-        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true)));
         $ifNoneMatchFromString = HeaderFactory::fromString('If-None-Match: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
@@ -177,7 +177,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructIfNoneMatchHeaderFromStringWithLowercaseName(): void
     {
-        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true)));
         $ifNoneMatchFromString = HeaderFactory::fromString('if-none-match: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
@@ -188,7 +188,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructIfNoneMatchHeaderFromStringWithUppercaseName(): void
     {
-        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*IsWeak*/true)));
+        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo'), new EntityTag('bar', /*isWeak*/true)));
         $ifNoneMatchFromString = HeaderFactory::fromString('IF-NONE-MATCH: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);

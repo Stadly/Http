@@ -68,15 +68,15 @@ final class ByteRange
         if (utf8_decode($range) !== $range || 1 !== preg_match($regEx, $range, $matches)) {
             throw new InvalidArgumentException("Invalid range: $range");
         }
-        
+
         $firstByte = '' === $matches['FIRST_BYTE_POS'] ? null : intval($matches['FIRST_BYTE_POS']);
-        
+
         if (null === $firstByte) {
             $lastByte = intval($matches['SUFFIX_LENGTH']);
         } else {
             $lastByte = '' === ($matches['LAST_BYTE_POS'] ?? '') ? null : intval($matches['LAST_BYTE_POS']);
         }
-           
+
         return new self($firstByte, $lastByte);
     }
 

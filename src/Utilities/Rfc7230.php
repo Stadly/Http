@@ -123,7 +123,7 @@ final class Rfc7230
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (quoted-pair)
      */
     public const QUOTED_PAIR = '(?:\\\\(?:'.Rfc5234::HTAB.'|'.Rfc5234::SP.'|'.Rfc5234::VCHAR.'|'.self::OBS_TEXT.'))';
-    
+
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-7 (#rule)
      *
@@ -147,7 +147,7 @@ final class Rfc7230
             $regEx = ',';
         } else {
             $regEx = '(?:,'.Rfc7230::OWS.')*'.$element;
-            
+
             if (1 !== $max) {
                 $minRepeat = max(0, $min-1);
                 $maxRepeat = null === $max ? '' : $max-1;

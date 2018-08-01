@@ -1,5 +1,5 @@
 {
-    "name": "Stadly/Http",
+    "name": "stadly/http",
     "type": "library",
     "description": "File serving made easy. A PHP library for serving files from any file system over HTTP, with support for conditional and ranged requests.",
     "keywords": [
@@ -28,9 +28,6 @@
         "phpstan/phpstan-strict-rules": "^0.10",
         "phpunit/phpunit": "^7.0",
         "squizlabs/php_codesniffer": "^2.3||^3.0"
-    },
-    "suggest": {
-        "league/flysystem": "To use the abstract filesystem Flysystem."
     },
     "autoload": {
         "psr-4": {

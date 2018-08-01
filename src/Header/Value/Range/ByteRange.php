@@ -47,11 +47,6 @@ final class ByteRange
             throw new InvalidArgumentException("Invalid range: $firstByte-$lastByte");
         }
 
-        // Number of bytes to get is not positive.
-        if (null === $firstByte && $lastByte <= 0) {
-            throw new InvalidArgumentException("Invalid range: $firstByte-$lastByte");
-        }
-
         $this->firstByte = $firstByte;
         $this->lastByte = $lastByte;
     }

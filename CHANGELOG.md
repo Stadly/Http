@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Can create suffix byte ranges of length zero.
 
 ### Deprecated
 - Nothing

@@ -339,4 +339,34 @@ final class ByteRangeSetTest extends TestCase
 
         self::assertEquals($rangeSet, $rangeSetAdd);
     }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeSetContainingOnlySatisfiableRangesIsSatisfiable(): void
+    {
+        $rangeSet = new ByteRangeSet(new ByteRange(50, 50), new ByteRange(50, 100));
+
+        self::assertTrue($rangeSet->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeSetContainingOnlyNonSatisfiableRangesIsNotSatisfiable(): void
+    {
+        $rangeSet = new ByteRangeSet(new ByteRange(null, 0));
+
+        self::assertFalse($rangeSet->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeSetContainingBothSatisfiableAndNonSatisfiableRangesIsSatisfiable(): void
+    {
+        $rangeSet = new ByteRangeSet(new ByteRange(null, 0), new ByteRange(50, 50), new ByteRange(50, 100));
+
+        self::assertTrue($rangeSet->isSatisfiable(/*fileSize*/null));
+    }
 }

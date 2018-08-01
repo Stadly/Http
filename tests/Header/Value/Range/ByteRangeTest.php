@@ -99,11 +99,13 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructRangeCoveringZeroBytesFromTheEnd(): void
+    public function testCanConstructRangeCoveringZeroBytesFromTheEnd(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $range = new ByteRange(null, 0);
 
-        new ByteRange(null, 0);
+        // Force generation of code coverage
+        $rangeConstruct = new ByteRange(null, 0);
+        self::assertEquals($range, $rangeConstruct);
     }
 
     /**
@@ -217,9 +219,10 @@ final class ByteRangeTest extends TestCase
      */
     public function testCannotConstructRangeCoveringZeroBytesFromTheEndFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $range = new ByteRange(null, 0);
+        $rangeFromString = ByteRange::fromString('-0');
 
-        ByteRange::fromString('-0');
+        self::assertEquals($range, $rangeFromString);
     }
 
     /**
@@ -330,5 +333,185 @@ final class ByteRangeTest extends TestCase
         $range = new ByteRange(null, 100);
 
         self::assertSame('-100', (string)$range);
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsSatisfiable(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeWithSameFirstAndLastByteIsSatisfiable(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheStartIsSatisfiable(): void
+    {
+        $range = new ByteRange(0, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsNotSatisfiableWhenFirstByteIsEqualToFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/50));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsNotSatisfiableWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/25));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsSatisfiableWhenLastByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringToTheEndIsSatisfiable(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/100));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheStartToTheEndIsSatisfiable(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/100));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheEndIsSatisfiable(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringZeroBytesFromTheEndIsNotSatisfiable(): void
+    {
+        $range = new ByteRange(null, 0);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheEndIsSatisfiableWhenNumberOfCoveredBytesIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsNotSatisfiableWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, 0);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/0));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringToTheEndIsNotSatisfiableWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/0));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheEndIsSatisfiableWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(null, 50);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/0));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsNotSatisfiableWhenFileSizeIsNegative(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/-100));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringToTheEndIsSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheEndIsSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeIsSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/null));
     }
 }

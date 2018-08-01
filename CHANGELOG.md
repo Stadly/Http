@@ -4,7 +4,7 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased]
+## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.3.1...HEAD)
 
 ### Added
 - Nothing
@@ -24,7 +24,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
-## [0.3.0] - 2018-08-01
+## [0.3.1](https://github.com/Stadly/HttpTest/compare/v0.3.0...v0.3.1) - 2018-08-01
+
+### Added
+- Tests for checking byte range and byte range set satisfiability.
+
+### Fixed
+- Failing tests.
+
+## [0.3.0](https://github.com/Stadly/HttpTest/compare/v0.2.0...v0.3.0) - 2018-08-01
 
 ### Added
 - Can check whether byte ranges and byte range sets are satisfiable.
@@ -32,7 +40,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - Can create suffix byte ranges of length zero.
 
-## [0.2.0] - 2018-07-27
+## [0.2.0](https://github.com/Stadly/HttpTest/compare/v0.1.0...v0.2.0) - 2018-07-27
 
 ### Added
 - Separate RFC rules for capturing expressions.
@@ -47,7 +55,3 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - ETag HTTP header.
 - If-Match HTTP header.
 - If-None-Match HTTP header.
-
-[Unreleased]: https://github.com/Stadly/HttpTest/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/Stadly/HttpTest/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/Stadly/HttpTest/compare/v0.1.0...v0.2.0

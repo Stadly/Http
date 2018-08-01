@@ -94,14 +94,15 @@ final class ByteRangeSet implements RangeSetInterface
     }
 
     /**
-     * @param int|null $size Size of the file.
+     * @param int|null $fileSize Size of the file.
      * @return bool Whether the set of ranges is satisfiable.
      */
-    public function isSatisfiable($size): bool
+    public function isSatisfiable($fileSize): bool
     {
         foreach ($this->ranges as $range) {
-            if ($range->isSatisfiable($size))
+            if ($range->isSatisfiable($fileSize)) {
                 return true;
+            }
         }
 
         return false;

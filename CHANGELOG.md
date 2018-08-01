@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased]
 
 ### Added
-- Nothing
+- Can check whether byte ranges and byte range sets are satisfiable.
 
 ### Changed
 - Can create suffix byte ranges of length zero.

@@ -82,4 +82,17 @@ final class ByteRange
     {
         return "$this->firstByte-$this->lastByte";
     }
+
+    /**
+     * @param int|null $size Size of the file.
+     * @return bool Whether the range is satisfiable.
+     */
+    public function isSatisfiable(?int $size): bool
+    {
+        if (null === $this->firstByte)
+            return 0 < $this->lastByte;
+
+        // If file size is unknown, assume the range is satisfiable.
+        return null === $size || $this->firstByte < $size;
+    }
 }

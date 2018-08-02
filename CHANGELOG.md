@@ -4,7 +4,7 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.4.0...HEAD)
+## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.4.1...HEAD)
 
 ### Added
 - Nothing
@@ -23,6 +23,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Security
 - Nothing
+
+## [0.4.1](https://github.com/Stadly/HttpTest/compare/v0.4.0...v0.4.1) - 2018-08-02
+
+### Changed
+- Refactored code for constructing date from rfc850 formatted string.
 
 ## [0.4.0](https://github.com/Stadly/HttpTest/compare/v0.3.1...v0.4.0) - 2018-08-02
 

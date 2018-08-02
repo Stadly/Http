@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Value;
 
-use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;

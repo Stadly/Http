@@ -89,11 +89,79 @@ final class ByteRange
      */
     public function isSatisfiable(?int $fileSize): bool
     {
+        // Cannot cover from or to end of file when file size is unkown.
+        if (null === $fileSize && (null === $this->firstByte || null === $this->lastByte)) {
+            return false;
+        }
+
         if (null === $this->firstByte) {
             return 0 < $this->lastByte;
         }
 
         // If file size is unknown, assume the range is satisfiable.
         return null === $fileSize || $this->firstByte < $fileSize;
+    }
+
+    /**
+     * @param int|null $fileSize Size of the file.
+     * @return int Position of the first byte in the range.
+     */
+    public function getFirstBytePos(?int $fileSize): int
+    {
+        // File size and number of bytes must be positive when covering from the end.
+        if (null === $this->firstByte && null !== $fileSize && 0 < $fileSize && 0 < $this->lastByte) {
+            assert(null !== $this->lastByte);
+            return max(0, $fileSize-$this->lastByte);
+        }
+
+        // First byte must be smaller than file size, unless file size is unknown.
+        if (null !== $this->firstByte && (null === $fileSize || $this->firstByte < $fileSize)) {
+            return $this->firstByte;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'Cannot calculate first byte position: %s-%s/%s',
+            $this->firstByte,
+            $this->lastByte,
+            $fileSize ?? '*'
+        ));
+    }
+
+    /**
+     * @param int|null $fileSize Size of the file.
+     * @return int Position of the last byte in the range.
+     */
+    public function getLastBytePos(?int $fileSize): int
+    {
+        // Cannot cover to or from the end when file size is unknown.
+        if (null === $fileSize && null !== $this->firstByte && null !== $this->lastByte) {
+            return $this->lastByte;
+        }
+
+        // File size and number of bytes must be positive when covering from the end.
+        if (null !== $fileSize && null === $this->firstByte && 0 < $fileSize && 0 < $this->lastByte) {
+            return max(0, $fileSize-1);
+        }
+
+        // First byte must be smaller than file size.
+        if (null !== $fileSize && null !== $this->firstByte && $this->firstByte < $fileSize) {
+            return max(0, min($this->lastByte ?? $fileSize-1, $fileSize-1));
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'Cannot calculate last byte position: %s-%s/%s',
+            $this->firstByte,
+            $this->lastByte,
+            $fileSize ?? '*'
+        ));
+    }
+
+    /**
+     * @param int|null $fileSize Size of the file.
+     * @return int Number of bytes in the range.
+     */
+    public function getLength(?int $fileSize): int
+    {
+        return $this->getLastBytePos($fileSize) - $this->getFirstBytePos($fileSize) + 1;
     }
 }

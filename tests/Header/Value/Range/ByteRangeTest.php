@@ -388,6 +388,16 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::isSatisfiable
      */
+    public function testRangeCoveringToTheEndIsNotSatisfiableWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/25));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
     public function testRangeIsSatisfiableWhenLastByteIsGreaterThanFileSize(): void
     {
         $range = new ByteRange(50, 100);
@@ -402,7 +412,7 @@ final class ByteRangeTest extends TestCase
     {
         $range = new ByteRange(50, null);
 
-        self::assertTrue($range->isSatisfiable(/*fileSize*/100));
+        self::assertTrue($range->isSatisfiable(/*fileSize*/1000));
     }
 
     /**
@@ -412,7 +422,7 @@ final class ByteRangeTest extends TestCase
     {
         $range = new ByteRange(0, null);
 
-        self::assertTrue($range->isSatisfiable(/*fileSize*/100));
+        self::assertTrue($range->isSatisfiable(/*fileSize*/1000));
     }
 
     /**
@@ -438,7 +448,7 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::isSatisfiable
      */
-    public function testRangeCoveringFromTheEndIsSatisfiableWhenNumberOfCoveredBytesIsGreaterThanFileSize(): void
+    public function testRangeCoveringFromTheEndIsSatisfiableWhenNumberOfBytesIsGreaterThanFileSize(): void
     {
         $range = new ByteRange(null, 100);
 
@@ -488,30 +498,698 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::isSatisfiable
      */
-    public function testRangeCoveringToTheEndIsSatisfiableWhenFileSizeIsUnknown(): void
-    {
-        $range = new ByteRange(50, null);
-
-        self::assertTrue($range->isSatisfiable(/*fileSize*/null));
-    }
-
-    /**
-     * @covers ::isSatisfiable
-     */
-    public function testRangeCoveringFromTheEndIsSatisfiableWhenFileSizeIsUnknown(): void
-    {
-        $range = new ByteRange(null, 100);
-
-        self::assertTrue($range->isSatisfiable(/*fileSize*/null));
-    }
-
-    /**
-     * @covers ::isSatisfiable
-     */
     public function testRangeIsSatisfiableWhenFileSizeIsUnknown(): void
     {
         $range = new ByteRange(50, 100);
 
         self::assertTrue($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeWithSameFirstAndLastByteIsSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertTrue($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringToTheEndIsNotSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
+    public function testRangeCoveringFromTheEndIsNotSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePos(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeWithSameFirstAndLastByte(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeCoveringFromTheStart(): void
+    {
+        $range = new ByteRange(0, 100);
+
+        self::assertSame(0, $range->getFirstBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosWhenFirstByteIsEqualToFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/50);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/25);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosForRangeCoveringToTheEndWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/25);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosWhenLastByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeCoveringToTheEnd(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeCoveringFromTheStartToTheEnd(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertSame(0, $range->getFirstBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeCoveringFromTheEnd(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertSame(900, $range->getFirstBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosForRangeCoveringZeroBytesFromTheEnd(): void
+    {
+        $range = new ByteRange(null, 0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/1000);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeCoveringFromTheEndWhenNumberOfBytesIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertSame(0, $range->getFirstBytePos(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, 0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosForRangeCoveringToTheEndWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosForRangeCoveringFromTheEndWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(null, 50);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosWhenFileSizeIsNegative(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/-100);
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeWithSameFirstAndLastByteWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCanGetFirstBytePosForRangeCoveringToTheEndWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertSame(50, $range->getFirstBytePos(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getFirstBytePos
+     */
+    public function testCannotGetFirstBytePosForRangeCoveringFromTheEndWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getFirstBytePos(/*fileSize*/null);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePos(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(100, $range->getLastBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeWithSameFirstAndLastByte(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertSame(50, $range->getLastBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeCoveringFromTheStart(): void
+    {
+        $range = new ByteRange(0, 100);
+
+        self::assertSame(100, $range->getLastBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosWhenFirstByteIsEqualToFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/50);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/25);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosForRangeCoveringToTheEndWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/25);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosWhenLastByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(74, $range->getLastBytePos(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeCoveringToTheEnd(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertSame(999, $range->getLastBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeCoveringFromTheStartToTheEnd(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertSame(999, $range->getLastBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeCoveringFromTheEnd(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertSame(999, $range->getLastBytePos(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosForRangeCoveringZeroBytesFromTheEnd(): void
+    {
+        $range = new ByteRange(null, 0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/1000);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeCoveringFromTheEndWhenNumberOfBytesIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertSame(74, $range->getLastBytePos(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, 0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosForRangeCoveringToTheEndWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosForRangeCoveringFromTheEndWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(null, 50);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosWhenFileSizeIsNegative(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/-100);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(100, $range->getLastBytePos(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCanGetLastBytePosForRangeWithSameFirstAndLastByteWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertSame(50, $range->getLastBytePos(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosForRangeCoveringToTheEndWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/null);
+    }
+
+    /**
+     * @covers ::getLastBytePos
+     */
+    public function testCannotGetLastBytePosForRangeCoveringFromTheEndWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLastBytePos(/*fileSize*/null);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLength(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(51, $range->getLength(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeWithSameFirstAndLastByte(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertSame(1, $range->getLength(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeCoveringFromTheStart(): void
+    {
+        $range = new ByteRange(0, 100);
+
+        self::assertSame(101, $range->getLength(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthWhenFirstByteIsEqualToFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/50);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/25);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthForRangeCoveringToTheEndWhenFirstByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/25);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthWhenLastByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(25, $range->getLength(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeCoveringToTheEnd(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertSame(950, $range->getLength(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeCoveringFromTheStartToTheEnd(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertSame(1000, $range->getLength(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeCoveringFromTheEnd(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertSame(100, $range->getLength(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthForRangeCoveringZeroBytesFromTheEnd(): void
+    {
+        $range = new ByteRange(null, 0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/1000);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeCoveringFromTheEndWhenNumberOfBytesIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertSame(75, $range->getLength(/*fileSize*/75));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, 0);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthForRangeCoveringToTheEndWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(0, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthForRangeCoveringFromTheEndWhenFileSizeIsZero(): void
+    {
+        $range = new ByteRange(null, 50);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/0);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthWhenFileSizeIsNegative(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/-100);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertSame(51, $range->getLength(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCanGetLengthForRangeWithSameFirstAndLastByteWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertSame(1, $range->getLength(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthForRangeCoveringToTheEndWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, null);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/null);
+    }
+
+    /**
+     * @covers ::getLength
+     */
+    public function testCannotGetLengthForRangeCoveringFromTheEndWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        $this->expectException(InvalidArgumentException::class);
+
+        $range->getLength(/*fileSize*/null);
     }
 }

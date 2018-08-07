@@ -4,11 +4,10 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.4.1...HEAD)
+## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.5.0...HEAD)
 
 ### Added
-- Possible to iterate over byte range set.
-- Possible to iterate over entity tag set.
+- Nothing
 
 ### Changed
 - Nothing
@@ -20,10 +19,25 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Parameter type hint for ByteRangeSet::isSatisfiable.
+- Nothing
 
 ### Security
 - Nothing
+
+## [0.5.0](https://github.com/Stadly/HttpTest/compare/v0.4.1...v0.5.0) - 2018-08-07
+
+### Added
+- Possible to iterate over byte range set.
+- Possible to iterate over entity tag set.
+- Byte range method calculating first byte position when taking file size into consideration.
+- Byte range method calculating last byte position when taking file size into consideration.
+- Byte range method calculating length of range when taking file size into consideration.
+
+### Changed
+- Byte range is not satisfiable when covering to or from end of file and file size is unknown.
+
+### Fixed
+- Parameter type hint for ByteRangeSet::isSatisfiable.
 
 ## [0.4.1](https://github.com/Stadly/HttpTest/compare/v0.4.0...v0.4.1) - 2018-08-02
 

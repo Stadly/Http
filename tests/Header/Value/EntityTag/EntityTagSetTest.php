@@ -712,4 +712,57 @@ final class EntityTagSetTest extends TestCase
 
         self::assertFalse($entityTagSet->compareWeakly(null));
     }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testCanGetIteratorForEntityTagSetWithoutEntityTags(): void
+    {
+        $entityTags = [];
+        $entityTagSet = new EntityTagSet(...$entityTags);
+
+        $entityTagsGetIterator = [];
+        foreach ($entityTagSet as $entityTag) {
+            $entityTagsGetIterator[] = $entityTag;
+        }
+
+        self::assertSame($entityTags, $entityTagsGetIterator);
+    }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testCanGetIteratorForEntityTagSetWithSingleEntityTag(): void
+    {
+        $entityTags = [new EntityTag('foo')];
+        $entityTagSet = new EntityTagSet(...$entityTags);
+
+        $entityTagsGetIterator = [];
+        foreach ($entityTagSet as $entityTag) {
+            $entityTagsGetIterator[] = $entityTag;
+        }
+
+        self::assertSame($entityTags, $entityTagsGetIterator);
+    }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testCanGetIteratorForEntityTagSetWithMultipleEntityTags(): void
+    {
+        $entityTags = [
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag(''),
+        ];
+        $entityTagSet = new EntityTagSet(...$entityTags);
+
+        $entityTagsGetIterator = [];
+        foreach ($entityTagSet as $entityTag) {
+            $entityTagsGetIterator[] = $entityTag;
+        }
+
+        self::assertSame($entityTags, $entityTagsGetIterator);
+    }
 }

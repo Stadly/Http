@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Value\EntityTag;
 
+use ArrayIterator;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Stadly\Http\Utilities\Rfc7230;
 use Stadly\Http\Utilities\Rfc7232;
 
 /**
  * Class for handling sets of entity tags.
  */
-final class EntityTagSet
+final class EntityTagSet implements IteratorAggregate
 {
     /**
      * @var EntityTag[] Entity tags.
@@ -153,5 +155,13 @@ final class EntityTagSet
         }
 
         return false;
+    }
+
+    /**
+     * @return ArrayIterator Iterator containing the entity tags in the set.
+     */
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->entityTags);
     }
 }

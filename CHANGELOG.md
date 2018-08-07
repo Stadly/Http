@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Possible to iterate over byte range set.
+- Possible to iterate over entity tag set.
 
 ### Changed
 - Nothing

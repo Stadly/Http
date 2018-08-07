@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.4.1...HEAD)
 
 ### Added
-- Nothing
+- Possible to iterate over byte range set.
 
 ### Changed
 - Nothing

@@ -369,4 +369,64 @@ final class ByteRangeSetTest extends TestCase
 
         self::assertTrue($rangeSet->isSatisfiable(/*fileSize*/null));
     }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testCanGetIteratorForRangeSetWithSingleRange(): void
+    {
+        $ranges = [new ByteRange(50, 100)];
+        $rangeSet = new ByteRangeSet(...$ranges);
+
+        $rangesGetIterator = [];
+        foreach ($rangeSet as $range) {
+            $rangesGetIterator[] = $range;
+        }
+
+        self::assertSame($ranges, $rangesGetIterator);
+    }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testCanGetIteratorForRangeSetWithMultipleRanges(): void
+    {
+        $ranges = [
+            new ByteRange(50, 100),
+            new ByteRange(50, 50),
+            new ByteRange(50, null),
+            new ByteRange(null, 100),
+        ];
+        $rangeSet = new ByteRangeSet(...$ranges);
+
+        $rangesGetIterator = [];
+        foreach ($rangeSet as $range) {
+            $rangesGetIterator[] = $range;
+        }
+
+        self::assertSame($ranges, $rangesGetIterator);
+    }
+
+    /**
+     * @covers ::getIterator
+     */
+    public function testCanGetIteratorForRangeSetWithDuplicateRanges(): void
+    {
+        $ranges = [
+            new ByteRange(50, 100),
+            new ByteRange(50, 50),
+            new ByteRange(50, 50),
+            new ByteRange(50, null),
+            new ByteRange(null, 100),
+            new ByteRange(50, 50),
+        ];
+        $rangeSet = new ByteRangeSet(...$ranges);
+
+        $rangesGetIterator = [];
+        foreach ($rangeSet as $range) {
+            $rangesGetIterator[] = $range;
+        }
+
+        self::assertSame($ranges, $rangesGetIterator);
+    }
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Value\Range;
 
+use ArrayIterator;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Stadly\Http\Utilities\Rfc7233;
 
 /**
@@ -12,7 +14,7 @@ use Stadly\Http\Utilities\Rfc7233;
  *
  * Specification: https://tools.ietf.org/html/rfc7233#section-2.1
  */
-final class ByteRangeSet implements RangeSetInterface
+final class ByteRangeSet implements RangeSetInterface, IteratorAggregate
 {
     /**
      * @var ByteRange[] Ranges.
@@ -106,5 +108,13 @@ final class ByteRangeSet implements RangeSetInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return ArrayIterator Iterator containing the ranges in the set.
+     */
+    public function getIterator(): ArrayIterator
+    {
+        return new ArrayIterator($this->ranges);
     }
 }

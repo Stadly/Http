@@ -88,7 +88,7 @@ final class Date
 
         throw new InvalidArgumentException("Invalid date: $date");
     }
-    
+
     private static function fromRfc850String(string $date, bool $isWeak): self
     {
         preg_match('{^'.Rfc7231::RFC850_DATE_CAPTURE.'$}', $date, $matches);

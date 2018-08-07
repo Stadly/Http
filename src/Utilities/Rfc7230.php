@@ -137,8 +137,13 @@ final class Rfc7230
      *
      * 1#1 element => *( "," OWS ) element *( OWS ",")
      * x#y element => *( "," OWS ) element <x-1>*<y-1>((OWS ",")+ OWS element ) *( OWS ",")
+     *
+     * @param string $element Regular expression for the list element.
+     * @param int $min Minimum number of elements in list.
+     * @param int|null $max Maximum number of elements in list.
+     * @return string Regular expression for the list.
      */
-    public static function hashRule(string $element, int $min = 0, int $max = null): string
+    public static function hashRule(string $element, int $min = 0, ?int $max = null): string
     {
         assert(0 <= $min);
         assert(null === $max || $min <= $max);

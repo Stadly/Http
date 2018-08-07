@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Utilities;
 
-use Stadly\Http\Utilities\Rfc5234;
-
 /**
  * Regular expressions for matching rules in RFC 7231:
  * Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content

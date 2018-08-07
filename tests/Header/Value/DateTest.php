@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Value;
 
-use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -47,7 +46,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateWithNamedTimeZone(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateTimeZone = new Date(new DateTime('2001-02-02 23:05:06', new DateTimeZone('EST')));
 
         self::assertEquals($date, $dateTimeZone);
@@ -58,7 +57,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateWithRelativeTimeZone(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateTimeZone = new Date(new DateTime('2001-02-03 02:05:06', new DateTimeZone('-02:00')));
 
         self::assertEquals($date, $dateTimeZone);
@@ -69,7 +68,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateWithLocationBasedTimeZone(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateTimeZone = new Date(new DateTime('2001-02-03 11:05:06', new DateTimeZone('Indian/Christmas')));
 
         self::assertEquals($date, $dateTimeZone);
@@ -80,8 +79,8 @@ final class DateTest extends TestCase
      */
     public function testMicrosecondsAreDiscardedWhenConstructingDate(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
-        $dateMicroseconds = new Date(new DateTime('2001-02-03 04:05:06.789', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06'));
+        $dateMicroseconds = new Date(new DateTime('2001-02-03 04:05:06.789'));
 
         self::assertEquals($date, $dateMicroseconds);
     }
@@ -91,7 +90,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromTimestamp(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(981173106);
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -102,7 +101,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructStrongDateFromTimestamp(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')), /*isWeak*/false);
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')), /*isWeak*/false);
         $dateFromTimestamp = Date::fromTimestamp(981173106, /*isWeak*/false);
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -113,7 +112,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromZeroTimestamp(): void
     {
-        $date = new Date(new DateTime('1970-01-01 00:00:00', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('1970-01-01 00:00:00', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(0);
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -124,7 +123,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromTheSmallest32BitTimestamp(): void
     {
-        $date = new Date(new DateTime('1901-12-13 20:45:52', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('1901-12-13 20:45:52', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(-2147483648); // The smallest 32-bit integer (-2^31).
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -135,7 +134,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromTheLargest32BitTimestamp(): void
     {
-        $date = new Date(new DateTime('2038-01-19 03:14:07', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2038-01-19 03:14:07', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(2147483647); // The largest 32-bit integer (2^31-1).
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -146,7 +145,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromTheSmallerThan32BitTimestamp(): void
     {
-        $date = new Date(new DateTime('1000-01-01 00:00:00', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('1000-01-01 00:00:00', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(-30610224000); // Smaller than any 32-bit integer.
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -157,7 +156,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromTheLargerThan32BitTimestamp(): void
     {
-        $date = new Date(new DateTime('3000-01-01 00:00:00', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('3000-01-01 00:00:00', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(32503680000); // Larger than any 32-bit integer.
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -168,7 +167,7 @@ final class DateTest extends TestCase
      */
     public function testMicrosecondsAreDiscardedWhenConstructingDateFromTimestamp(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateFromTimestamp = Date::fromTimestamp(981173106.789);
 
         self::assertEquals($date, $dateFromTimestamp);
@@ -199,7 +198,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromImfFixdateFormattedString(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateFromString = Date::fromString('Sat, 03 Feb 2001 04:05:06 GMT');
 
         self::assertEquals($date, $dateFromString);
@@ -210,7 +209,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromRfc850FormattedString(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateFromString = Date::fromString('Saturday, 03-Feb-01 04:05:06 GMT');
 
         self::assertEquals($date, $dateFromString);
@@ -386,7 +385,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructDateFromAsctimeFormattedString(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
         $dateFromString = Date::fromString('Sat Feb  3 04:05:06 2001');
 
         self::assertEquals($date, $dateFromString);
@@ -397,7 +396,7 @@ final class DateTest extends TestCase
      */
     public function testCanConstructStrongDateFromString(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')), /*isWeak*/false);
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')), /*isWeak*/false);
         $dateFromString = Date::fromString('Sat, 03 Feb 2001 04:05:06 GMT', /*isWeak*/false);
 
         self::assertEquals($date, $dateFromString);
@@ -408,7 +407,7 @@ final class DateTest extends TestCase
      */
     public function testCanConvertDateToString(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')));
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
 
         self::assertSame('Sat, 03 Feb 2001 04:05:06 GMT', (string)$date);
     }
@@ -418,7 +417,7 @@ final class DateTest extends TestCase
      */
     public function testCanConvertStrongDateToString(): void
     {
-        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('UTC')), /*isWeak*/false);
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')), /*isWeak*/false);
 
         self::assertSame('Sat, 03 Feb 2001 04:05:06 GMT', (string)$date);
     }

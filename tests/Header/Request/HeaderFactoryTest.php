@@ -6,8 +6,8 @@ namespace Stadly\Http\Header\Request;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Stadly\Http\Header\Common\Header;
 use Stadly\Http\Header\Common\ContentType;
+use Stadly\Http\Header\Common\Header;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 use Stadly\Http\Header\Value\MediaType\MediaType;

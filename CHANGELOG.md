@@ -19,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- Parameter type hint for ByteRangeSet::isSatisfiable.
 
 ### Security
 - Nothing

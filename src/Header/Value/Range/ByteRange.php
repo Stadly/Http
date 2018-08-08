@@ -42,11 +42,6 @@ final class ByteRange
             throw new InvalidArgumentException("Invalid range: $firstByte-$lastByte");
         }
 
-        // $lastByte is before $firstByte.
-        if (null !== $lastByte && $lastByte < $firstByte) {
-            throw new InvalidArgumentException("Invalid range: $firstByte-$lastByte");
-        }
-
         $this->firstByte = $firstByte;
         $this->lastByte = $lastByte;
     }
@@ -89,17 +84,30 @@ final class ByteRange
      */
     public function isSatisfiable(?int $fileSize): bool
     {
+        if (!$this->isValid()) {
+            return false;
+        }
+
         // Cannot cover from or to end of file when file size is unkown.
         if (null === $fileSize && (null === $this->firstByte || null === $this->lastByte)) {
             return false;
         }
 
+        // Number of bytes must be positive when covering from the end.
         if (null === $this->firstByte) {
             return 0 < $this->lastByte;
         }
 
         // If file size is unknown, assume the range is satisfiable.
         return null === $fileSize || $this->firstByte < $fileSize;
+    }
+
+    /**
+     * @return bool Whether the range is valid.
+     */
+    public function isValid(): bool
+    {
+        return null === $this->lastByte || $this->firstByte <= $this->lastByte;
     }
 
     /**

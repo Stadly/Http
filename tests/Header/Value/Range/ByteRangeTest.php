@@ -41,11 +41,13 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructRangeWithFirstByteGreaterThanLastByte(): void
+    public function testCanConstructRangeWithFirstByteGreaterThanLastByte(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $range = new ByteRange(50, 49);
 
-        new ByteRange(50, 49);
+        // Force generation of code coverage
+        $rangeConstruct = new ByteRange(50, 49);
+        self::assertEquals($range, $rangeConstruct);
     }
 
     /**
@@ -163,11 +165,12 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::fromString
      */
-    public function testCannotConstructRangeWithFirstByteGreaterThanLastByteFromString(): void
+    public function testCanConstructRangeWithFirstByteGreaterThanLastByteFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $range = new ByteRange(50, 49);
+        $rangeFromString = ByteRange::fromString('50-49');
 
-        ByteRange::fromString('50-49');
+        self::assertEquals($range, $rangeFromString);
     }
 
     /**
@@ -358,6 +361,16 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::isSatisfiable
      */
+    public function testRangeWithFirstByteGreaterThanLastByteIsNotSatisfiable(): void
+    {
+        $range = new ByteRange(50, 49);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
     public function testRangeCoveringFromTheStartIsSatisfiable(): void
     {
         $range = new ByteRange(0, 100);
@@ -518,6 +531,16 @@ final class ByteRangeTest extends TestCase
     /**
      * @covers ::isSatisfiable
      */
+    public function testRangeWithFirstByteGreaterThanLastByteIsNotSatisfiableWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 49);
+
+        self::assertFalse($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isSatisfiable
+     */
     public function testRangeCoveringToTheEndIsNotSatisfiableWhenFileSizeIsUnknown(): void
     {
         $range = new ByteRange(50, null);
@@ -533,6 +556,56 @@ final class ByteRangeTest extends TestCase
         $range = new ByteRange(null, 100);
 
         self::assertFalse($range->isSatisfiable(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testRangeIsValid(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertTrue($range->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testRangeWithSameFirstAndLastByteIsValid(): void
+    {
+        $range = new ByteRange(50, 50);
+
+        self::assertTrue($range->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testRangeWithFirstByteGreaterThanLastByteIsNotValid(): void
+    {
+        $range = new ByteRange(50, 49);
+
+        self::assertFalse($range->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testRangeCoveringToTheEndIsValid(): void
+    {
+        $range = new ByteRange(50, null);
+
+        self::assertTrue($range->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testRangeCoveringFromTheEndIsValid(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertTrue($range->isValid());
     }
 
     /**

@@ -7,9 +7,10 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.5.0...HEAD)
 
 ### Added
-- Nothing
+- Possible to check if a byte range is valid.
 
 ### Changed
+- Possible to create byte ranges with first byte position greater than last byte position.
 - Refactored logic for interpreting rfc850 dates.
 
 ### Deprecated

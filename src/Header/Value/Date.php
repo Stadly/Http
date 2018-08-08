@@ -91,26 +91,20 @@ final class Date
 
     private static function fromRfc850String(string $date, bool $isWeak): self
     {
+        $now = new DateTimeImmutable('now', new DateTimeZone('GMT'));
+
         preg_match('{^'.Rfc7231::RFC850_DATE_CAPTURE.'$}', $date, $matches);
 
-        $year = substr(gmdate('Y'), 0, -2).$matches['YEAR'];
+        // Assume the year belongs to the next century.
+        $year = (1 + (int)substr($now->format('Y'), 0, -2)).$matches['YEAR'];
 
         $newDate = sprintf('%s-%s-%s %s', $matches['DAY'], $matches['MONTH'], $year, $matches['TIME_OF_DAY']);
         $dateTime = DateTime::createFromFormat('d-M-Y H:i:s', $newDate, new DateTimeZone('GMT'));
         assert(false !== $dateTime);
 
-        // If more than 50 years in the future, interpret the date as past.
-        $now = new DateTimeImmutable();
-        if ($now->modify('+50 years') < $dateTime) {
-            // Interpret 99 as year 1999 instead of 2099 in year 2000.
-            // @codeCoverageIgnoreStart
+        // While date is more than 50 years in the future, interpret the date as 100 years earlier.
+        while ($now->modify('+50 years') < $dateTime) {
             $dateTime->modify('-100 years');
-            // @codeCoverageIgnoreEnd
-        } elseif ($dateTime < $now->modify('-50 years')) {
-            // Interpret 00 as year 2000 instead of 1900 in year 1999.
-            // @codeCoverageIgnoreStart
-            $dateTime->modify('+100 years');
-            // @codeCoverageIgnoreEnd
         }
 
         return new self($dateTime, $isWeak);

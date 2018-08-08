@@ -123,10 +123,9 @@ final class ByteRange
             }
         } elseif (0 < $fileSize) {
             if (null === $this->firstByte) {
-                assert(null !== $this->lastByte);
                 // When covering from the end, the number of bytes covered must be positive.
                 if (0 < $this->lastByte) {
-                    return max(0, $fileSize-$this->lastByte);
+                    return max(0, $fileSize-(int)$this->lastByte);
                 }
             // First byte must be smaller than file size.
             } elseif ($this->firstByte < $fileSize) {
@@ -155,7 +154,6 @@ final class ByteRange
             }
         } elseif (0 < $fileSize) {
             if (null === $this->firstByte) {
-                assert(null !== $this->lastByte);
                 // When covering from the end, the number of bytes covered must be positive.
                 if (0 < $this->lastByte) {
                     return $fileSize-1;

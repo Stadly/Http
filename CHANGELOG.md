@@ -4,7 +4,27 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.5.0...HEAD)
+## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.6.0...HEAD)
+
+### Added
+- Nothing
+
+### Changed
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Removed
+- Nothing
+
+### Fixed
+- Nothing
+
+### Security
+- Nothing
+
+## [0.6.0](https://github.com/Stadly/HttpTest/compare/v0.5.0...v0.6.0)
 
 ### Added
 - Possible to check if a byte range is valid.
@@ -14,17 +34,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Possible to create byte ranges with first byte position greater than last byte position.
 - Refactored logic for interpreting rfc850 dates.
 
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
 ### Fixed
 - Byte range set factory could not create byte ranges from strings containing whitespace.
-
-### Security
-- Nothing
 
 ## [0.5.0](https://github.com/Stadly/HttpTest/compare/v0.4.1...v0.5.0) - 2018-08-07
 

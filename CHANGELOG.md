@@ -13,6 +13,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Refactored code for checking whether byte range covers entire file.
 - Refactored code for calculating last byte position for byte ranges.
 - Refactored code for calculating first byte position for byte ranges.
+- Refactored code for calculating whether byte range is satisfiable.
 
 ### Deprecated
 - Nothing

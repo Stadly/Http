@@ -98,8 +98,8 @@ final class ByteRange
             return 0 < $this->lastByte;
         }
 
-        // If file size is unknown, assume the range is satisfiable.
-        return null === $fileSize || $this->firstByte < $fileSize;
+        // First byte must be smaller than file size.
+        return $this->firstByte < $fileSize;
     }
 
     /**

@@ -19,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- Byte range set factory could not create byte ranges from strings containing whitespace.
 
 ### Security
 - Nothing

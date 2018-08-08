@@ -20,16 +20,16 @@ final class RangeSetFactory
      */
     public static function fromString(string $rangeSet): RangeSetInterface
     {
-        $regEx = '{^'.Rfc7233::OTHER_RANGES_SPECIFIER_CAPTURE.'$}';
-        if (utf8_decode($rangeSet) !== $rangeSet || 1 !== preg_match($regEx, $rangeSet, $matches)) {
-            throw new InvalidArgumentException("Invalid set of ranges: $rangeSet");
+        if (utf8_decode($rangeSet) === $rangeSet) {
+            if (1 === preg_match('{^'.Rfc7233::BYTE_RANGES_SPECIFIER.'$}', $rangeSet)) {
+                return ByteRangeSet::fromString($rangeSet);
+            }
+
+            if (1 === preg_match('{^'.Rfc7233::OTHER_RANGES_SPECIFIER.'$}', $rangeSet)) {
+                return OtherRangeSet::fromString($rangeSet);
+            }
         }
 
-        switch (strtolower($matches['OTHER_RANGE_UNIT'])) {
-            case 'bytes':
-                return ByteRangeSet::fromString($rangeSet);
-            default:
-                return OtherRangeSet::fromString($rangeSet);
-        }
+        throw new InvalidArgumentException("Invalid set of ranges: $rangeSet");
     }
 }

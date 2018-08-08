@@ -88,12 +88,12 @@ final class ByteRange
             return false;
         }
 
-        // Cannot cover from or to end of file when file size is unkown.
-        if (null === $fileSize && (null === $this->firstByte || null === $this->lastByte)) {
-            return false;
+        if (null === $fileSize) {
+            // When file size is unknown, both first byte and last byte must be specified.
+            return null !== $this->firstByte && null !== $this->lastByte;
         }
 
-        // Number of bytes must be positive when covering from the end.
+        // When covering from the end, the number of bytes covered must be positive.
         if (null === $this->firstByte) {
             return 0 < $this->lastByte;
         }

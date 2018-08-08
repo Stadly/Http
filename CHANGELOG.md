@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Possible to check if a byte range is valid.
+- Possible to check if a byte range covers an entire file.
 
 ### Changed
 - Possible to create byte ranges with first byte position greater than last byte position.

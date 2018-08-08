@@ -1265,4 +1265,134 @@ final class ByteRangeTest extends TestCase
 
         $range->getLength(/*fileSize*/null);
     }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeNotCoveringFromTheStartDoesNotCoverFile(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertFalse($range->coversFile(/*fileSize*/100));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStarDoesNotCoverFileWhenLastByteIsMoreThanOneLessThanFileSize(): void
+    {
+        $range = new ByteRange(0, 100);
+
+        self::assertFalse($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStartCoversFileWhenLastByteIsOneLessThanFileSize(): void
+    {
+        $range = new ByteRange(0, 999);
+
+        self::assertTrue($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStartCoversFileWhenLastByteIsEqualToFileSize(): void
+    {
+        $range = new ByteRange(0, 1000);
+
+        self::assertTrue($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStartCoversFileWhenLastByteIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(0, 1001);
+
+        self::assertTrue($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStartToTheEndCoversFile(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertTrue($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheEndDoesNotCoverFileWhenNumberOfBytesIsSmallerThanFileSize(): void
+    {
+        $range = new ByteRange(null, 999);
+
+        self::assertFalse($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheEndCoversFileWhenNumberOfBytesIsEqualToFileSize(): void
+    {
+        $range = new ByteRange(null, 1000);
+
+        self::assertTrue($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheEndCoversFileWhenNumberOfBytesIsGreaterThanFileSize(): void
+    {
+        $range = new ByteRange(null, 1001);
+
+        self::assertTrue($range->coversFile(/*fileSize*/1000));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeNotCoveringFromTheStartDoesNotCoverFileWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(50, 100);
+
+        self::assertFalse($range->coversFile(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStarDoesNotCoverFileWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(0, 100);
+
+        self::assertFalse($range->coversFile(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheStartToTheEndCoversFileWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(0, null);
+
+        self::assertTrue($range->coversFile(/*fileSize*/null));
+    }
+
+    /**
+     * @covers ::coversFile
+     */
+    public function testRangeCoveringFromTheEndDoesNotCoverFileWhenFileSizeIsUnknown(): void
+    {
+        $range = new ByteRange(null, 100);
+
+        self::assertFalse($range->coversFile(/*fileSize*/null));
+    }
 }

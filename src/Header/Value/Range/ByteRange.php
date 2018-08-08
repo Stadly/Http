@@ -172,4 +172,25 @@ final class ByteRange
     {
         return $this->getLastBytePos($fileSize) - $this->getFirstBytePos($fileSize) + 1;
     }
+
+    /**
+     * @param int|null $fileSize Size of the file.
+     * @return bool Whether the range covers the entire file.
+     */
+    public function coversFile(?int $fileSize): bool
+    {
+        if (0 === $this->firstByte && null === $this->lastByte) {
+            return true;
+        }
+
+        if (0 === $this->firstByte && null !== $fileSize && $fileSize-1 <= $this->lastByte) {
+            return true;
+        }
+
+        if (null === $this->firstByte && null !== $fileSize && $fileSize <= $this->lastByte) {
+            return true;
+        }
+
+        return false;
+    }
 }

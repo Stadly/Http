@@ -24,7 +24,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
-## [0.6.0](https://github.com/Stadly/HttpTest/compare/v0.5.0...v0.6.0)
+## [0.6.0](https://github.com/Stadly/HttpTest/compare/v0.5.0...v0.6.0) - 2018-08-08
 
 ### Added
 - Possible to check if a byte range is valid.

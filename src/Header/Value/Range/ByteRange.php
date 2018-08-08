@@ -179,16 +179,18 @@ final class ByteRange
      */
     public function coversFile(?int $fileSize): bool
     {
-        if (0 === $this->firstByte && null === $this->lastByte) {
-            return true;
+        if (null === $this->lastByte) {
+            return 0 === $this->firstByte;
         }
 
-        if (0 === $this->firstByte && null !== $fileSize && $fileSize-1 <= $this->lastByte) {
-            return true;
-        }
+        if (null !== $fileSize) {
+            if (0 === $this->firstByte && $fileSize <= $this->lastByte+1) {
+                return true;
+            }
 
-        if (null === $this->firstByte && null !== $fileSize && $fileSize <= $this->lastByte) {
-            return true;
+            if (null === $this->firstByte && $fileSize <= $this->lastByte) {
+                return true;
+            }
         }
 
         return false;

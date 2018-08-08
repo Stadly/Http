@@ -116,15 +116,22 @@ final class ByteRange
      */
     public function getFirstBytePos(?int $fileSize): int
     {
-        // File size and number of bytes must be positive when covering from the end.
-        if (null === $this->firstByte && null !== $fileSize && 0 < $fileSize && 0 < $this->lastByte) {
-            assert(null !== $this->lastByte);
-            return max(0, $fileSize-$this->lastByte);
-        }
-
-        // First byte must be smaller than file size, unless file size is unknown.
-        if (null !== $this->firstByte && (null === $fileSize || $this->firstByte < $fileSize)) {
-            return $this->firstByte;
+        if (null === $fileSize) {
+            // When file size is unknown, first byte must be specified.
+            if (null !== $this->firstByte) {
+                return $this->firstByte;
+            }
+        } elseif (0 < $fileSize) {
+            if (null === $this->firstByte) {
+                assert(null !== $this->lastByte);
+                // When covering from the end, the number of bytes covered must be positive.
+                if (0 < $this->lastByte) {
+                    return max(0, $fileSize-$this->lastByte);
+                }
+            // First byte must be smaller than file size.
+            } elseif ($this->firstByte < $fileSize) {
+                return $this->firstByte;
+            }
         }
 
         throw new InvalidArgumentException(sprintf(
@@ -148,6 +155,7 @@ final class ByteRange
             }
         } elseif (0 < $fileSize) {
             if (null === $this->firstByte) {
+                assert(null !== $this->lastByte);
                 // When covering from the end, the number of bytes covered must be positive.
                 if (0 < $this->lastByte) {
                     return $fileSize-1;

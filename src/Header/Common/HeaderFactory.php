@@ -17,20 +17,20 @@ final class HeaderFactory
      * Construct header from string.
      *
      * @param string $header Header field string.
-     * @return HeaderInterface Header generated based on the string.
+     * @return Header Header generated based on the string.
      */
-    public static function fromString(string $header): HeaderInterface
+    public static function fromString(string $header): Header
     {
-        $regEx = '{^'.Rfc7230::HEADER_FIELD_CAPTURE.'$}';
-        if (utf8_decode($header) !== $header || 1 !== preg_match($regEx, $header, $matches)) {
-            throw new InvalidArgumentException("Invalid header field: $header");
+        $regEx = '{^' . Rfc7230::HEADER_FIELD_CAPTURE . '$}';
+        if (utf8_decode($header) !== $header || preg_match($regEx, $header, $matches) !== 1) {
+            throw new InvalidArgumentException('Invalid header field: ' . $header);
         }
 
         switch (strtolower($matches['FIELD_NAME'])) {
             case 'content-type':
                 return new ContentType(MediaType::fromString($matches['FIELD_VALUE']));
             default:
-                return new Header($matches['FIELD_NAME'], $matches['FIELD_VALUE']);
+                return new ArbitraryHeader($matches['FIELD_NAME'], $matches['FIELD_VALUE']);
         }
     }
 }

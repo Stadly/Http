@@ -20,7 +20,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderFromString(): void
     {
-        $header = new Header('foo', 'bar');
+        $header = new ArbitraryHeader('foo', 'bar');
         $headerFromString = HeaderFactory::fromString('foo:bar');
 
         self::assertEquals($header, $headerFromString);
@@ -41,7 +41,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderFromStringWithWhitespaceAroundValue(): void
     {
-        $header = new Header('foo', 'bar');
+        $header = new ArbitraryHeader('foo', 'bar');
         $headerFromString = HeaderFactory::fromString("foo: \t bar\t  ");
 
         self::assertEquals($header, $headerFromString);
@@ -72,7 +72,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderWithEmptyValueFromString(): void
     {
-        $header = new Header('foo', '');
+        $header = new ArbitraryHeader('foo', '');
         $headerFromString = HeaderFactory::fromString('foo:');
 
         self::assertEquals($header, $headerFromString);
@@ -83,7 +83,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderWithEmptyValueFromStringWithWhitespace(): void
     {
-        $header = new Header('foo', '');
+        $header = new ArbitraryHeader('foo', '');
         $headerFromString = HeaderFactory::fromString("foo: \t\t ");
 
         self::assertEquals($header, $headerFromString);
@@ -127,7 +127,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructIfMatchHeaderFromString(): void
     {
-        $ifMatch = new Header('If-Match', '"foo", W/"bar"');
+        $ifMatch = new ArbitraryHeader('If-Match', '"foo", W/"bar"');
         $ifMatchFromString = HeaderFactory::fromString('If-Match: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
@@ -138,7 +138,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructIfMatchHeaderFromStringWithLowercaseName(): void
     {
-        $ifMatch = new Header('if-match', '"foo", W/"bar"');
+        $ifMatch = new ArbitraryHeader('if-match', '"foo", W/"bar"');
         $ifMatchFromString = HeaderFactory::fromString('if-match: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
@@ -149,7 +149,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructIfMatchHeaderFromStringWithUppercaseName(): void
     {
-        $ifMatch = new Header('IF-MATCH', '"foo", W/"bar"');
+        $ifMatch = new ArbitraryHeader('IF-MATCH', '"foo", W/"bar"');
         $ifMatchFromString = HeaderFactory::fromString('IF-MATCH: "foo", W/"bar"');
 
         self::assertEquals($ifMatch, $ifMatchFromString);
@@ -160,7 +160,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructIfNoneMatchHeaderFromString(): void
     {
-        $ifNoneMatch = new Header('If-None-Match', '"foo", W/"bar"');
+        $ifNoneMatch = new ArbitraryHeader('If-None-Match', '"foo", W/"bar"');
         $ifNoneMatchFromString = HeaderFactory::fromString('If-None-Match: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
@@ -171,7 +171,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructIfNoneMatchHeaderFromStringWithLowercaseName(): void
     {
-        $ifNoneMatch = new Header('if-none-match', '"foo", W/"bar"');
+        $ifNoneMatch = new ArbitraryHeader('if-none-match', '"foo", W/"bar"');
         $ifNoneMatchFromString = HeaderFactory::fromString('if-none-match: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
@@ -182,7 +182,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructIfNoneMatchHeaderFromStringWithUppercaseName(): void
     {
-        $ifNoneMatch = new Header('IF-NONE-MATCH', '"foo", W/"bar"');
+        $ifNoneMatch = new ArbitraryHeader('IF-NONE-MATCH', '"foo", W/"bar"');
         $ifNoneMatchFromString = HeaderFactory::fromString('IF-NONE-MATCH: "foo", W/"bar"');
 
         self::assertEquals($ifNoneMatch, $ifNoneMatchFromString);
@@ -193,7 +193,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructETagHeaderFromString(): void
     {
-        $eTag = new Header('ETag', '"foo"');
+        $eTag = new ArbitraryHeader('ETag', '"foo"');
         $eTagFromString = HeaderFactory::fromString('ETag: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
@@ -204,7 +204,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructETagHeaderFromStringWithLowercaseName(): void
     {
-        $eTag = new Header('etag', '"foo"');
+        $eTag = new ArbitraryHeader('etag', '"foo"');
         $eTagFromString = HeaderFactory::fromString('etag: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
@@ -215,7 +215,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructETagHeaderFromStringWithUppercaseName(): void
     {
-        $eTag = new Header('ETAG', '"foo"');
+        $eTag = new ArbitraryHeader('ETAG', '"foo"');
         $eTagFromString = HeaderFactory::fromString('ETAG: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
@@ -226,7 +226,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructRangeHeaderFromString(): void
     {
-        $range = new Header('Range', 'bytes=10-100');
+        $range = new ArbitraryHeader('Range', 'bytes=10-100');
         $rangeFromString = HeaderFactory::fromString('Range: bytes=10-100');
 
         self::assertEquals($range, $rangeFromString);
@@ -237,7 +237,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructRangeHeaderFromStringWithLowercaseName(): void
     {
-        $range = new Header('range', 'bytes=10-100');
+        $range = new ArbitraryHeader('range', 'bytes=10-100');
         $rangeFromString = HeaderFactory::fromString('range: bytes=10-100');
 
         self::assertEquals($range, $rangeFromString);
@@ -248,7 +248,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructRangeHeaderFromStringWithUppercaseName(): void
     {
-        $range = new Header('RANGE', 'bytes=10-100');
+        $range = new ArbitraryHeader('RANGE', 'bytes=10-100');
         $rangeFromString = HeaderFactory::fromString('RANGE: bytes=10-100');
 
         self::assertEquals($range, $rangeFromString);

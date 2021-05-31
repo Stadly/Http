@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header;
 
-interface HeaderInterface
+interface Header
 {
     /**
      * @return string String representation of the header field.

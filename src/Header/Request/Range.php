@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
-use Stadly\Http\Header\Value\Range\RangeSetInterface;
+use Stadly\Http\Header\Value\Range\RangeSet;
 
 /**
  * Class for handling the HTTP header field Range.
  *
  * Specification: https://tools.ietf.org/html/rfc7233#section-3.1
  */
-final class Range implements HeaderInterface
+final class Range implements Header
 {
     /**
-     * @var RangeSetInterface Range set.
+     * @var RangeSet Range set.
      */
     private $rangeSet;
 
     /**
      * Constructor.
      *
-     * @param RangeSetInterface $rangeSet Set of ranges.
+     * @param RangeSet $rangeSet Set of ranges.
      */
-    public function __construct(RangeSetInterface $rangeSet)
+    public function __construct(RangeSet $rangeSet)
     {
         $this->setRangeSet($rangeSet);
     }
@@ -33,7 +33,7 @@ final class Range implements HeaderInterface
      */
     public function __toString(): string
     {
-        return $this->getName().': '.$this->getValue();
+        return $this->getName() . ': ' . $this->getValue();
     }
 
     /**
@@ -53,9 +53,9 @@ final class Range implements HeaderInterface
     }
 
     /**
-     * @return RangeSetInterface Set of ranges.
+     * @return RangeSet Set of ranges.
      */
-    public function getRangeSet(): RangeSetInterface
+    public function getRangeSet(): RangeSet
     {
         return $this->rangeSet;
     }
@@ -63,9 +63,9 @@ final class Range implements HeaderInterface
     /**
      * Set range set.
      *
-     * @param RangeSetInterface $rangeSet Set of ranges.
+     * @param RangeSet $rangeSet Set of ranges.
      */
-    public function setRangeSet(RangeSetInterface $rangeSet): void
+    public function setRangeSet(RangeSet $rangeSet): void
     {
         $this->rangeSet = $rangeSet;
     }

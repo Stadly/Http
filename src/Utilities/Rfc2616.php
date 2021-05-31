@@ -8,7 +8,7 @@ namespace Stadly\Http\Utilities;
  * Regular expressions for matching rules in RFC 2616:
  * Hypertext Transfer Protocol -- HTTP/1.1
  *
- * https://tools.ietf.org/html/rfc2616
+ * Specification: https://tools.ietf.org/html/rfc2616
  */
 final class Rfc2616
 {
@@ -35,7 +35,7 @@ final class Rfc2616
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (ALPHA)
      */
-    public const ALPHA = '(?:'.self::UPALPHA.'|'.self::LOALPHA.')';
+    public const ALPHA = '(?:' . self::UPALPHA . '|' . self::LOALPHA . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (DIGIT)
@@ -75,22 +75,22 @@ final class Rfc2616
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (CRLF)
      */
-    public const CRLF = '(?:'.self::CR.self::LF.')';
+    public const CRLF = '(?:' . self::CR . self::LF . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (LWS)
      */
-    public const LWS = '(?:'.self::CRLF.'?(?:'.self::SP.'|'.self::HT.')+)';
+    public const LWS = '(?:' . self::CRLF . '?(?:' . self::SP . '|' . self::HT . ')+)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (TEXT)
      */
-    public const TEXT = "(?:[\x20-\x7E]|".self::LWS.')';
+    public const TEXT = "(?:[\x20-\x7E]|" . self::LWS . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (HEX)
      */
-    public const HEX = '(?:'.self::DIGIT.'|[A-Fa-f])';
+    public const HEX = '(?:' . self::DIGIT . '|[A-Fa-f])';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (token)
@@ -100,27 +100,28 @@ final class Rfc2616
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (separators)
      */
-    public const SEPARATORS = '(?:[()<>@,;:\\\\"/[\\]?={}]|'.self::SP.'|'.self::HT.')';
+    public const SEPARATORS = '(?:[()<>@,;:\\\\"/[\\]?={}]|' . self::SP . '|' . self::HT . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (comment)
      */
-    public const COMMENT = '(?:\\((?:'.self::CTEXT.'|'.self::QUOTED_PAIR.'|(?R))*\\))';
+    public const COMMENT = '(?:\\((?:' . self::CTEXT . '|' . self::QUOTED_PAIR . '|(?R))*\\))';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (ctext)
      */
-    public const CTEXT = "(?:[\x20-\x27\x2A-\x7E]|".self::LWS.')';
+    public const CTEXT = "(?:[\x20-\x27\x2A-\x7E]|" . self::LWS . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (quoted-string)
      */
-    public const QUOTED_STRING = '(?:'.self::DQUOTE.'(?:'.self::QDTEXT.'|'.self::QUOTED_PAIR.')*'.self::DQUOTE.')';
+    public const QUOTED_STRING
+        = '(?:' . self::DQUOTE . '(?:' . self::QDTEXT . '|' . self::QUOTED_PAIR . ')*' . self::DQUOTE . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (qdtext)
      */
-    public const QDTEXT = "(?:[\x20\x21\x23-\x7E]|".self::LWS.')';
+    public const QDTEXT = "(?:[\x20\x21\x23-\x7E]|" . self::LWS . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-2.2 (quoted-pair)
@@ -130,17 +131,18 @@ final class Rfc2616
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-3.6 (transfer-coding)
      */
-    public const TRANSFER_CODING = '(?:[Cc][Hh][Uu][Nn][Kk][Ee][Dd]|'.self::TRANSFER_EXTENSION.')';
+    public const TRANSFER_CODING = '(?:[Cc][Hh][Uu][Nn][Kk][Ee][Dd]|' . self::TRANSFER_EXTENSION . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-3.6 (transfer-extension)
      */
-    public const TRANSFER_EXTENSION = '(?:'.self::TOKEN.'(?:'.self::LWS.'*;'.self::LWS.'*'.self::PARAMETER.')*)';
+    public const TRANSFER_EXTENSION
+        = '(?:' . self::TOKEN . '(?:' . self::LWS . '*;' . self::LWS . '*' . self::PARAMETER . ')*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-3.6 (parameter)
      */
-    public const PARAMETER = '(?:'.self::ATTRIBUTE.self::LWS.'*='.self::LWS.'*'.self::VALUE.')';
+    public const PARAMETER = '(?:' . self::ATTRIBUTE . self::LWS . '*=' . self::LWS . '*' . self::VALUE . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-3.6 (attribute)
@@ -150,5 +152,5 @@ final class Rfc2616
     /**
      * Specification: https://tools.ietf.org/html/rfc2616#section-3.6 (value)
      */
-    public const VALUE = '(?:'.self::TOKEN.'|'.self::QUOTED_STRING.')';
+    public const VALUE = '(?:' . self::TOKEN . '|' . self::QUOTED_STRING . ')';
 }

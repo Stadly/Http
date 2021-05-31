@@ -40,7 +40,7 @@ final class MediaTypeTest extends TestCase
     }
 
     /**
-     * @covers ::fromString
+     * @covers ::__construct
      */
     public function testCanConstructMediaTypeWithMultipleParameters(): void
     {

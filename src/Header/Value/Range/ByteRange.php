@@ -33,13 +33,13 @@ final class ByteRange
     public function __construct(?int $firstByte, ?int $lastByte)
     {
         // Both $firstByte and $lastByte are null.
-        if (null === $firstByte && null === $lastByte) {
-            throw new InvalidArgumentException("Invalid range: $firstByte-$lastByte");
+        if ($firstByte === null && $lastByte === null) {
+            throw new InvalidArgumentException('Invalid range: ' . $firstByte . '-' . $lastByte);
         }
 
         // $firstByte or $lastByte are negative.
         if ($firstByte < 0 || $lastByte < 0) {
-            throw new InvalidArgumentException("Invalid range: $firstByte-$lastByte");
+            throw new InvalidArgumentException('Invalid range: ' . $firstByte . '-' . $lastByte);
         }
 
         $this->firstByte = $firstByte;
@@ -54,17 +54,17 @@ final class ByteRange
      */
     public static function fromString(string $range): self
     {
-        $regEx = '{^(?:'.Rfc7233::BYTE_RANGE_SPEC_CAPTURE.'|'.Rfc7233::SUFFIX_BYTE_RANGE_SPEC_CAPTURE.')$}';
-        if (utf8_decode($range) !== $range || 1 !== preg_match($regEx, $range, $matches)) {
-            throw new InvalidArgumentException("Invalid range: $range");
+        $regEx = '{^(?:' . Rfc7233::BYTE_RANGE_SPEC_CAPTURE . '|' . Rfc7233::SUFFIX_BYTE_RANGE_SPEC_CAPTURE . ')$}';
+        if (utf8_decode($range) !== $range || preg_match($regEx, $range, $matches) !== 1) {
+            throw new InvalidArgumentException('Invalid range: ' . $range);
         }
 
-        $firstByte = '' === $matches['FIRST_BYTE_POS'] ? null : intval($matches['FIRST_BYTE_POS']);
+        $firstByte = $matches['FIRST_BYTE_POS'] === '' ? null : intval($matches['FIRST_BYTE_POS']);
 
-        if (null === $firstByte) {
+        if ($firstByte === null) {
             $lastByte = intval($matches['SUFFIX_LENGTH']);
         } else {
-            $lastByte = '' === ($matches['LAST_BYTE_POS'] ?? '') ? null : intval($matches['LAST_BYTE_POS']);
+            $lastByte = ($matches['LAST_BYTE_POS'] ?? '') === '' ? null : intval($matches['LAST_BYTE_POS']);
         }
 
         return new self($firstByte, $lastByte);
@@ -75,7 +75,7 @@ final class ByteRange
      */
     public function __toString(): string
     {
-        return "$this->firstByte-$this->lastByte";
+        return $this->firstByte . '-' . $this->lastByte;
     }
 
     /**
@@ -88,14 +88,14 @@ final class ByteRange
             return false;
         }
 
-        if (null === $fileSize) {
+        if ($fileSize === null) {
             // When file size is unknown, both first byte and last byte must be specified.
-            return null !== $this->firstByte && null !== $this->lastByte;
+            return $this->firstByte !== null && $this->lastByte !== null;
         }
 
         // When covering from the end, the number of bytes covered must be positive.
-        if (null === $this->firstByte) {
-            return 0 < $this->lastByte;
+        if ($this->firstByte === null) {
+            return $this->lastByte > 0;
         }
 
         // First byte must be smaller than file size.
@@ -107,7 +107,7 @@ final class ByteRange
      */
     public function isValid(): bool
     {
-        return null === $this->lastByte || $this->firstByte <= $this->lastByte;
+        return $this->lastByte === null || $this->firstByte <= $this->lastByte;
     }
 
     /**
@@ -116,16 +116,16 @@ final class ByteRange
      */
     public function getFirstBytePos(?int $fileSize): int
     {
-        if (null === $fileSize) {
+        if ($fileSize === null) {
             // When file size is unknown, first byte must be specified.
-            if (null !== $this->firstByte) {
+            if ($this->firstByte !== null) {
                 return $this->firstByte;
             }
-        } elseif (0 < $fileSize) {
-            if (null === $this->firstByte) {
+        } elseif ($fileSize > 0) {
+            if ($this->firstByte === null) {
                 // When covering from the end, the number of bytes covered must be positive.
-                if (0 < $this->lastByte) {
-                    return max(0, $fileSize-(int)$this->lastByte);
+                if ($this->lastByte > 0) {
+                    return max(0, $fileSize - $this->lastByte);
                 }
             // First byte must be smaller than file size.
             } elseif ($this->firstByte < $fileSize) {
@@ -147,20 +147,20 @@ final class ByteRange
      */
     public function getLastBytePos(?int $fileSize): int
     {
-        if (null === $fileSize) {
+        if ($fileSize === null) {
             // When file size is unknown, both first byte and last byte must be specified.
-            if (null !== $this->firstByte && null !== $this->lastByte) {
+            if ($this->firstByte !== null && $this->lastByte !== null) {
                 return $this->lastByte;
             }
-        } elseif (0 < $fileSize) {
-            if (null === $this->firstByte) {
+        } elseif ($fileSize > 0) {
+            if ($this->firstByte === null) {
                 // When covering from the end, the number of bytes covered must be positive.
-                if (0 < $this->lastByte) {
-                    return $fileSize-1;
+                if ($this->lastByte > 0) {
+                    return $fileSize - 1;
                 }
             // First byte must be smaller than file size.
             } elseif ($this->firstByte < $fileSize) {
-                return min($this->lastByte ?? $fileSize-1, $fileSize-1);
+                return min($this->lastByte ?? $fileSize - 1, $fileSize - 1);
             }
         }
 
@@ -187,16 +187,16 @@ final class ByteRange
      */
     public function coversFile(?int $fileSize): bool
     {
-        if (null === $this->lastByte) {
-            return 0 === $this->firstByte;
+        if ($this->lastByte === null) {
+            return $this->firstByte === 0;
         }
 
-        if (null !== $fileSize) {
-            if (0 === $this->firstByte && $fileSize <= $this->lastByte+1) {
+        if ($fileSize !== null) {
+            if ($this->firstByte === 0 && $fileSize <= $this->lastByte + 1) {
                 return true;
             }
 
-            if (null === $this->firstByte && $fileSize <= $this->lastByte) {
+            if ($this->firstByte === null && $fileSize <= $this->lastByte) {
                 return true;
             }
         }

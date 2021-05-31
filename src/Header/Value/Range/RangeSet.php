@@ -7,7 +7,7 @@ namespace Stadly\Http\Header\Value\Range;
 /**
  * Interface to be implemented by all range sets.
  */
-interface RangeSetInterface
+interface RangeSet
 {
     /**
      * @return string String representation of the range set.

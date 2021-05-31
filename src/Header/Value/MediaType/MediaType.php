@@ -26,7 +26,7 @@ final class MediaType
     private $subtype;
 
     /**
-     * @var Parameter[] Parameters.
+     * @var array<Parameter> Parameters.
      */
     private $parameters = [];
 
@@ -52,12 +52,12 @@ final class MediaType
      */
     public static function fromString(string $mediaType): self
     {
-        $regEx = '{^'.Rfc7231::MEDIA_TYPE_CAPTURE.'$}';
-        if (utf8_decode($mediaType) !== $mediaType || 1 !== preg_match($regEx, $mediaType, $matches)) {
-            throw new InvalidArgumentException("Invalid media type: $mediaType");
+        $regEx = '{^' . Rfc7231::MEDIA_TYPE_CAPTURE . '$}';
+        if (utf8_decode($mediaType) !== $mediaType || preg_match($regEx, $mediaType, $matches) !== 1) {
+            throw new InvalidArgumentException('Invalid media type: ' . $mediaType);
         }
 
-        $parameterRexEx = '{'.Rfc7231::PARAMETER_CAPTURE.'}';
+        $parameterRexEx = '{' . Rfc7231::PARAMETER_CAPTURE . '}';
         preg_match_all($parameterRexEx, $matches['PARAMETERS'], $parameterMatches);
 
         $parameters = [];
@@ -73,9 +73,9 @@ final class MediaType
      */
     public function __toString(): string
     {
-        $mediaType = $this->type.'/'.$this->subtype;
-        if ([] !== $this->parameters) {
-            $mediaType .= '; '.implode('; ', $this->parameters);
+        $mediaType = $this->type . '/' . $this->subtype;
+        if ($this->parameters !== []) {
+            $mediaType .= '; ' . implode('; ', $this->parameters);
         }
 
         return $mediaType;
@@ -96,8 +96,8 @@ final class MediaType
      */
     public function setType(string $type): void
     {
-        if (utf8_decode($type) !== $type || 1 !== preg_match('{^'.Rfc7231::TYPE.'$}', $type)) {
-            throw new InvalidArgumentException("Invalid type: $type");
+        if (utf8_decode($type) !== $type || preg_match('{^' . Rfc7231::TYPE . '$}', $type) !== 1) {
+            throw new InvalidArgumentException('Invalid type: ' . $type);
         }
 
         $this->type = $type;
@@ -118,8 +118,8 @@ final class MediaType
      */
     public function setSubtype(string $subtype): void
     {
-        if (utf8_decode($subtype) !== $subtype || 1 !== preg_match('{^'.Rfc7231::SUBTYPE.'$}', $subtype)) {
-            throw new InvalidArgumentException("Invalid subtype: $subtype");
+        if (utf8_decode($subtype) !== $subtype || preg_match('{^' . Rfc7231::SUBTYPE . '$}', $subtype) !== 1) {
+            throw new InvalidArgumentException('Invalid subtype: ' . $subtype);
         }
 
         $this->subtype = $subtype;
@@ -142,7 +142,7 @@ final class MediaType
     public function getParameter(string $name): Parameter
     {
         if (!$this->hasParameter($name)) {
-            throw new OutOfBoundsException("Parameter not found: $name");
+            throw new OutOfBoundsException('Parameter not found: ' . $name);
         }
 
         return $this->parameters[strtolower($name)];

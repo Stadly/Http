@@ -89,7 +89,7 @@ final class RangeSetFactoryTest extends TestCase
     /**
      * @covers ::fromString
      */
-    public function testCanConstructByteRangeSetRangeSetFromStringWithUppercaseUnit(): void
+    public function testCanConstructByteRangeSetFromStringWithUppercaseUnit(): void
     {
         $byteRangeSet = new ByteRangeSet(new ByteRange(50, 100));
         $byteRangeSetFromString = RangeSetFactory::fromString('BYTES=50-100');

@@ -12,11 +12,13 @@ use Stadly\Http\Utilities\Rfc7232;
 
 /**
  * Class for handling sets of entity tags.
+ *
+ * @implements IteratorAggregate<EntityTag>
  */
 final class EntityTagSet implements IteratorAggregate
 {
     /**
-     * @var EntityTag[] Entity tags.
+     * @var array<EntityTag> Entity tags.
      */
     private $entityTags = [];
 
@@ -38,16 +40,16 @@ final class EntityTagSet implements IteratorAggregate
      */
     public static function fromString(string $entityTagSet): self
     {
-        if ('*' === $entityTagSet) {
+        if ($entityTagSet === '*') {
             return new self();
         }
 
-        $regEx = '{^'.Rfc7230::hashRule(Rfc7232::ENTITY_TAG, 1).'$}';
-        if (utf8_decode($entityTagSet) !== $entityTagSet || 1 !== preg_match($regEx, $entityTagSet)) {
-            throw new InvalidArgumentException("Invalid set of entity tags: $entityTagSet");
+        $regEx = '{^' . Rfc7230::hashRule(Rfc7232::ENTITY_TAG, 1) . '$}';
+        if (utf8_decode($entityTagSet) !== $entityTagSet || preg_match($regEx, $entityTagSet) !== 1) {
+            throw new InvalidArgumentException('Invalid set of entity tags: ' . $entityTagSet);
         }
 
-        $entityTagRegEx = '{'.Rfc7232::ENTITY_TAG_CAPTURE.'}';
+        $entityTagRegEx = '{' . Rfc7232::ENTITY_TAG_CAPTURE . '}';
         preg_match_all($entityTagRegEx, $entityTagSet, $entityTagMatches);
 
         $entityTags = [];
@@ -75,7 +77,7 @@ final class EntityTagSet implements IteratorAggregate
      */
     public function isAny(): bool
     {
-        return [] === $this->entityTags;
+        return $this->entityTags === [];
     }
 
     /**
@@ -121,7 +123,7 @@ final class EntityTagSet implements IteratorAggregate
             return true;
         }
 
-        if (null === $entityTag) {
+        if ($entityTag === null) {
             return false;
         }
 
@@ -144,7 +146,7 @@ final class EntityTagSet implements IteratorAggregate
             return true;
         }
 
-        if (null === $entityTag) {
+        if ($entityTag === null) {
             return false;
         }
 
@@ -158,7 +160,7 @@ final class EntityTagSet implements IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator Iterator containing the entity tags in the set.
+     * @return ArrayIterator<int, EntityTag> Iterator containing the entity tags in the set.
      */
     public function getIterator(): ArrayIterator
     {

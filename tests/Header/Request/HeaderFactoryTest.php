@@ -6,8 +6,8 @@ namespace Stadly\Http\Header\Request;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Header\Common\ArbitraryHeader;
 use Stadly\Http\Header\Common\ContentType;
-use Stadly\Http\Header\Common\Header;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 use Stadly\Http\Header\Value\MediaType\MediaType;
@@ -26,7 +26,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderFromString(): void
     {
-        $header = new Header('foo', 'bar');
+        $header = new ArbitraryHeader('foo', 'bar');
         $headerFromString = HeaderFactory::fromString('foo:bar');
 
         self::assertEquals($header, $headerFromString);
@@ -47,7 +47,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderFromStringWithWhitespaceAroundValue(): void
     {
-        $header = new Header('foo', 'bar');
+        $header = new ArbitraryHeader('foo', 'bar');
         $headerFromString = HeaderFactory::fromString("foo: \t bar\t  ");
 
         self::assertEquals($header, $headerFromString);
@@ -78,7 +78,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderWithEmptyValueFromString(): void
     {
-        $header = new Header('foo', '');
+        $header = new ArbitraryHeader('foo', '');
         $headerFromString = HeaderFactory::fromString('foo:');
 
         self::assertEquals($header, $headerFromString);
@@ -89,7 +89,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCanConstructHeaderWithEmptyValueFromStringWithWhitespace(): void
     {
-        $header = new Header('foo', '');
+        $header = new ArbitraryHeader('foo', '');
         $headerFromString = HeaderFactory::fromString("foo: \t\t ");
 
         self::assertEquals($header, $headerFromString);
@@ -199,7 +199,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructETagHeaderFromString(): void
     {
-        $eTag = new Header('ETag', '"foo"');
+        $eTag = new ArbitraryHeader('ETag', '"foo"');
         $eTagFromString = HeaderFactory::fromString('ETag: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
@@ -210,7 +210,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructETagHeaderFromStringWithLowercaseName(): void
     {
-        $eTag = new Header('etag', '"foo"');
+        $eTag = new ArbitraryHeader('etag', '"foo"');
         $eTagFromString = HeaderFactory::fromString('etag: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);
@@ -221,7 +221,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructETagHeaderFromStringWithUppercaseName(): void
     {
-        $eTag = new Header('ETAG', '"foo"');
+        $eTag = new ArbitraryHeader('ETAG', '"foo"');
         $eTagFromString = HeaderFactory::fromString('ETAG: "foo"');
 
         self::assertEquals($eTag, $eTagFromString);

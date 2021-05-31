@@ -11,7 +11,7 @@ use Stadly\Http\Header\Value\MediaType\MediaType;
  *
  * Specification: https://tools.ietf.org/html/rfc7231#section-3.1.1.5
  */
-final class ContentType implements HeaderInterface
+final class ContentType implements Header
 {
     /**
      * @var MediaType Media type.
@@ -33,7 +33,7 @@ final class ContentType implements HeaderInterface
      */
     public function __toString(): string
     {
-        return $this->getName().': '.$this->getValue();
+        return $this->getName() . ': ' . $this->getValue();
     }
 
     /**

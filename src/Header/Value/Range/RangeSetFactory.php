@@ -16,20 +16,20 @@ final class RangeSetFactory
      * Construct range set from string.
      *
      * @param string $rangeSet Range set string.
-     * @return RangeSetInterface Range set generated based on the string.
+     * @return RangeSet Range set generated based on the string.
      */
-    public static function fromString(string $rangeSet): RangeSetInterface
+    public static function fromString(string $rangeSet): RangeSet
     {
         if (utf8_decode($rangeSet) === $rangeSet) {
-            if (1 === preg_match('{^'.Rfc7233::BYTE_RANGES_SPECIFIER.'$}', $rangeSet)) {
+            if (preg_match('{^' . Rfc7233::BYTE_RANGES_SPECIFIER . '$}', $rangeSet) === 1) {
                 return ByteRangeSet::fromString($rangeSet);
             }
 
-            if (1 === preg_match('{^'.Rfc7233::OTHER_RANGES_SPECIFIER.'$}', $rangeSet)) {
+            if (preg_match('{^' . Rfc7233::OTHER_RANGES_SPECIFIER . '$}', $rangeSet) === 1) {
                 return OtherRangeSet::fromString($rangeSet);
             }
         }
 
-        throw new InvalidArgumentException("Invalid set of ranges: $rangeSet");
+        throw new InvalidArgumentException('Invalid set of ranges: ' . $rangeSet);
     }
 }

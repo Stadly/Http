@@ -208,7 +208,7 @@ final class ByteRangeSetTest extends TestCase
             new ByteRange(null, 100),
             new ByteRange(50, 50)
         );
-        $rangeSetFromString = ByteRangeSet::fromString("bytes=50-100,50-50,50-50,50-,-100,50-50");
+        $rangeSetFromString = ByteRangeSet::fromString('bytes=50-100,50-50,50-50,50-,-100,50-50');
 
         self::assertEquals($rangeSet, $rangeSetFromString);
     }

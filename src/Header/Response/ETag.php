@@ -11,7 +11,7 @@ use Stadly\Http\Header\Value\EntityTag\EntityTag;
  *
  * Specification: https://tools.ietf.org/html/rfc7232#section-2.3
  */
-final class ETag implements HeaderInterface
+final class ETag implements Header
 {
     /**
      * @var EntityTag Entity tag.
@@ -33,7 +33,7 @@ final class ETag implements HeaderInterface
      */
     public function __toString(): string
     {
-        return $this->getName().': '.$this->getValue();
+        return $this->getName() . ': ' . $this->getValue();
     }
 
     /**

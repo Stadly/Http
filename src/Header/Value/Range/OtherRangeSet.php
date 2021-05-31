@@ -12,7 +12,7 @@ use Stadly\Http\Utilities\Rfc7233;
  *
  * Specification: https://tools.ietf.org/html/rfc7233#section-3.1
  */
-final class OtherRangeSet implements RangeSetInterface
+final class OtherRangeSet implements RangeSet
 {
     /**
      * @var string Unit.
@@ -44,9 +44,9 @@ final class OtherRangeSet implements RangeSetInterface
      */
     public static function fromString(string $rangeSet): self
     {
-        $regEx = '{^'.Rfc7233::OTHER_RANGES_SPECIFIER_CAPTURE.'$}';
-        if (utf8_decode($rangeSet) !== $rangeSet || 1 !== preg_match($regEx, $rangeSet, $matches)) {
-            throw new InvalidArgumentException("Invalid set of ranges: $rangeSet");
+        $regEx = '{^' . Rfc7233::OTHER_RANGES_SPECIFIER_CAPTURE . '$}';
+        if (utf8_decode($rangeSet) !== $rangeSet || preg_match($regEx, $rangeSet, $matches) !== 1) {
+            throw new InvalidArgumentException('Invalid set of ranges: ' . $rangeSet);
         }
 
         return new self($matches['OTHER_RANGE_UNIT'], $matches['OTHER_RANGE_SET']);
@@ -57,7 +57,7 @@ final class OtherRangeSet implements RangeSetInterface
      */
     public function __toString(): string
     {
-        return $this->getUnit().'='.$this->getValue();
+        return $this->getUnit() . '=' . $this->getValue();
     }
 
     /**
@@ -75,8 +75,8 @@ final class OtherRangeSet implements RangeSetInterface
      */
     public function setUnit(string $unit): void
     {
-        if (utf8_decode($unit) !== $unit || 1 !== preg_match('{^'.Rfc7233::OTHER_RANGE_UNIT.'$}', $unit)) {
-            throw new InvalidArgumentException("Invalid unit: $unit");
+        if (utf8_decode($unit) !== $unit || preg_match('{^' . Rfc7233::OTHER_RANGE_UNIT . '$}', $unit) !== 1) {
+            throw new InvalidArgumentException('Invalid unit: ' . $unit);
         }
 
         $this->unit = $unit;
@@ -97,8 +97,8 @@ final class OtherRangeSet implements RangeSetInterface
      */
     public function setValue(string $value): void
     {
-        if (utf8_decode($value) !== $value || 1 !== preg_match('{^'.Rfc7233::OTHER_RANGE_SET.'$}', $value)) {
-            throw new InvalidArgumentException("Invalid value: $value");
+        if (utf8_decode($value) !== $value || preg_match('{^' . Rfc7233::OTHER_RANGE_SET . '$}', $value) !== 1) {
+            throw new InvalidArgumentException('Invalid value: ' . $value);
         }
 
         $this->value = $value;

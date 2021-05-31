@@ -8,7 +8,7 @@ namespace Stadly\Http\Utilities;
  * Regular expressions for matching rules in RFC 5234:
  * Augmented BNF for Syntax Specifications: ABNF
  *
- * https://tools.ietf.org/html/rfc5234
+ * Specification: https://tools.ietf.org/html/rfc5234
  */
 final class Rfc5234
 {
@@ -35,7 +35,7 @@ final class Rfc5234
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (CRLF)
      */
-    public const CRLF = '(?:'.self::CR.self::LF.')';
+    public const CRLF = '(?:' . self::CR . self::LF . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (CTL)
@@ -55,7 +55,7 @@ final class Rfc5234
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (HEXDIG)
      */
-    public const HEXDIG = '(?:'.self::DIGIT.'|[A-Fa-f])';
+    public const HEXDIG = '(?:' . self::DIGIT . '|[A-Fa-f])';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (HTAB)
@@ -70,7 +70,7 @@ final class Rfc5234
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (LWSP)
      */
-    public const LWSP = '(?:(?:'.self::WSP.'|'.self::CRLF.self::WSP.')*)';
+    public const LWSP = '(?:(?:' . self::WSP . '|' . self::CRLF . self::WSP . ')*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (OCTET)
@@ -90,5 +90,5 @@ final class Rfc5234
     /**
      * Specification: https://tools.ietf.org/html/rfc5234#appendix-B.1 (WSP)
      */
-    public const WSP = '(?:'.self::SP.'|'.self::HTAB.')';
+    public const WSP = '(?:' . self::SP . '|' . self::HTAB . ')';
 }

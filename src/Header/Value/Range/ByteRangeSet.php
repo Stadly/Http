@@ -13,11 +13,13 @@ use Stadly\Http\Utilities\Rfc7233;
  * Class for handling sets of byte ranges.
  *
  * Specification: https://tools.ietf.org/html/rfc7233#section-2.1
+ *
+ * @implements IteratorAggregate<ByteRange>
  */
-final class ByteRangeSet implements RangeSetInterface, IteratorAggregate
+final class ByteRangeSet implements RangeSet, IteratorAggregate
 {
     /**
-     * @var ByteRange[] Ranges.
+     * @var array<ByteRange> Ranges.
      */
     private $ranges = [];
 
@@ -28,7 +30,7 @@ final class ByteRangeSet implements RangeSetInterface, IteratorAggregate
      */
     public function __construct(ByteRange ...$ranges)
     {
-        if (0 === count($ranges)) {
+        if (count($ranges) === 0) {
             throw new InvalidArgumentException('The set of ranges cannot be empty.');
         }
 
@@ -43,12 +45,12 @@ final class ByteRangeSet implements RangeSetInterface, IteratorAggregate
      */
     public static function fromString(string $rangeSet): self
     {
-        $regEx = '{^'.Rfc7233::BYTE_RANGES_SPECIFIER_CAPTURE.'$}';
-        if (utf8_decode($rangeSet) !== $rangeSet || 1 !== preg_match($regEx, $rangeSet, $matches)) {
-            throw new InvalidArgumentException("Invalid set of ranges: $rangeSet");
+        $regEx = '{^' . Rfc7233::BYTE_RANGES_SPECIFIER_CAPTURE . '$}';
+        if (utf8_decode($rangeSet) !== $rangeSet || preg_match($regEx, $rangeSet, $matches) !== 1) {
+            throw new InvalidArgumentException('Invalid set of ranges: ' . $rangeSet);
         }
 
-        $rangeRegEx = '{(?<BYTE_RANGE_SPEC>'.Rfc7233::BYTE_RANGE_SPEC.'|'.Rfc7233::SUFFIX_BYTE_RANGE_SPEC.')}';
+        $rangeRegEx = '{(?<BYTE_RANGE_SPEC>' . Rfc7233::BYTE_RANGE_SPEC . '|' . Rfc7233::SUFFIX_BYTE_RANGE_SPEC . ')}';
         preg_match_all($rangeRegEx, $matches['BYTE_RANGE_SET'], $rangeMatches);
 
         $ranges = [];
@@ -64,7 +66,7 @@ final class ByteRangeSet implements RangeSetInterface, IteratorAggregate
      */
     public function __toString(): string
     {
-        return $this->getUnit().'='.$this->getValue();
+        return $this->getUnit() . '=' . $this->getValue();
     }
 
     /**
@@ -111,7 +113,7 @@ final class ByteRangeSet implements RangeSetInterface, IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator Iterator containing the ranges in the set.
+     * @return ArrayIterator<int, ByteRange> Iterator containing the ranges in the set.
      */
     public function getIterator(): ArrayIterator
     {

@@ -4,7 +4,7 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/HttpTest/compare/v0.6.0...HEAD)
+## [Unreleased](https://github.com/Stadly/Http/compare/v0.6.0...HEAD)
 
 ### Added
 - Nothing
@@ -14,6 +14,11 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Refactored code for calculating last byte position for byte ranges.
 - Refactored code for calculating first byte position for byte ranges.
 - Refactored code for calculating whether byte range is satisfiable.
+- Renamed Header/Common/Header to Header/Common/ArbitraryHeader.
+- Renamed Header/Common/HeaderInterface to Header/Common/Header.
+- Renamed Header/Request/HeaderInterface to Header/Request/Header.
+- Renamed Header/Response/HeaderInterface to Header/Response/Header.
+- Renamed Header/Value/Range/RangeSetInterface to Header/Value/Range/RangeSet.
 
 ### Deprecated
 - Nothing
@@ -27,7 +32,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Security
 - Nothing
 
-## [0.6.0](https://github.com/Stadly/HttpTest/compare/v0.5.0...v0.6.0) - 2018-08-08
+## [0.6.0](https://github.com/Stadly/Http/compare/v0.5.0...v0.6.0) - 2018-08-08
 
 ### Added
 - Possible to check if a byte range is valid.
@@ -40,7 +45,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 - Byte range set factory could not create byte ranges from strings containing whitespace.
 
-## [0.5.0](https://github.com/Stadly/HttpTest/compare/v0.4.1...v0.5.0) - 2018-08-07
+## [0.5.0](https://github.com/Stadly/Http/compare/v0.4.1...v0.5.0) - 2018-08-07
 
 ### Added
 - Possible to iterate over byte range set.
@@ -55,17 +60,17 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 - Parameter type hint for ByteRangeSet::isSatisfiable.
 
-## [0.4.1](https://github.com/Stadly/HttpTest/compare/v0.4.0...v0.4.1) - 2018-08-02
+## [0.4.1](https://github.com/Stadly/Http/compare/v0.4.0...v0.4.1) - 2018-08-02
 
 ### Changed
 - Refactored code for constructing date from rfc850 formatted string.
 
-## [0.4.0](https://github.com/Stadly/HttpTest/compare/v0.3.1...v0.4.0) - 2018-08-02
+## [0.4.0](https://github.com/Stadly/Http/compare/v0.3.1...v0.4.0) - 2018-08-02
 
 ### Added
 - HTTP Header value date.
 
-## [0.3.1](https://github.com/Stadly/HttpTest/compare/v0.3.0...v0.3.1) - 2018-08-01
+## [0.3.1](https://github.com/Stadly/Http/compare/v0.3.0...v0.3.1) - 2018-08-01
 
 ### Added
 - Tests for checking byte range and byte range set satisfiability.
@@ -73,7 +78,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 - Failing tests.
 
-## [0.3.0](https://github.com/Stadly/HttpTest/compare/v0.2.0...v0.3.0) - 2018-08-01
+## [0.3.0](https://github.com/Stadly/Http/compare/v0.2.0...v0.3.0) - 2018-08-01
 
 ### Added
 - Can check whether byte ranges and byte range sets are satisfiable.
@@ -81,7 +86,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 - Can create suffix byte ranges of length zero.
 
-## [0.2.0](https://github.com/Stadly/HttpTest/compare/v0.1.0...v0.2.0) - 2018-07-27
+## [0.2.0](https://github.com/Stadly/Http/compare/v0.1.0...v0.2.0) - 2018-07-27
 
 ### Added
 - Separate RFC rules for capturing expressions.

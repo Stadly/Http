@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"phpunit.files": "{test,tests}/**/*Test.php"
+	}
+}

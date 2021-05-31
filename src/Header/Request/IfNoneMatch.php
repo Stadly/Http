@@ -11,7 +11,7 @@ use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
  *
  * Specification: https://tools.ietf.org/html/rfc7232#section-3.2
  */
-final class IfNoneMatch implements HeaderInterface
+final class IfNoneMatch implements Header
 {
     /**
      * @var EntityTagSet Entity tag set.
@@ -33,7 +33,7 @@ final class IfNoneMatch implements HeaderInterface
      */
     public function __toString(): string
     {
-        return $this->getName().': '.$this->getValue();
+        return $this->getName() . ': ' . $this->getValue();
     }
 
     /**

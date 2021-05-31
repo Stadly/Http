@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\Http\Header\Value\Range\ByteRange;
 use Stadly\Http\Header\Value\Range\ByteRangeSet;
@@ -26,18 +25,6 @@ final class RangeTest extends TestCase
         // Force generation of code coverage
         $rangeConstruct = new Range(new ByteRangeSet(new ByteRange(10, 100)));
         self::assertEquals($range, $rangeConstruct);
-    }
-
-    /**
-     * @covers ::__toString
-     */
-    public function testCannotConvertRangeWithoutRangesToString(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $range = new Range(new ByteRangeSet());
-
-        (string)$range;
     }
 
     /**
@@ -73,18 +60,6 @@ final class RangeTest extends TestCase
         $range = new Range(new ByteRangeSet(new ByteRange(10, 100)));
 
         self::assertSame('Range', $range->getName());
-    }
-
-    /**
-     * @covers ::getValue
-     */
-    public function testCannotGetValueForRangeWithoutRanges(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $range = new Range(new ByteRangeSet());
-
-        $range->getValue();
     }
 
     /**

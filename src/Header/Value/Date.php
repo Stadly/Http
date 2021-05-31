@@ -38,7 +38,7 @@ final class Date
     {
         // Discard microseconds.
         $immutableDate = DateTimeImmutable::createFromFormat('U', $date->format('U'));
-        assert(false !== $immutableDate);
+        assert($immutableDate !== false);
 
         $this->date = $immutableDate->setTimezone(new DateTimeZone('GMT'));
         $this->isWeak = $isWeak;
@@ -54,7 +54,7 @@ final class Date
     public static function fromTimestamp(float $timestamp, bool $isWeak = true): self
     {
         $dateTime = DateTime::createFromFormat('U.u', sprintf('%.6f', $timestamp));
-        assert(false !== $dateTime);
+        assert($dateTime !== false);
 
         return new self($dateTime, $isWeak);
     }
@@ -69,38 +69,38 @@ final class Date
     public static function fromString(string $date, bool $isWeak = true): self
     {
         if (utf8_decode($date) === $date) {
-            if (1 === preg_match('{^'.Rfc7231::IMF_FIXDATE.'$}', $date)) {
+            if (preg_match('{^' . Rfc7231::IMF_FIXDATE . '$}', $date) === 1) {
                 $dateTime = DateTime::createFromFormat('D, d M Y H:i:s T', $date);
-                assert(false !== $dateTime);
+                assert($dateTime !== false);
                 return new self($dateTime, $isWeak);
             }
 
-            if (1 === preg_match('{^'.Rfc7231::RFC850_DATE.'$}', $date)) {
+            if (preg_match('{^' . Rfc7231::RFC850_DATE . '$}', $date) === 1) {
                 return self::fromRfc850String($date, $isWeak);
             }
 
-            if (1 === preg_match('{^'.Rfc7231::ASCTIME_DATE.'$}', $date)) {
+            if (preg_match('{^' . Rfc7231::ASCTIME_DATE . '$}', $date) === 1) {
                 $dateTime = DateTime::createFromFormat('D M j H:i:s Y', $date, new DateTimeZone('GMT'));
-                assert(false !== $dateTime);
+                assert($dateTime !== false);
                 return new self($dateTime, $isWeak);
             }
         }
 
-        throw new InvalidArgumentException("Invalid date: $date");
+        throw new InvalidArgumentException('Invalid date: ' . $date);
     }
 
     private static function fromRfc850String(string $date, bool $isWeak): self
     {
         $now = new DateTimeImmutable('now', new DateTimeZone('GMT'));
 
-        preg_match('{^'.Rfc7231::RFC850_DATE_CAPTURE.'$}', $date, $matches);
+        preg_match('{^' . Rfc7231::RFC850_DATE_CAPTURE . '$}', $date, $matches);
 
         // Assume the year belongs to the next century.
-        $year = (1 + (int)substr($now->format('Y'), 0, -2)).$matches['YEAR'];
+        $year = (1 + (int)substr($now->format('Y'), 0, -2)) . $matches['YEAR'];
 
         $newDate = sprintf('%s-%s-%s %s', $matches['DAY'], $matches['MONTH'], $year, $matches['TIME_OF_DAY']);
         $dateTime = DateTime::createFromFormat('d-M-Y H:i:s', $newDate, new DateTimeZone('GMT'));
-        assert(false !== $dateTime);
+        assert($dateTime !== false);
 
         // While date is more than 50 years in the future, interpret the date as 100 years earlier.
         while ($now->modify('+50 years') < $dateTime) {
@@ -152,7 +152,8 @@ final class Date
      */
     public function isEq(self $date): bool
     {
-        return $this->date == $date->date;
+        $format = DateTimeInterface::RFC3339_EXTENDED;
+        return $this->date->format($format) === $date->date->format($format);
     }
 
     /**

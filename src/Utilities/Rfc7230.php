@@ -8,20 +8,20 @@ namespace Stadly\Http\Utilities;
  * Regular expressions for matching rules in RFC 7230:
  * Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
  *
- * https://tools.ietf.org/html/rfc7230
+ * Specification: https://tools.ietf.org/html/rfc7230
  */
 final class Rfc7230
 {
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (header-field)
      */
-    public const HEADER_FIELD = '(?:'.self::FIELD_NAME.':'.self::OWS.self::FIELD_VALUE.self::OWS.')';
+    public const HEADER_FIELD = '(?:' . self::FIELD_NAME . ':' . self::OWS . self::FIELD_VALUE . self::OWS . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (header-field)
      */
     public const HEADER_FIELD_CAPTURE
-        = '(?:'.self::FIELD_NAME_CAPTURE.':'.self::OWS.self::FIELD_VALUE_CAPTURE.self::OWS.')';
+        = '(?:' . self::FIELD_NAME_CAPTURE . ':' . self::OWS . self::FIELD_VALUE_CAPTURE . self::OWS . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-name)
@@ -31,17 +31,17 @@ final class Rfc7230
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-name)
      */
-    public const FIELD_NAME_CAPTURE = '(?<FIELD_NAME>'.self::TOKEN.')';
+    public const FIELD_NAME_CAPTURE = '(?<FIELD_NAME>' . self::TOKEN . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-value)
      */
-    public const FIELD_VALUE = '(?:(?:'.self::FIELD_CONTENT.'|'.self::OBS_FOLD.')*)';
+    public const FIELD_VALUE = '(?:(?:' . self::FIELD_CONTENT . '|' . self::OBS_FOLD . ')*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-value)
      */
-    public const FIELD_VALUE_CAPTURE = '(?<FIELD_VALUE>(?:'.self::FIELD_CONTENT.'|'.self::OBS_FOLD.')*)';
+    public const FIELD_VALUE_CAPTURE = '(?<FIELD_VALUE>(?:' . self::FIELD_CONTENT . '|' . self::OBS_FOLD . ')*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-content)
@@ -51,13 +51,13 @@ final class Rfc7230
      * Updated: field-vchar [ 1*( SP / HTAB / field-vchar ) field-vchar ]
      */
     public const FIELD_CONTENT
-        = '(?:'.self::FIELD_VCHAR
-        . '(?:(?:'.Rfc5234::SP.'|'.Rfc5234::HTAB.'|'.self::FIELD_VCHAR.')+'.self::FIELD_VCHAR.')?)';
+        = '(?:' . self::FIELD_VCHAR
+        . '(?:(?:' . Rfc5234::SP . '|' . Rfc5234::HTAB . '|' . self::FIELD_VCHAR . ')+' . self::FIELD_VCHAR . ')?)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (field-vchar)
      */
-    public const FIELD_VCHAR = '(?:'.Rfc5234::VCHAR.'|'.self::OBS_TEXT.')';
+    public const FIELD_VCHAR = '(?:' . Rfc5234::VCHAR . '|' . self::OBS_TEXT . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2 (obs-fold)
@@ -66,17 +66,17 @@ final class Rfc7230
      * Original: CRLF 1*( SP / HTAB )
      * Updated: OWS CRLF 1*( SP / HTAB )
      */
-    public const OBS_FOLD = '(?:'.self::OWS.Rfc5234::CRLF.'(?:'.Rfc5234::SP.'|'.Rfc5234::HTAB.')+)';
+    public const OBS_FOLD = '(?:' . self::OWS . Rfc5234::CRLF . '(?:' . Rfc5234::SP . '|' . Rfc5234::HTAB . ')+)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.3 (OWS)
      */
-    public const OWS = '(?:(?:'.Rfc5234::SP.'|'.Rfc5234::HTAB.')*)';
+    public const OWS = '(?:(?:' . Rfc5234::SP . '|' . Rfc5234::HTAB . ')*)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.3 (RWS)
      */
-    public const RWS = '(?:(?:'.Rfc5234::SP.'|'.Rfc5234::HTAB.')+)';
+    public const RWS = '(?:(?:' . Rfc5234::SP . '|' . Rfc5234::HTAB . ')+)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.3 (BWS)
@@ -86,23 +86,24 @@ final class Rfc7230
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (token)
      */
-    public const TOKEN = '(?:'.self::TCHAR.'+)';
+    public const TOKEN = '(?:' . self::TCHAR . '+)';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (tchar)
      */
-    public const TCHAR = "(?:[!#$%&'*+\\-.\\^_`|~]|".Rfc5234::DIGIT.'|'.Rfc5234::ALPHA.')';
+    public const TCHAR = "(?:[!#$%&'*+\\-.\\^_`|~]|" . Rfc5234::DIGIT . '|' . Rfc5234::ALPHA . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (quoted-string)
      */
     public const QUOTED_STRING
-        = '(?:'.Rfc5234::DQUOTE.'(?:'.self::QDTEXT.'|'.self::QUOTED_PAIR.')*'.Rfc5234::DQUOTE.')';
+        = '(?:' . Rfc5234::DQUOTE . '(?:' . self::QDTEXT . '|' . self::QUOTED_PAIR . ')*' . Rfc5234::DQUOTE . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (qdtext)
      */
-    public const QDTEXT = '(?:'.Rfc5234::HTAB.'|'.Rfc5234::SP."|[\x21\x23-\x5B\\\x5D-\x7E]|".self::OBS_TEXT.')';
+    public const QDTEXT
+        = '(?:' . Rfc5234::HTAB . '|' . Rfc5234::SP . "|[\x21\x23-\x5B\\\x5D-\x7E]|" . self::OBS_TEXT . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (obs-text)
@@ -112,17 +113,19 @@ final class Rfc7230
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (comment)
      */
-    public const COMMENT = '(?:\\((?:'.self::CTEXT.'|'.self::QUOTED_PAIR.'|(?R))*\\))';
+    public const COMMENT = '(?:\\((?:' . self::CTEXT . '|' . self::QUOTED_PAIR . '|(?R))*\\))';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (ctext)
      */
-    public const CTEXT = '(?:'.Rfc5234::HTAB.'|'.Rfc5234::SP.'|[\x21-\x27\x2A-\x5B\x5D-\x7E]|'.self::OBS_TEXT.')';
+    public const CTEXT
+        = '(?:' . Rfc5234::HTAB . '|' . Rfc5234::SP . '|[\x21-\x27\x2A-\x5B\x5D-\x7E]|' . self::OBS_TEXT . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-3.2.6 (quoted-pair)
      */
-    public const QUOTED_PAIR = '(?:\\\\(?:'.Rfc5234::HTAB.'|'.Rfc5234::SP.'|'.Rfc5234::VCHAR.'|'.self::OBS_TEXT.'))';
+    public const QUOTED_PAIR
+        = '(?:\\\\(?:' . Rfc5234::HTAB . '|' . Rfc5234::SP . '|' . Rfc5234::VCHAR . '|' . self::OBS_TEXT . '))';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc7230#section-7 (#rule)
@@ -145,30 +148,31 @@ final class Rfc7230
      */
     public static function hashRule(string $element, int $min = 0, ?int $max = null): string
     {
-        assert(0 <= $min);
-        assert(null === $max || $min <= $max);
+        assert($min >= 0);
+        assert($max === null || $min <= $max);
 
-        if (0 === $max) {
+        if ($max === 0) {
             $regEx = ',';
         } else {
-            $regEx = '(?:,'.Rfc7230::OWS.')*'.$element;
+            $regEx = '(?:,' . self::OWS . ')*' . $element;
 
-            if (1 !== $max) {
-                $minRepeat = max(0, $min-1);
-                $maxRepeat = null === $max ? '' : $max-1;
+            if ($max !== 1) {
+                $minRepeat = max(0, $min - 1);
+                $maxRepeat = $max === null ? '' : $max - 1;
 
-                $regEx .= '(?:(?:'.Rfc7230::OWS.',)+'.Rfc7230::OWS.$element.'){'.$minRepeat.','.$maxRepeat.'}';
+                $regEx
+                    .= '(?:(?:' . self::OWS . ',)+' . self::OWS . $element . '){' . $minRepeat . ',' . $maxRepeat . '}';
             }
 
-            if (0 === $min) {
-                $regEx = '(?:'.$regEx.'|,)';
+            if ($min === 0) {
+                $regEx = '(?:' . $regEx . '|,)';
             }
         }
 
-        $regEx .= '(?:'.Rfc7230::OWS.',)*';
+        $regEx .= '(?:' . self::OWS . ',)*';
 
-        if (0 === $min) {
-            $regEx = '(?:'.$regEx.')?';
+        if ($min === 0) {
+            $regEx = '(?:' . $regEx . ')?';
         }
 
         return $regEx;

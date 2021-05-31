@@ -28,6 +28,17 @@ final class IfNoneMatchTest extends TestCase
     }
 
     /**
+     * @covers ::fromValue
+     */
+    public function testCanConstructIfNoneMatchFromValue(): void
+    {
+        $ifNoneMatch = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
+        $ifNoneMatchFromValue = IfNoneMatch::fromValue('"foo"');
+
+        self::assertEquals($ifNoneMatch, $ifNoneMatchFromValue);
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertIfNoneMatchWithoutEntityTagsToString(): void

@@ -29,6 +29,17 @@ final class ContentType implements Header
     }
 
     /**
+     * Construct header from value.
+     *
+     * @param string $value Header value.
+     * @return self Header generated based on the value.
+     */
+    public static function fromValue(string $value): self
+    {
+        return new self(MediaType::fromString($value));
+    }
+
+    /**
      * @inheritDoc
      */
     public function __toString(): string

@@ -6,7 +6,6 @@ namespace Stadly\Http\Header\Response;
 
 use InvalidArgumentException;
 use Stadly\Http\Header\Common\HeaderFactory as CommonHeaderFactory;
-use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Utilities\Rfc7230;
 
 /**
@@ -29,7 +28,7 @@ final class HeaderFactory
 
         switch (strtolower($matches['FIELD_NAME'])) {
             case 'etag':
-                return new ETag(EntityTag::fromString($matches['FIELD_VALUE']));
+                return ETag::fromValue($matches['FIELD_VALUE']);
             default:
                 return CommonHeaderFactory::fromString($header);
         }

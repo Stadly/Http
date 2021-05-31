@@ -28,6 +28,17 @@ final class RangeTest extends TestCase
     }
 
     /**
+     * @covers ::fromValue
+     */
+    public function testCanConstructRangeFromValue(): void
+    {
+        $range = new Range(new ByteRangeSet(new ByteRange(50, 100)));
+        $rangeFromValue = Range::fromValue('bytes=50-100');
+
+        self::assertEquals($range, $rangeFromValue);
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertRangeWithSingleRangeToString(): void

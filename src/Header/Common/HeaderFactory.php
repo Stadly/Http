@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Common;
 
 use InvalidArgumentException;
-use Stadly\Http\Header\Value\MediaType\MediaType;
 use Stadly\Http\Utilities\Rfc7230;
 
 /**
@@ -28,7 +27,7 @@ final class HeaderFactory
 
         switch (strtolower($matches['FIELD_NAME'])) {
             case 'content-type':
-                return new ContentType(MediaType::fromString($matches['FIELD_VALUE']));
+                return ContentType::fromValue($matches['FIELD_VALUE']);
             default:
                 return new ArbitraryHeader($matches['FIELD_NAME'], $matches['FIELD_VALUE']);
         }

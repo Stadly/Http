@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Request;
 
 use Stadly\Http\Header\Value\Range\RangeSet;
+use Stadly\Http\Header\Value\Range\RangeSetFactory;
 
 /**
  * Class for handling the HTTP header field Range.
@@ -26,6 +27,17 @@ final class Range implements Header
     public function __construct(RangeSet $rangeSet)
     {
         $this->setRangeSet($rangeSet);
+    }
+
+    /**
+     * Construct header from value.
+     *
+     * @param string $value Header value.
+     * @return self Header generated based on the value.
+     */
+    public static function fromValue(string $value): self
+    {
+        return new self(RangeSetFactory::fromString($value));
     }
 
     /**

@@ -6,8 +6,6 @@ namespace Stadly\Http\Header\Request;
 
 use InvalidArgumentException;
 use Stadly\Http\Header\Common\HeaderFactory as CommonHeaderFactory;
-use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
-use Stadly\Http\Header\Value\Range\RangeSetFactory;
 use Stadly\Http\Utilities\Rfc7230;
 
 /**
@@ -30,11 +28,11 @@ final class HeaderFactory
 
         switch (strtolower($matches['FIELD_NAME'])) {
             case 'if-match':
-                return new IfMatch(EntityTagSet::fromString($matches['FIELD_VALUE']));
+                return IfMatch::fromValue($matches['FIELD_VALUE']);
             case 'if-none-match':
-                return new IfNoneMatch(EntityTagSet::fromString($matches['FIELD_VALUE']));
+                return IfNoneMatch::fromValue($matches['FIELD_VALUE']);
             case 'range':
-                return new Range(RangeSetFactory::fromString($matches['FIELD_VALUE']));
+                return Range::fromValue($matches['FIELD_VALUE']);
             default:
                 return CommonHeaderFactory::fromString($header);
         }

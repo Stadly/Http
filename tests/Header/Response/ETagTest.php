@@ -27,6 +27,17 @@ final class ETagTest extends TestCase
     }
 
     /**
+     * @covers ::fromValue
+     */
+    public function testCanConstructETagFromValue(): void
+    {
+        $eTag = new ETag(new EntityTag('bar'));
+        $eTagFromValue = ETag::fromValue('"bar"');
+
+        self::assertEquals($eTag, $eTagFromValue);
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertETagToString(): void

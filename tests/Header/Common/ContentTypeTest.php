@@ -28,6 +28,17 @@ final class ContentTypeTest extends TestCase
     }
 
     /**
+     * @covers ::fromValue
+     */
+    public function testCanConstructContentFromValue(): void
+    {
+        $contentType = new ContentType(new MediaType('foo', 'bar'));
+        $contentTypeFromValue = ContentType::fromValue('foo/bar');
+
+        self::assertEquals($contentType, $contentTypeFromValue);
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertContentTypeWithoutParametersToString(): void

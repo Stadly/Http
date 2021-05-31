@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/Http/compare/v0.6.0...HEAD)
 
 ### Added
-- Nothing
+- Possible to create headers from header value.
 
 ### Changed
 - Refactored code for checking whether byte range covers entire file.

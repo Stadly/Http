@@ -21,10 +21,33 @@ final class Rfc6266
         . '(?:' . Rfc5234::LWSP . ';' . Rfc5234::LWSP . self::DISPOSITION_PARM . ')*' . Rfc5234::LWSP . ')';
 
     /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1
+     */
+    public const CONTENT_DISPOSITION_VALUE
+        = '(?:' . self::DISPOSITION_TYPE
+        . '(?:' . Rfc5234::LWSP . ';' . Rfc5234::LWSP . self::DISPOSITION_PARM . ')*)';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1
+     */
+    public const CONTENT_DISPOSITION_VALUE_CAPTURE
+        = '(?<CONTENT_DISPOSITION_VALUE>' . self::DISPOSITION_TYPE_CAPTURE
+        . '(?:' . Rfc5234::LWSP . ';' . Rfc5234::LWSP . '(?<DISPOSITION_PARAMS>' . self::DISPOSITION_PARM
+        . '(?:' . Rfc5234::LWSP . ';' . Rfc5234::LWSP . self::DISPOSITION_PARM . ')*))?)';
+
+    /**
      * Specification: https://tools.ietf.org/html/rfc6266#section-4.1 (disposition-type)
      */
     public const DISPOSITION_TYPE
         = '(?:'
+        // . '[Ii][Nn][Ll][Ii][Nn][Ee]|[Aa][Tt][Tt][Aa][Cc][Hh][Mm][Ee][Nn][Tt]|' // Covered by DISP_EXT_TYPE.
+        . self::DISP_EXT_TYPE . ')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1 (disposition-type)
+     */
+    public const DISPOSITION_TYPE_CAPTURE
+        = '(?<DISPOSITION_TYPE>'
         // . '[Ii][Nn][Ll][Ii][Nn][Ee]|[Aa][Tt][Tt][Aa][Cc][Hh][Mm][Ee][Nn][Tt]|' // Covered by DISP_EXT_TYPE.
         . self::DISP_EXT_TYPE . ')';
 
@@ -40,6 +63,40 @@ final class Rfc6266
         = '(?:'
         // . self::FILENAME_PARM . '|' // Covered by DISP_EXT_PARM.
         . self::DISP_EXT_PARM . ')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1 (disposition-parm)
+     */
+    public const DISPOSITION_PARM_CAPTURE
+        = '(?<DISPOSITION_PARM>'
+        // . self::FILENAME_PARM . '|' // Covered by DISP_EXT_PARM.
+        . self::DISP_EXT_PARM . ')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1
+     */
+    public const DISPOSITION_PARM_REGULAR
+        = '(?:' . Rfc2616::TOKEN . Rfc5234::LWSP . '=' . Rfc5234::LWSP . Rfc2616::VALUE . ')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1
+     */
+    public const DISPOSITION_PARM_REGULAR_CAPTURE
+        = '(?<DISPOSITION_PARM_REGULAR>(?<NAME>' . Rfc2616::TOKEN . ')' . Rfc5234::LWSP
+        . '=' . Rfc5234::LWSP . '(?<VALUE>' . Rfc2616::VALUE . '))';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1
+     */
+    public const DISPOSITION_PARM_EXTENDED
+        = '(?:' . self::EXT_TOKEN . Rfc5234::LWSP . '=' . Rfc5234::LWSP . Rfc5987::EXT_VALUE . ')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc6266#section-4.1
+     */
+    public const DISPOSITION_PARM_EXTENDED_CAPTURE
+        = '(?<DISPOSITION_PARM_EXTENDED>(?<NAME>' . self::EXT_TOKEN . ')' . Rfc5234::LWSP
+        . '=' . Rfc5234::LWSP . Rfc5987::EXT_VALUE_CAPTURE . ')';
 
     /**
      * Specification: https://tools.ietf.org/html/rfc6266#section-4.1 (filename-parm)

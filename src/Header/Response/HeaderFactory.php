@@ -27,6 +27,8 @@ final class HeaderFactory
         }
 
         switch (strtolower($matches['FIELD_NAME'])) {
+            case 'content-disposition':
+                return ContentDisposition::fromValue($matches['FIELD_VALUE']);
             case 'etag':
                 return ETag::fromValue($matches['FIELD_VALUE']);
             default:

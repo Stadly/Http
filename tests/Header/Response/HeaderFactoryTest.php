@@ -95,6 +95,39 @@ final class HeaderFactoryTest extends TestCase
     /**
      * @covers ::fromString
      */
+    public function testCanConstructContentDispositionHeaderFromString(): void
+    {
+        $contentDisposition = new ContentDisposition('foo');
+        $contentDispositionFromString = HeaderFactory::fromString('Content-Disposition: foo');
+
+        self::assertEquals($contentDisposition, $contentDispositionFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructContentDispositionHeaderFromStringWithLowercaseName(): void
+    {
+        $contentDisposition = new ContentDisposition('foo');
+        $contentDispositionFromString = HeaderFactory::fromString('content-disposition: foo');
+
+        self::assertEquals($contentDisposition, $contentDispositionFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
+    public function testCanConstructContentDispositionHeaderFromStringWithUppercaseName(): void
+    {
+        $contentDisposition = new ContentDisposition('foo');
+        $contentDispositionFromString = HeaderFactory::fromString('CONTENT-DISPOSITION: foo');
+
+        self::assertEquals($contentDisposition, $contentDispositionFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
     public function testCanConstructETagHeaderFromString(): void
     {
         $eTag = new ETag(new EntityTag('foo'));

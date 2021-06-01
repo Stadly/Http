@@ -39,6 +39,13 @@ final class Rfc5987
     public const EXT_VALUE = '(?:' . self::CHARSET . "'" . self::LANGUAGE . "?'" . self::VALUE_CHARS . ')';
 
     /**
+     * Specification: https://tools.ietf.org/html/rfc5987#section-3.2.1 (ext-value)
+     */
+    public const EXT_VALUE_CAPTURE
+        = '(?:(?<CHARSET>' . self::CHARSET . ")'(?<LANGUAGE>" . self::LANGUAGE . "?)'"
+        . '(?<VALUE_CHARS>' . self::VALUE_CHARS . '))';
+
+    /**
      * Specification: https://tools.ietf.org/html/rfc5987#section-3.2.1 (charset)
      */
     public const CHARSET = '(?:[Uu][Tt][Ff]-8|[Ii][Ss][Oo]-8859-1|' . self::MIME_CHARSET . ')';

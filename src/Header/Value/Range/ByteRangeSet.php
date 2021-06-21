@@ -14,12 +14,12 @@ use Stadly\Http\Utilities\Rfc7233;
  *
  * Specification: https://tools.ietf.org/html/rfc7233#section-2.1
  *
- * @implements IteratorAggregate<ByteRange>
+ * @implements IteratorAggregate<int, ByteRange>
  */
 final class ByteRangeSet implements RangeSet, IteratorAggregate
 {
     /**
-     * @var array<ByteRange> Ranges.
+     * @var array<int, ByteRange> Ranges.
      */
     private $ranges = [];
 

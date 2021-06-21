@@ -13,12 +13,12 @@ use Stadly\Http\Utilities\Rfc7232;
 /**
  * Class for handling sets of entity tags.
  *
- * @implements IteratorAggregate<EntityTag>
+ * @implements IteratorAggregate<int, EntityTag>
  */
 final class EntityTagSet implements IteratorAggregate
 {
     /**
-     * @var array<EntityTag> Entity tags.
+     * @var array<string, EntityTag> Entity tags.
      */
     private $entityTags = [];
 
@@ -164,6 +164,6 @@ final class EntityTagSet implements IteratorAggregate
      */
     public function getIterator(): ArrayIterator
     {
-        return new ArrayIterator($this->entityTags);
+        return new ArrayIterator(array_values($this->entityTags));
     }
 }

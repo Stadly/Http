@@ -88,7 +88,7 @@ final class RegularParameter extends Parameter
      * @param string $value Value.
      * @return string Encoded value.
      */
-    protected static function encodeValue(string $value): string
+    private static function encodeValue(string $value): string
     {
         if (preg_match('{^' . Rfc2616::TOKEN . '$}', $value) === 1) {
             return $value;

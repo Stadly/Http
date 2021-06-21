@@ -49,6 +49,14 @@ final class ContentType implements Header
     }
 
     /**
+     * @return true The header is always valid.
+     */
+    public function isValid(): bool
+    {
+        return true;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getName(): string

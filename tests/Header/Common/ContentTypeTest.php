@@ -74,6 +74,16 @@ final class ContentTypeTest extends TestCase
     }
 
     /**
+     * @covers ::isValid
+     */
+    public function testHeaderIsValid(): void
+    {
+        $contentType = new ContentType(new MediaType('text', 'html'));
+
+        self::assertTrue($contentType->isValid()); // @phpstan-ignore-line
+    }
+
+    /**
      * @covers ::getName
      */
     public function testCanGetName(): void

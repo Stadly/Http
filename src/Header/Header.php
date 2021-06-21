@@ -15,6 +15,11 @@ interface Header
     public function __toString(): string;
 
     /**
+     * @return bool Whether the header is valid.
+     */
+    public function isValid(): bool;
+
+    /**
      * @return string Header field name.
      */
     public function getName(): string;

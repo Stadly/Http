@@ -58,6 +58,16 @@ final class ETagTest extends TestCase
     }
 
     /**
+     * @covers ::isValid
+     */
+    public function testHeaderIsValid(): void
+    {
+        $eTag = new ETag(new EntityTag('foo'));
+
+        self::assertTrue($eTag->isValid()); // @phpstan-ignore-line
+    }
+
+    /**
      * @covers ::getName
      */
     public function testCanGetName(): void

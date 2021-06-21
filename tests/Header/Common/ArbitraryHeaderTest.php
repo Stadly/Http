@@ -152,6 +152,16 @@ final class ArbitraryHeaderTest extends TestCase
     }
 
     /**
+     * @covers ::isValid
+     */
+    public function testHeaderIsValid(): void
+    {
+        $header = new ArbitraryHeader('foo', 'bar');
+
+        self::assertTrue($header->isValid()); // @phpstan-ignore-line
+    }
+
+    /**
      * @covers ::getName
      */
     public function testCanGetName(): void

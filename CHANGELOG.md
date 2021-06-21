@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - Possible to create headers from header value.
 - Content-Disposition HTTP header.
+- Check if header is valid.
 
 ### Changed
 - Refactored code for checking whether byte range covers entire file.

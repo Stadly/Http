@@ -64,6 +64,16 @@ final class RangeTest extends TestCase
     }
 
     /**
+     * @covers ::isValid
+     */
+    public function testHeaderIsValid(): void
+    {
+        $range = new Range(new ByteRangeSet(new ByteRange(10, 100)));
+
+        self::assertTrue($range->isValid()); // @phpstan-ignore-line
+    }
+
+    /**
      * @covers ::getName
      */
     public function testCanGetName(): void

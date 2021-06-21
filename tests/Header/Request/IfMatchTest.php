@@ -74,6 +74,16 @@ final class IfMatchTest extends TestCase
     }
 
     /**
+     * @covers ::isValid
+     */
+    public function testHeaderIsValid(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet());
+
+        self::assertTrue($ifMatch->isValid()); // @phpstan-ignore-line
+    }
+
+    /**
      * @covers ::getName
      */
     public function testCanGetName(): void

@@ -62,6 +62,14 @@ final class ArbitraryHeader implements Header
     }
 
     /**
+     * @return true The header is always valid.
+     */
+    public function isValid(): bool
+    {
+        return true;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getName(): string

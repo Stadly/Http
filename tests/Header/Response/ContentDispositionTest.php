@@ -113,6 +113,16 @@ final class ContentDispositionTest extends TestCase
     }
 
     /**
+     * @covers ::isValid
+     */
+    public function testHeaderIsValid(): void
+    {
+        $contentDisposition = new ContentDisposition('attachment');
+
+        self::assertTrue($contentDisposition->isValid()); // @phpstan-ignore-line
+    }
+
+    /**
      * @covers ::getName
      */
     public function testCanGetName(): void

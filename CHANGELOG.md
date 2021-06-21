@@ -20,6 +20,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed Header/Request/HeaderInterface to Header/Request/Header.
 - Renamed Header/Response/HeaderInterface to Header/Response/Header.
 - Renamed Header/Value/Range/RangeSetInterface to Header/Value/Range/RangeSet.
+- Getting string or value of header may throw RuntimeException if header is invalid.
 
 ### Deprecated
 - Nothing

@@ -41,6 +41,7 @@ final class ETag implements Header
 
     /**
      * @inheritDoc
+     * @throws void The header is always valid.
      */
     public function __toString(): string
     {
@@ -57,6 +58,7 @@ final class ETag implements Header
 
     /**
      * @inheritDoc
+     * @throws void The header is always valid.
      */
     public function getValue(): string
     {

@@ -54,6 +54,7 @@ final class ArbitraryHeader implements Header
 
     /**
      * @inheritDoc
+     * @throws void The header is always valid.
      */
     public function __toString(): string
     {
@@ -70,6 +71,7 @@ final class ArbitraryHeader implements Header
 
     /**
      * @inheritDoc
+     * @throws void The header is always valid.
      */
     public function getValue(): string
     {

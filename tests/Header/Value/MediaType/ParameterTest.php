@@ -146,6 +146,17 @@ final class ParameterTest extends TestCase
     /**
      * @covers ::fromString
      */
+    public function testCanConstructParameterWithWhitespaceQuotedValueFromString(): void
+    {
+        $parameter = new Parameter('foo', "\t  ");
+        $parameterFromString = Parameter::fromString("foo=\"\t  \"");
+
+        self::assertEquals($parameter, $parameterFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
     public function testCannotConstructParameterWithInvalidValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);

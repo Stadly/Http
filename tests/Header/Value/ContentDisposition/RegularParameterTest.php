@@ -146,6 +146,17 @@ final class RegularParameterTest extends TestCase
     /**
      * @covers ::fromString
      */
+    public function testCanConstructParameterWithWhitespaceQuotedValueFromString(): void
+    {
+        $parameter = new RegularParameter('foo', " \t\t");
+        $parameterFromString = RegularParameter::fromString("foo=\" \t\t\"");
+
+        self::assertEquals($parameter, $parameterFromString);
+    }
+
+    /**
+     * @covers ::fromString
+     */
     public function testCannotConstructParameterWithInvalidValueFromString(): void
     {
         $this->expectException(InvalidArgumentException::class);

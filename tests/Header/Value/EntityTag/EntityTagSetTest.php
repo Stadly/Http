@@ -111,7 +111,7 @@ final class EntityTagSetTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        EntityTagSet::fromString(",\t,  ,,,");
+        EntityTagSet::fromString("  ,\t,  ,,,\t  ");
     }
 
     /**
@@ -131,7 +131,7 @@ final class EntityTagSetTest extends TestCase
     public function testCanConstructEntityTagSetWithSingleEntityTagFromStringWithWhitespace(): void
     {
         $entityTagSet = new EntityTagSet(new EntityTag('foo'));
-        $entityTagSetFromString = EntityTagSet::fromString(",\t,  ,\"foo\",,");
+        $entityTagSetFromString = EntityTagSet::fromString("\t  ,\t,  ,\"foo\",, ");
 
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }
@@ -163,7 +163,7 @@ final class EntityTagSetTest extends TestCase
             new EntityTag('entity-tag'),
             new EntityTag('')
         );
-        $entityTagSetFromString = EntityTagSet::fromString("\"foo\",\t  W/\"bar\",,,\"entity-tag\"   , \t, \"\",,");
+        $entityTagSetFromString = EntityTagSet::fromString("  \"foo\",\t  W/\"bar\",,,\"entity-tag\" , \t, \"\",,  \t");
 
         self::assertEquals($entityTagSet, $entityTagSetFromString);
     }

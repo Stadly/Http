@@ -47,11 +47,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchEmptyListWithWhitespace(): void
+    public function testHashRuleFromZeroToZeroMatchesEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " \t"));
+        self::assertSame(1, preg_match($regEx, " \t"));
     }
 
     /**
@@ -67,31 +67,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToZeroMatchesExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  , \t  ,\t "));
     }
 
     /**
@@ -107,27 +87,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToZeroDoesNotMatchListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
@@ -147,27 +107,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
@@ -187,27 +127,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToZeroDoesNotMatchListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
@@ -227,27 +147,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
@@ -267,27 +167,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToZeroDoesNotMatchListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
@@ -307,27 +187,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToZeroDoesNotMatchExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 0) . '$}';
 
@@ -347,11 +207,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchEmptyListWithWhitespace(): void
+    public function testHashRuleFromZeroToOneMatchesEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " \t"));
+        self::assertSame(1, preg_match($regEx, " \t"));
     }
 
     /**
@@ -367,31 +227,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToOneMatchesExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  , \t  ,\t "));
     }
 
     /**
@@ -407,31 +247,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToOneMatchesListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar\t "));
     }
 
     /**
@@ -447,31 +267,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToOneMatchesExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t  ,\t "));
     }
 
     /**
@@ -487,27 +287,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToOneDoesNotMatchListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
@@ -527,27 +307,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
@@ -567,27 +327,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToOneDoesNotMatchListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
@@ -607,27 +347,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToOneDoesNotMatchExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 1) . '$}';
 
@@ -647,11 +367,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchEmptyListWithWhitespace(): void
+    public function testHashRuleFromZeroToTwoMatchesEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " \t"));
+        self::assertSame(1, preg_match($regEx, " \t"));
     }
 
     /**
@@ -667,31 +387,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToTwoMatchesExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  , \t  ,\t "));
     }
 
     /**
@@ -707,31 +407,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToTwoMatchesListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar\t "));
     }
 
     /**
@@ -747,31 +427,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToTwoMatchesExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t  ,\t "));
     }
 
     /**
@@ -787,31 +447,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToTwoMatchesListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar\t "));
     }
 
     /**
@@ -827,31 +467,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToTwoMatchesExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -867,27 +487,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToTwoDoesNotMatchListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
@@ -907,27 +507,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromZeroToTwoDoesNotMatchExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, 2) . '$}';
 
@@ -947,11 +527,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchEmptyListWithWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " \t"));
+        self::assertSame(1, preg_match($regEx, " \t"));
     }
 
     /**
@@ -967,31 +547,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  , \t  ,\t "));
     }
 
     /**
@@ -1007,31 +567,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar\t "));
     }
 
     /**
@@ -1047,31 +587,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t  ,\t "));
     }
 
     /**
@@ -1087,31 +607,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar\t "));
     }
 
     /**
@@ -1127,31 +627,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -1167,31 +647,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar, foobar\t "));
     }
 
     /**
@@ -1207,31 +667,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
+    public function testHashRuleFromZeroToUnboundedMatchesExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromZeroToUnboundedDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 0, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " foobar,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -1267,27 +707,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToOneDoesNotMatchExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
@@ -1307,31 +727,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToOneMatchesListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar\t "));
     }
 
     /**
@@ -1347,31 +747,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToOneMatchesExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t  ,\t "));
     }
 
     /**
@@ -1387,27 +767,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToOneDoesNotMatchListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
@@ -1427,27 +787,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
@@ -1467,27 +807,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToOneDoesNotMatchListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
@@ -1507,27 +827,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToOneDoesNotMatchExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 1) . '$}';
 
@@ -1567,27 +867,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToTwoDoesNotMatchExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
@@ -1607,31 +887,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToTwoMatchesListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar\t "));
     }
 
     /**
@@ -1647,31 +907,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToTwoMatchesExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t  ,\t "));
     }
 
     /**
@@ -1687,31 +927,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToTwoMatchesListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar\t "));
     }
 
     /**
@@ -1727,31 +947,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToTwoMatchesExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -1767,27 +967,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToTwoDoesNotMatchListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
@@ -1807,27 +987,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToTwoDoesNotMatchExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, 2) . '$}';
 
@@ -1867,27 +1027,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
+    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
@@ -1907,31 +1047,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToUnboundedMatchesListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar\t "));
     }
 
     /**
@@ -1947,31 +1067,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToUnboundedMatchesExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t  ,\t "));
     }
 
     /**
@@ -1987,31 +1087,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToUnboundedMatchesListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar\t "));
     }
 
     /**
@@ -2027,31 +1107,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToUnboundedMatchesExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -2067,31 +1127,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToUnboundedMatchesListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar, foobar\t "));
     }
 
     /**
@@ -2107,31 +1147,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
+    public function testHashRuleFromOneToUnboundedMatchesExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromOneToUnboundedDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 1, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " foobar,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -2167,27 +1187,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
@@ -2207,27 +1207,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToTwoDoesNotMatchListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
@@ -2247,27 +1227,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
@@ -2287,31 +1247,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromTwoToTwoMatchesListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar\t "));
     }
 
     /**
@@ -2327,31 +1267,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromTwoToTwoMatchesExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -2367,27 +1287,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToTwoDoesNotMatchListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
@@ -2407,27 +1307,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToTwoDoesNotMatchExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, 2) . '$}';
 
@@ -2467,27 +1347,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedEmptyListWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  , \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedEmptyListWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  , \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedEmptyListWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedEmptyListWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
@@ -2507,27 +1367,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithOneElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ' foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithOneElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
@@ -2547,27 +1387,7 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithOneElmWithOpeningWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t  ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithOneElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t  ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithOneElmWithSurroundingWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithOneElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
@@ -2587,31 +1407,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedMatchesListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar\t "));
     }
 
     /**
@@ -2627,31 +1427,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithTwoElmWithOpeningWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedMatchesExtendedListWithTwoElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithTwoElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, ",,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithTwoElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " ,,  foobar, \t foobar ,\t "));
     }
 
     /**
@@ -2667,31 +1447,11 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithThreeElmWithOpeningWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedMatchesListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, ' foobar, foobar, foobar'));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar, foobar, foobar\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchListWithThreeElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar, foobar, foobar\t "));
+        self::assertSame(1, preg_match($regEx, " foobar, foobar, foobar\t "));
     }
 
     /**
@@ -2707,30 +1467,10 @@ final class Rfc7230Test extends TestCase
     /**
      * @covers ::hashRule
      */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithThreeElmWithOpeningWhitespace(): void
+    public function testHashRuleFromTwoToUnboundedMatchesExtendedListWithThreeElmWithWhitespace(): void
     {
         $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
 
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,"));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithThreeElmWithEndingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, "foobar,,  foobar, \t foobar ,\t "));
-    }
-
-    /**
-     * @covers ::hashRule
-     */
-    public function testHashRuleFromTwoToUnboundedDoesNotMatchExtendedListWithThreeElmWithSurroundingWhitespace(): void
-    {
-        $regEx = '{^' . Rfc7230::hashRule('foobar', 2, null) . '$}';
-
-        self::assertSame(0, preg_match($regEx, " foobar,,  foobar, \t foobar ,\t "));
+        self::assertSame(1, preg_match($regEx, " foobar,,  foobar, \t foobar ,\t "));
     }
 }

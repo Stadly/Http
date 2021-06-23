@@ -30,7 +30,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- Allow leading and trailing whitespace in hash rule.
 
 ### Security
 - Nothing

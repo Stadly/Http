@@ -133,15 +133,15 @@ final class Rfc7230
      * Specification: https://tools.ietf.org/html/rfc7230#section-7 (#rule)
      *
      * This function produces the following rules:
-     * 0# element => [ ( *( "," OWS ) element *((OWS ",")+ OWS element ) | ",") *( OWS ",") ]
-     * x# element => *( "," OWS ) element <x-1>*((OWS ",")+ OWS element ) *( OWS ",")
+     * 0# element => [ OWS *( "," OWS ) element *( 1*( OWS "," ) OWS element ) ] OWS *( "," OWS )
+     * x# element => OWS *( "," OWS ) element <x-1>*( 1*( OWS "," ) OWS element ) OWS *( "," OWS )
      *
-     * 0#0 element => [ "," *( OWS ",") ]
-     * 0#1 element => [ ( *( "," OWS ) element | "," ) *( OWS ",") ]
-     * 0#y element => [ ( *( "," OWS ) element *<y-1>((OWS ",")+ OWS element ) | "," ) *( OWS ",") ]
+     * 0#0 element => OWS *( "," OWS )
+     * 0#1 element => [ OWS *( "," OWS ) element ] OWS *( "," OWS )
+     * 0#y element => [ OWS *( "," OWS ) element *<y-1>( 1*( OWS "," ) OWS element ) ] OWS *( "," OWS )
      *
-     * 1#1 element => *( "," OWS ) element *( OWS ",")
-     * x#y element => *( "," OWS ) element <x-1>*<y-1>((OWS ",")+ OWS element ) *( OWS ",")
+     * 1#1 element => OWS *( "," OWS ) element OWS *( "," OWS )
+     * x#y element => OWS *( "," OWS ) element <x-1>*<y-1>( 1*( OWS "," ) OWS element ) OWS *( "," OWS )
      *
      * @param string $element Regular expression for the list element.
      * @param int $min Minimum number of elements in list.
@@ -157,10 +157,10 @@ final class Rfc7230
             throw new InvalidArgumentException('Max number of elements must be greater than or equal to min.');
         }
 
-        if ($max === 0) {
-            $regEx = ',';
-        } else {
-            $regEx = '(?:,' . self::OWS . ')*' . $element;
+        $regEx = '';
+
+        if ($max !== 0) {
+            $regEx = self::OWS . '(?:,' . self::OWS . ')*' . $element;
 
             if ($max !== 1) {
                 $minRepeat = max(0, $min - 1);
@@ -171,16 +171,10 @@ final class Rfc7230
             }
 
             if ($min === 0) {
-                $regEx = '(?:' . $regEx . '|,)';
+                $regEx = '(?:' . $regEx . ')?';
             }
         }
 
-        $regEx .= '(?:' . self::OWS . ',)*';
-
-        if ($min === 0) {
-            $regEx = '(?:' . $regEx . ')?';
-        }
-
-        return $regEx;
+        return $regEx . self::OWS . '(?:,' . self::OWS . ')*';
     }
 }

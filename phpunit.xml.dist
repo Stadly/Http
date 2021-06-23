@@ -7,6 +7,7 @@
     <report>
       <clover outputFile="build/clover.xml"/>
       <html outputDirectory="build/coverage"/>
+      <text outputFile="php://stdout" showOnlySummary="true"/>
     </report>
   </coverage>
   <testsuites>

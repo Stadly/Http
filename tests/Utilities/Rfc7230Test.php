@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Utilities;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,6 +14,26 @@ use PHPUnit\Framework\TestCase;
  */
 final class Rfc7230Test extends TestCase
 {
+    /**
+     * @covers ::hashRule
+     */
+    public function testCannotHaveNegativeMin(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Rfc7230::hashRule('foobar', -1);
+    }
+
+    /**
+     * @covers ::hashRule
+     */
+    public function testCannotHaveMaxSmallerThanMin(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        Rfc7230::hashRule('foobar', 1, 0);
+    }
+
     /**
      * @covers ::hashRule
      */

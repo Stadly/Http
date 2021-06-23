@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Utilities;
 
+use InvalidArgumentException;
+
 /**
  * Regular expressions for matching rules in RFC 7230:
  * Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
@@ -148,8 +150,12 @@ final class Rfc7230
      */
     public static function hashRule(string $element, int $min = 0, ?int $max = null): string
     {
-        assert($min >= 0);
-        assert($max === null || $min <= $max);
+        if ($min < 0) {
+            throw new InvalidArgumentException('Min number of elements must be non-negative.');
+        }
+        if ($max !== null && $min > $max) {
+            throw new InvalidArgumentException('Max number of elements must be greater than or equal to min.');
+        }
 
         if ($max === 0) {
             $regEx = ',';

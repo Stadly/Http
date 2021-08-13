@@ -4,7 +4,7 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/Http/compare/v0.6.0...HEAD)
+## [0.7.0](https://github.com/Stadly/Http/compare/v0.6.0...v0.7.0) - 2021-08-13
 
 ### Added
 - Possible to create headers from header value.

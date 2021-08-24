@@ -205,7 +205,7 @@ final class RegularParameterTest extends TestCase
     }
 
     /**
-     * @covers \Stadly\Http\Header\Value\ContentDisposition\RegularParameter::getName
+     * @covers ::getName
      */
     public function testCanGetName(): void
     {
@@ -252,7 +252,7 @@ final class RegularParameterTest extends TestCase
     }
 
     /**
-     * @covers \Stadly\Http\Header\Value\ContentDisposition\RegularParameter::getValue
+     * @covers ::getValue
      */
     public function testCanGetValue(): void
     {

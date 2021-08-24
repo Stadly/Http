@@ -297,7 +297,7 @@ final class ExtendedParameterTest extends TestCase
     }
 
     /**
-     * @covers \Stadly\Http\Header\Value\ContentDisposition\ExtendedParameter::getName
+     * @covers ::getName
      */
     public function testCanGetName(): void
     {
@@ -344,7 +344,7 @@ final class ExtendedParameterTest extends TestCase
     }
 
     /**
-     * @covers \Stadly\Http\Header\Value\ContentDisposition\ExtendedParameter::getValue
+     * @covers ::getValue
      */
     public function testCanGetValue(): void
     {

@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- PHP 7.3 is no longer supported, due to use of type variance.
 
 ### Deprecated
 - Nothing

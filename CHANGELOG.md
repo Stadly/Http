@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/Http/compare/v0.7.0...HEAD)
 
 ### Added
-- Nothing
+- Cache-Control HTTP header.
 
 ### Changed
 - PHP 7.3 is no longer supported, due to use of type variance.

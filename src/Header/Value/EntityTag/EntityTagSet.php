@@ -150,8 +150,8 @@ final class EntityTagSet implements IteratorAggregate
             return false;
         }
 
-        foreach ($this->entityTags as $entityTagntityTagI) {
-            if ($entityTag->compareWeakly($entityTagntityTagI)) {
+        foreach ($this->entityTags as $entityTagI) {
+            if ($entityTag->compareWeakly($entityTagI)) {
                 return true;
             }
         }

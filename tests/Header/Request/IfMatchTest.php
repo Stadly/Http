@@ -129,6 +129,149 @@ final class IfMatchTest extends TestCase
     }
 
     /**
+     * @covers ::evaluate
+     */
+    public function testAnyHeaderEvaluatesToTrueWithNoEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet());
+
+        self::assertTrue($ifMatch->evaluate(null));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testAnyHeaderEvaluatesToTrueWithStrongEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet());
+        $entityTag = new EntityTag('foo');
+
+        self::assertTrue($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testAnyHeaderEvaluatesToTrueWithWeakEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet());
+        $entityTag = new EntityTag('foo', /*isWeak*/true);
+
+        self::assertTrue($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderWithStrongEntityTagEvaluatesToTrueWithStrongEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+        $entityTag = new EntityTag('foo');
+
+        self::assertTrue($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderWithStrongEntityTagEvaluatesToFalseWithWeakEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+        $entityTag = new EntityTag('foo', /*isWeak*/true);
+
+        self::assertFalse($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderWithWeakEntityTagEvaluatesToFalseWithStrongEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+        $entityTag = new EntityTag('bar');
+
+        self::assertFalse($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderWithWeakEntityTagEvaluatesToFalseWithWeakEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+        $entityTag = new EntityTag('bar', /*isWeak*/true);
+
+        self::assertFalse($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderEvaluatesToFalseWithMissingStrongEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+        $entityTag = new EntityTag('test');
+
+        self::assertFalse($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderEvaluatesToFalseWithMissingWeakEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+        $entityTag = new EntityTag('test', /*isWeak*/true);
+
+        self::assertFalse($ifMatch->evaluate($entityTag));
+    }
+
+    /**
+     * @covers ::evaluate
+     */
+    public function testHeaderEvaluatesToFalseWithNoEntityTag(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet(
+            new EntityTag('foo'),
+            new EntityTag('bar', /*isWeak*/true),
+            new EntityTag('entity-tag'),
+            new EntityTag('')
+        ));
+
+        self::assertFalse($ifMatch->evaluate(null));
+    }
+
+    /**
      * @covers ::getEntityTagSet
      */
     public function testCanGetEntityTagSet(): void

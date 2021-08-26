@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
+use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 
 /**
@@ -71,6 +72,15 @@ final class IfNoneMatch implements Header
     public function getValue(): string
     {
         return (string)$this->entityTagSet;
+    }
+
+    /**
+     * @param EntityTag|null $entityTag Entity tag to evaluate.
+     * @return bool Whether the entity tag set does not weakly match the entity tag.
+     */
+    public function evaluate(?EntityTag $entityTag): bool
+    {
+        return !$this->entityTagSet->compareWeakly($entityTag);
     }
 
     /**

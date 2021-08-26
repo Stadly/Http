@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Added
 - Cache-Control HTTP header.
+- Possible to evaluate conditional headers.
 
 ### Changed
 - PHP 7.3 is no longer supported, due to use of type variance.

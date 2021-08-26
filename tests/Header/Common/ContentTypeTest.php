@@ -53,9 +53,9 @@ final class ContentTypeTest extends TestCase
      */
     public function testCanConvertContentTypeWithSingleParameterToString(): void
     {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('charset', 'utf-8')));
+        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('charset', 'UTF-8')));
 
-        self::assertSame('Content-Type: text/html; charset=utf-8', (string)$contentType);
+        self::assertSame('Content-Type: text/html; charset=UTF-8', (string)$contentType);
     }
 
     /**
@@ -66,11 +66,11 @@ final class ContentTypeTest extends TestCase
         $contentType = new ContentType(new MediaType(
             'text',
             'html',
-            new Parameter('charset', 'utf-8'),
+            new Parameter('charset', 'UTF-8'),
             new Parameter('boundary', 'abc def')
         ));
 
-        self::assertSame('Content-Type: text/html; charset=utf-8; boundary="abc def"', (string)$contentType);
+        self::assertSame('Content-Type: text/html; charset=UTF-8; boundary="abc def"', (string)$contentType);
     }
 
     /**
@@ -108,9 +108,9 @@ final class ContentTypeTest extends TestCase
      */
     public function testCanGetValueForContentTypeWithSingleParameter(): void
     {
-        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('charset', 'utf-8')));
+        $contentType = new ContentType(new MediaType('text', 'html', new Parameter('charset', 'UTF-8')));
 
-        self::assertSame('text/html; charset=utf-8', $contentType->getValue());
+        self::assertSame('text/html; charset=UTF-8', $contentType->getValue());
     }
 
     /**
@@ -121,11 +121,11 @@ final class ContentTypeTest extends TestCase
         $contentType = new ContentType(new MediaType(
             'text',
             'html',
-            new Parameter('charset', 'utf-8'),
+            new Parameter('charset', 'UTF-8'),
             new Parameter('boundary', 'abc def')
         ));
 
-        self::assertSame('text/html; charset=utf-8; boundary="abc def"', $contentType->getValue());
+        self::assertSame('text/html; charset=UTF-8; boundary="abc def"', $contentType->getValue());
     }
 
     /**

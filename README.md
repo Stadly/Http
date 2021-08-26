@@ -7,48 +7,99 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
-
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-bin/
-config/
-src/
-tests/
-vendor/
-```
-
+A PHP library for parsing and building HTTP headers.
 
 ## Install
 
 Via Composer
 
 ``` bash
-$ composer require Stadly/Http
+$ composer require stadly/http
 ```
 
 ## Usage
 
+### Parsing HTTP headers
+
+Header values can be parsed using `fromValue` on each header class:
+
 ``` php
-$skeleton = new Stadly\Http();
-echo $skeleton->echoPhrase('Hello, League!');
+use Stadly\Http\Header\Common\ContentType;
+use Stadly\Http\Header\Request\IfNoneMatch;
+use Stadly\Http\Header\Response\ContentDisposition;
+
+$contentType = ContentType::fromValue($_SERVER['HTTP_CONTENT_TYPE']);
+$ifNoneMatch = IfNoneMatch::fromValue($_SERVER['HTTP_IF_MATCH']);
+$contentDisposition = ContentDisposition::fromValue($_SERVER['HTTP_CONTENT_DISPOSITION']);
 ```
 
-## Change log
+Header strings can be parsed using `HeaderFactory::fromString`:
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+``` php
+use Stadly\Http\Header\Request\HeaderFactory as RequestHeaderFactory;
+use Stadly\Http\Header\Response\HeaderFactory as ResponseHeaderFactory;
 
-## Testing
+$requestHeaders = [
+    'Content-Type: text/html; charset=UTF-8',
+    'If-Match: "67ab43", "54ed21", W/"7892dd"',
+    'Range: bytes=10-100, 200-300',
+];
+foreach ($requestHeaders as $headerString) {
+    $header = RequestHeaderFactory::fromString($headerString);
+}
 
-``` bash
-$ composer test
+$responseHeaders = [
+    'Content-Type: multipart/form-data; boundary="abc def"',
+    'Cache-Control: no-cache="foo, bar", max-age=120, must-revalidate',
+    "Content-Disposition: attachment; filename=unicorn.jpg; filename*=UTF-8''%F0%9F%A6%84.jpg",
+];
+foreach ($responseHeaders as $headerString) {
+    $header = ResponseHeaderFactory::fromString($headerString);
+}
+```
+
+Note that header strings include the header name, while header values do not. The following results in identical headers:
+
+``` php
+use Stadly\Http\Header\Response\ContentDisposition;
+use Stadly\Http\Header\Response\HeaderFactory;
+
+$header1 = ContentDisposition::fromValue('inline; filename=image.jpg');
+$header2 = HeaderFactory::fromString('Content-Disposition: inline; filename=image.jpg');
+```
+
+### Example usage
+
+Example parsing the `If-None-Match` request header and using it to determine whether to serve a file. The response headers `Content-Disposition` and `ETag` are built for serving the file.
+
+``` php
+use Stadly\Http\Header\Request\IfNoneMatch;
+use Stadly\Http\Header\Response\ContentDisposition;
+use Stadly\Http\Header\Response\ETag;
+use Stadly\Http\Header\Value\EntityTag\EntityTag;
+
+$entityTag = new EntityTag(md5($filename));
+$ifNoneMatch = IfNoneMatch::fromValue($_SERVER['HTTP_IF_NONE_MATCH']);
+
+if ($ifNoneMatch->evaluate($entityTag)) {
+    // Serve file.
+    $contentDisposition = new ContentDisposition('attachment');
+    $contentDisposition->setFilename(basename($filename));
+    header((string)$contentDisposition);
+
+    $eTag = new ETag($entityTag);
+    header((string)$eTag);
+
+    readfile($filename);
+} else {
+    // 304: Not modified.
+    http_response_code(304);
+}
 ```
 
 ## Header fields overview
+
+The checked header fields have been implemented.
 
 ### Common header fields
 
@@ -67,20 +118,20 @@ $ composer test
 ### Request header fields
 
 #### Controls
- - [ ] Cache-Control           https://tools.ietf.org/html/rfc7234#section-5.2         x
+ - [ ] Cache-Control           https://tools.ietf.org/html/rfc7234#section-5.2
  - [ ] Expect                  https://tools.ietf.org/html/rfc7231#section-5.1.1
  - [ ] Host                    https://tools.ietf.org/html/rfc7230#section-5.4
  - [ ] Max-Forwards            https://tools.ietf.org/html/rfc7231#section-5.1.2
- - [ ] Pragma                  https://tools.ietf.org/html/rfc7234#section-5.4         x
+ - [ ] Pragma                  https://tools.ietf.org/html/rfc7234#section-5.4
  - [x] Range                   https://tools.ietf.org/html/rfc7233#section-3.1
  - [ ] TE                      https://tools.ietf.org/html/rfc7230#section-4.3
 
 #### Conditionals
  - [x] If-Match                https://tools.ietf.org/html/rfc7232#section-3.1
  - [x] If-None-Match           https://tools.ietf.org/html/rfc7232#section-3.2
- - [ ] If-Modified-Since       https://tools.ietf.org/html/rfc7232#section-3.3         x
- - [ ] If-Unmodified-Since     https://tools.ietf.org/html/rfc7232#section-3.4         x
- - [ ] If-Range                https://tools.ietf.org/html/rfc7233#section-3.2         x
+ - [ ] If-Modified-Since       https://tools.ietf.org/html/rfc7232#section-3.3
+ - [ ] If-Unmodified-Since     https://tools.ietf.org/html/rfc7232#section-3.4
+ - [ ] If-Range                https://tools.ietf.org/html/rfc7233#section-3.2
 
 #### Content Negotiation
  - [ ] Accept                  https://tools.ietf.org/html/rfc7231#section-5.3.2
@@ -101,9 +152,9 @@ $ composer test
 
 #### Control Data
  - [ ] Age                     https://tools.ietf.org/html/rfc7234#section-5.1
- - [ ] Cache-Control           https://tools.ietf.org/html/rfc7234#section-5.2         x
- - [ ] Expires                 https://tools.ietf.org/html/rfc7234#section-5.3         x
- - [ ] Date                    https://tools.ietf.org/html/rfc7231#section-7.1.1.2     x
+ - [x] Cache-Control           https://tools.ietf.org/html/rfc7234#section-5.2
+ - [ ] Expires                 https://tools.ietf.org/html/rfc7234#section-5.3
+ - [ ] Date                    https://tools.ietf.org/html/rfc7231#section-7.1.1.2
  - [ ] Location                https://tools.ietf.org/html/rfc7231#section-7.1.2
  - [ ] Retry-After             https://tools.ietf.org/html/rfc7231#section-7.1.3
  - [ ] Vary                    https://tools.ietf.org/html/rfc7231#section-7.1.4
@@ -111,19 +162,29 @@ $ composer test
 
 #### Validator Header Fields
  - [x] ETag                    https://tools.ietf.org/html/rfc7232#section-2.3
- - [ ] Last-Modified           https://tools.ietf.org/html/rfc7232#section-2.2         x
+ - [ ] Last-Modified           https://tools.ietf.org/html/rfc7232#section-2.2
 
 #### Authentication Challenges
  - [ ] WWW-Authenticate        https://tools.ietf.org/html/rfc7235#section-4.1
  - [ ] Proxy-Authenticate      https://tools.ietf.org/html/rfc7235#section-4.3
 
 #### Response Context
- - [ ] Accept-Ranges           https://tools.ietf.org/html/rfc7233#section-2.3         x
+ - [ ] Accept-Ranges           https://tools.ietf.org/html/rfc7233#section-2.3
  - [ ] Allow                   https://tools.ietf.org/html/rfc7231#section-7.4.1
  - [ ] Server                  https://tools.ietf.org/html/rfc7231#section-7.4.2
 
 #### Other
- - [ ] Content-Disposition     https://tools.ietf.org/html/rfc6266#section-4           x
+ - [x] Content-Disposition     https://tools.ietf.org/html/rfc6266#section-4
+
+## Change log
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Testing
+
+``` bash
+$ composer test
+```
 
 ## Contributing
 

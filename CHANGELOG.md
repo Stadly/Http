@@ -4,17 +4,13 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [0.8.0](https://github.com/Stadly/Http/compare/v0.7.0...v0.8.0) - 2021-08-30
+## [Unreleased](https://github.com/Stadly/Http/compare/v0.8.0...HEAD)
 
 ### Added
-- Cache-Control HTTP header.
-- Possible to evaluate conditional headers.
+- Nothing
 
 ### Changed
-- PHP 7.3 is no longer supported, due to use of type variance.
-- Constructing headers from value or string throws the checked exception `InvalidHeader` instead of the unchecked exception `InvalidArgumentException`, since the input is likely to be user provided.
-- Converting invalid header to string throws `InvalidHeader` instead of `RuntimeException`.
-- Getting value of invalid header throws `InvalidHeader` instead of `RuntimeException`.
+- Nothing
 
 ### Deprecated
 - Nothing
@@ -27,6 +23,18 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Security
 - Nothing
+
+## [0.8.0](https://github.com/Stadly/Http/compare/v0.7.0...v0.8.0) - 2021-08-30
+
+### Added
+- Cache-Control HTTP header.
+- Possible to evaluate conditional headers.
+
+### Changed
+- PHP 7.3 is no longer supported, due to use of type variance.
+- Constructing headers from value or string throws the checked exception `InvalidHeader` instead of the unchecked exception `InvalidArgumentException`, since the input is likely to be user provided.
+- Converting invalid header to string throws `InvalidHeader` instead of `RuntimeException`.
+- Getting value of invalid header throws `InvalidHeader` instead of `RuntimeException`.
 
 ## [0.7.0](https://github.com/Stadly/Http/compare/v0.6.0...v0.7.0) - 2021-08-13
 
@@ -47,17 +55,8 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Renamed Header/Value/Range/RangeSetInterface to Header/Value/Range/RangeSet.
 - Getting string or value of header may throw RuntimeException if header is invalid.
 
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
 ### Fixed
 - Allow leading and trailing whitespace in hash rule.
-
-### Security
-- Nothing
 
 ## [0.6.0](https://github.com/Stadly/Http/compare/v0.5.0...v0.6.0) - 2018-08-08
 

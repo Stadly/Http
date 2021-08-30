@@ -12,6 +12,9 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - PHP 7.3 is no longer supported, due to use of type variance.
+- Constructing headers from value or string throws the checked exception `InvalidHeader` instead of the unchecked exception `InvalidArgumentException`, since the input is likely to be user provided.
+- Converting invalid header to string throws `InvalidHeader` instead of `RuntimeException`.
+- Getting value of invalid header throws `InvalidHeader` instead of `RuntimeException`.
 
 ### Deprecated
 - Nothing

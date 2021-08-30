@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header;
 
-use RuntimeException;
+use Stadly\Http\Exception\InvalidHeader;
 
 interface Header
 {
     /**
      * @return string String representation of the header field.
-     * @throws RuntimeException If the header is invalid.
+     * @throws InvalidHeader If the header is invalid.
      */
     public function __toString(): string;
 
@@ -26,7 +26,7 @@ interface Header
 
     /**
      * @return string Header field value.
-     * @throws RuntimeException If the header is invalid.
+     * @throws InvalidHeader If the header is invalid.
      */
     public function getValue(): string;
 }

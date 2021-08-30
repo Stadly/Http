@@ -7,6 +7,7 @@ namespace Stadly\Http\Header\Response;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\ContentDisposition\ExtendedParameter;
 use Stadly\Http\Header\Value\ContentDisposition\RegularParameter;
 
@@ -54,7 +55,7 @@ final class ContentDispositionTest extends TestCase
      */
     public function testCannotConstructContentDispositionWithEmptyTypeFromValue(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         ContentDisposition::fromValue('');
     }

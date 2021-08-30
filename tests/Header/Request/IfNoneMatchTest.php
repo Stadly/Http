@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Request;
 
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
 
@@ -25,6 +26,16 @@ final class IfNoneMatchTest extends TestCase
         // Force generation of code coverage
         $ifNoneMatchConstruct = new IfNoneMatch(new EntityTagSet(new EntityTag('foo')));
         self::assertEquals($ifNoneMatch, $ifNoneMatchConstruct);
+    }
+
+    /**
+     * @covers ::fromValue
+     */
+    public function testCannotConstructIfNoneMatchWithEmptyEntityTagSetFromValue(): void
+    {
+        $this->expectException(InvalidHeader::class);
+
+        IfNoneMatch::fromValue('');
     }
 
     /**

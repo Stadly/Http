@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Response;
 
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
+use Stadly\Http\Utilities\Rfc7232;
 
 /**
  * Class for handling the HTTP header field ETag.
@@ -33,9 +35,15 @@ final class ETag implements Header
      *
      * @param string $value Header value.
      * @return self Header generated based on the value.
+     * @throws InvalidHeader If the header value is invalid.
      */
     public static function fromValue(string $value): self
     {
+        $regEx = '{^' . Rfc7232::ENTITY_TAG . '$}';
+        if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
+            throw new InvalidHeader('Invalid header value: ' . $value);
+        }
+
         return new self(EntityTag::fromString($value));
     }
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Response;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Common\ArbitraryHeader;
 use Stadly\Http\Header\Common\ContentType;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
@@ -34,7 +34,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructHeaderFromStringWithWhitespaceAroundName(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         HeaderFactory::fromString("\t foo\t  :bar");
     }
@@ -55,7 +55,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructHeaderWithoutValueFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         HeaderFactory::fromString('foo');
     }
@@ -65,7 +65,7 @@ final class HeaderFactoryTest extends TestCase
      */
     public function testCannotConstructHeaderWithEmptyNameFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         HeaderFactory::fromString(':bar');
     }

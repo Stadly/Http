@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Request;
 
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\Range\ByteRange;
 use Stadly\Http\Header\Value\Range\ByteRangeSet;
 
@@ -25,6 +26,16 @@ final class RangeTest extends TestCase
         // Force generation of code coverage
         $rangeConstruct = new Range(new ByteRangeSet(new ByteRange(10, 100)));
         self::assertEquals($range, $rangeConstruct);
+    }
+
+    /**
+     * @covers ::fromValue
+     */
+    public function testCannotConstructRangeWithEmptyRangeSetFromValue(): void
+    {
+        $this->expectException(InvalidHeader::class);
+
+        Range::fromValue('');
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Response;
 
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
 
 /**
@@ -24,6 +25,16 @@ final class ETagTest extends TestCase
         // Force generation of code coverage
         $eTagConstruct = new ETag(new EntityTag('foo'));
         self::assertEquals($eTag, $eTagConstruct);
+    }
+
+    /**
+     * @covers ::fromValue
+     */
+    public function testCannotConstructETagWithEmptyEntityTagFromValue(): void
+    {
+        $this->expectException(InvalidHeader::class);
+
+        ETag::fromValue('');
     }
 
     /**

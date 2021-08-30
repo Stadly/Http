@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\Range\RangeSet;
 use Stadly\Http\Header\Value\Range\RangeSetFactory;
+use Stadly\Http\Utilities\Rfc7233;
 
 /**
  * Class for handling the HTTP header field Range.
@@ -34,9 +36,15 @@ final class Range implements Header
      *
      * @param string $value Header value.
      * @return self Header generated based on the value.
+     * @throws InvalidHeader If the header value is invalid.
      */
     public static function fromValue(string $value): self
     {
+        $regEx = '{^(?:' . Rfc7233::BYTE_RANGES_SPECIFIER . '|' . Rfc7233::OTHER_RANGES_SPECIFIER . ')$}';
+        if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
+            throw new InvalidHeader('Invalid header value: ' . $value);
+        }
+
         return new self(RangeSetFactory::fromString($value));
     }
 

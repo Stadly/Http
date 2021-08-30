@@ -7,6 +7,7 @@ namespace Stadly\Http\Header\Response;
 use Cocur\Slugify\Slugify;
 use InvalidArgumentException;
 use OutOfBoundsException;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\ContentDisposition\ExtendedParameter;
 use Stadly\Http\Header\Value\ContentDisposition\Parameter;
 use Stadly\Http\Header\Value\ContentDisposition\RegularParameter;
@@ -49,12 +50,13 @@ final class ContentDisposition implements Header
      *
      * @param string $value Header value.
      * @return self Header generated based on the value.
+     * @throws InvalidHeader If the header value is invalid.
      */
     public static function fromValue(string $value): self
     {
         $regEx = '{^' . Rfc6266::CONTENT_DISPOSITION_VALUE_CAPTURE . '$}';
         if (utf8_decode($value) !== $value || preg_match($regEx, $value, $matches) !== 1) {
-            throw new InvalidArgumentException('Invalid header value: ' . $value);
+            throw new InvalidHeader('Invalid header value: ' . $value);
         }
 
         $parameters = [];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Common;
 
 use InvalidArgumentException;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Utilities\Rfc7230;
 
 /**
@@ -41,12 +42,13 @@ final class ArbitraryHeader implements Header
      *
      * @param string $header Header field string.
      * @return self Header generated based on the string.
+     * @throws InvalidHeader If the header is invalid.
      */
     public static function fromString(string $header): self
     {
         $regEx = '{^' . Rfc7230::HEADER_FIELD_CAPTURE . '$}';
         if (utf8_decode($header) !== $header || preg_match($regEx, $header, $matches) !== 1) {
-            throw new InvalidArgumentException('Invalid header field: ' . $header);
+            throw new InvalidHeader('Invalid header field: ' . $header);
         }
 
         return new self($matches['FIELD_NAME'], $matches['FIELD_VALUE']);

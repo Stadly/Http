@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Response;
 
-use InvalidArgumentException;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\CacheControl\FieldListDirective;
 use Stadly\Http\Header\Value\CacheControl\GeneralDirective;
 use Stadly\Http\Header\Value\CacheControl\IntegerDirective;
@@ -73,7 +72,7 @@ final class CacheControlTest extends TestCase
      */
     public function testCannotConstructCacheControlWithoutDirectivesFromValue(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         CacheControl::fromValue('');
     }
@@ -83,7 +82,7 @@ final class CacheControlTest extends TestCase
      */
     public function testCannotConstructCacheControlWithoutDirectivesFromValueWithWhitespace(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         CacheControl::fromValue(',,  , ,    ,    ');
     }
@@ -153,7 +152,7 @@ final class CacheControlTest extends TestCase
     {
         $cacheControl = new CacheControl();
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(InvalidHeader::class);
 
         $cacheControl->__toString();
     }
@@ -224,7 +223,7 @@ final class CacheControlTest extends TestCase
     {
         $cacheControl = new CacheControl();
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(InvalidHeader::class);
 
         $cacheControl->getValue();
     }

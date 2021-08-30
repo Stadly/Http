@@ -6,6 +6,7 @@ namespace Stadly\Http\Header\Common;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 
 /**
  * @coversDefaultClass \Stadly\Http\Header\Common\ArbitraryHeader
@@ -84,7 +85,7 @@ final class ArbitraryHeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithEmptyNameFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         ArbitraryHeader::fromString(': bar');
     }
@@ -94,7 +95,7 @@ final class ArbitraryHeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithInvalidNameFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         ArbitraryHeader::fromString('f o o: bar');
     }
@@ -115,7 +116,7 @@ final class ArbitraryHeaderTest extends TestCase
      */
     public function testCannotConstructHeaderWithInvalidValueFromString(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         ArbitraryHeader::fromString('foo: €-rate');
     }
@@ -125,7 +126,7 @@ final class ArbitraryHeaderTest extends TestCase
      */
     public function testCannotConstructHeaderFromStringWithWhitespaceAroundName(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidHeader::class);
 
         ArbitraryHeader::fromString("\t  foo  \t:bar");
     }

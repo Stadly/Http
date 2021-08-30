@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Common;
 
 use PHPUnit\Framework\TestCase;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\MediaType\MediaType;
 use Stadly\Http\Header\Value\MediaType\Parameter;
 
@@ -25,6 +26,16 @@ final class ContentTypeTest extends TestCase
         // Force generation of code coverage
         $contentTypeConstruct = new ContentType(new MediaType('text', 'html'));
         self::assertEquals($contentType, $contentTypeConstruct);
+    }
+
+    /**
+     * @covers ::fromValue
+     */
+    public function testCannotConstructContentTypeWithEmptyTypeFromValue(): void
+    {
+        $this->expectException(InvalidHeader::class);
+
+        ContentType::fromValue('');
     }
 
     /**

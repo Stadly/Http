@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Common;
 
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\MediaType\MediaType;
+use Stadly\Http\Utilities\Rfc7231;
 
 /**
  * Class for handling the HTTP header field Content-Type.
@@ -33,9 +35,15 @@ final class ContentType implements Header
      *
      * @param string $value Header value.
      * @return self Header generated based on the value.
+     * @throws InvalidHeader If the header value is invalid.
      */
     public static function fromValue(string $value): self
     {
+        $regEx = '{^' . Rfc7231::MEDIA_TYPE . '$}';
+        if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
+            throw new InvalidHeader('Invalid header value: ' . $value);
+        }
+
         return new self(MediaType::fromString($value));
     }
 

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Response;
 
-use InvalidArgumentException;
 use OutOfBoundsException;
-use RuntimeException;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\CacheControl\Directive;
 use Stadly\Http\Utilities\Rfc7230;
 use Stadly\Http\Utilities\Rfc7234;
@@ -38,12 +37,13 @@ final class CacheControl implements Header
      *
      * @param string $value Header value.
      * @return self Header generated based on the value.
+     * @throws InvalidHeader If the header value is invalid.
      */
     public static function fromValue(string $value): self
     {
         $regEx = '{^' . Rfc7230::hashRule(Rfc7234::CACHE_DIRECTIVE, 1) . '$}';
         if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
-            throw new InvalidArgumentException('Invalid header value: ' . $value);
+            throw new InvalidHeader('Invalid header value: ' . $value);
         }
 
         $directiveRegEx = '{' . Rfc7234::CACHE_DIRECTIVE_CAPTURE . '}';
@@ -87,7 +87,7 @@ final class CacheControl implements Header
     public function getValue(): string
     {
         if ($this->directives === []) {
-            throw new RuntimeException('Header has no directives.');
+            throw new InvalidHeader('Header has no directives.');
         }
 
         return implode(', ', $this->directives);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
-use InvalidArgumentException;
+use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Common\HeaderFactory as CommonHeaderFactory;
 use Stadly\Http\Utilities\Rfc7230;
 
@@ -18,12 +18,13 @@ final class HeaderFactory
      *
      * @param string $header Header field string.
      * @return Header Header generated based on the string.
+     * @throws InvalidHeader If the header is invalid.
      */
     public static function fromString(string $header): Header
     {
         $regEx = '{^' . Rfc7230::HEADER_FIELD_CAPTURE . '$}';
         if (utf8_decode($header) !== $header || preg_match($regEx, $header, $matches) !== 1) {
-            throw new InvalidArgumentException('Invalid header field: ' . $header);
+            throw new InvalidHeader('Invalid header field: ' . $header);
         }
 
         switch (strtolower($matches['FIELD_NAME'])) {

@@ -30,7 +30,7 @@ final class ContentTypeTest extends TestCase
     /**
      * @covers ::fromValue
      */
-    public function testCanConstructContentFromValue(): void
+    public function testCanConstructContentTypeFromValue(): void
     {
         $contentType = new ContentType(new MediaType('foo', 'bar'));
         $contentTypeFromValue = ContentType::fromValue('foo/bar');

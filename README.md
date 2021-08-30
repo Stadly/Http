@@ -92,7 +92,7 @@ if ($ifNoneMatch->evaluate($entityTag)) {
 
     readfile($filename);
 } else {
-    // 304: Not modified.
+    // 304 Not modified.
     http_response_code(304);
 }
 ```
@@ -203,17 +203,17 @@ If you discover any security related issues, please email magnar@myrtveit.com in
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/Stadly/Http.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/stadly/http.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/Stadly/Http/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/Stadly/Http.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Stadly/Http.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/Stadly/Http.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/stadly/http.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/Stadly/Http
+[link-packagist]: https://packagist.org/packages/stadly/http
 [link-travis]: https://app.travis-ci.com/github/Stadly/Http
 [link-scrutinizer]: https://scrutinizer-ci.com/g/Stadly/Http/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/Stadly/Http
-[link-downloads]: https://packagist.org/packages/Stadly/Http
+[link-downloads]: https://packagist.org/packages/stadly/http
 [link-author]: https://github.com/Stadly
 [link-contributors]: ../../contributors

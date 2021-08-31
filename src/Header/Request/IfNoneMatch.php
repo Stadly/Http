@@ -7,7 +7,6 @@ namespace Stadly\Http\Header\Request;
 use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
 use Stadly\Http\Header\Value\EntityTag\EntityTagSet;
-use Stadly\Http\Utilities\Rfc7230;
 use Stadly\Http\Utilities\Rfc7232;
 
 /**
@@ -41,7 +40,7 @@ final class IfNoneMatch implements Header
      */
     public static function fromValue(string $value): self
     {
-        $regEx = '{^(?:\\*|' . Rfc7230::hashRule(Rfc7232::ENTITY_TAG, 1) . ')$}';
+        $regEx = '{^' . Rfc7232::IF_NONE_MATCH . '$}';
         if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
             throw new InvalidHeader('Invalid header value: ' . $value);
         }

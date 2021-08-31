@@ -39,7 +39,7 @@ final class ContentType implements Header
      */
     public static function fromValue(string $value): self
     {
-        $regEx = '{^' . Rfc7231::MEDIA_TYPE . '$}';
+        $regEx = '{^' . Rfc7231::CONTENT_TYPE . '$}';
         if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
             throw new InvalidHeader('Invalid header value: ' . $value);
         }

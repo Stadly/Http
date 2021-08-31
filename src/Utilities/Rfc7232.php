@@ -52,4 +52,22 @@ final class Rfc7232
      * Specification: https://tools.ietf.org/html/rfc7232#section-2.3 (etagc)
      */
     public const ETAGC = "(?:[\x21\x23-\x7E]|" . Rfc7230::OBS_TEXT . ')';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7232#section-3.1 (If-Match)
+     * Same as: "*" | Rfc7230::hashRule(self::ENTITY_TAG, 1)
+     */
+    public const IF_MATCH
+        = '(?:\\*|(?:' . Rfc7230::OWS . '(?:,' . Rfc7230::OWS . ')*'
+        . self::ENTITY_TAG . '(?:(?:' . Rfc7230::OWS . ',)+' . Rfc7230::OWS . self::ENTITY_TAG . ')*'
+        . Rfc7230::OWS . '(?:,' . Rfc7230::OWS . ')*))';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7232#section-3.2 (If-None-Match)
+     * Same as: "*" | Rfc7230::hashRule(self::ENTITY_TAG, 1)
+     */
+    public const IF_NONE_MATCH
+        = '(?:\\*|(?:' . Rfc7230::OWS . '(?:,' . Rfc7230::OWS . ')*'
+        . self::ENTITY_TAG . '(?:(?:' . Rfc7230::OWS . ',)+' . Rfc7230::OWS . self::ENTITY_TAG . ')*'
+        . Rfc7230::OWS . '(?:,' . Rfc7230::OWS . ')*))';
 }

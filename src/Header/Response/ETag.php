@@ -39,7 +39,7 @@ final class ETag implements Header
      */
     public static function fromValue(string $value): self
     {
-        $regEx = '{^' . Rfc7232::ENTITY_TAG . '$}';
+        $regEx = '{^' . Rfc7232::ETAG . '$}';
         if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
             throw new InvalidHeader('Invalid header value: ' . $value);
         }

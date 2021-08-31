@@ -7,7 +7,6 @@ namespace Stadly\Http\Header\Response;
 use OutOfBoundsException;
 use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\CacheControl\Directive;
-use Stadly\Http\Utilities\Rfc7230;
 use Stadly\Http\Utilities\Rfc7234;
 
 /**
@@ -41,7 +40,7 @@ final class CacheControl implements Header
      */
     public static function fromValue(string $value): self
     {
-        $regEx = '{^' . Rfc7230::hashRule(Rfc7234::CACHE_DIRECTIVE, 1) . '$}';
+        $regEx = '{^' . Rfc7234::CACHE_CONTROL . '$}';
         if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
             throw new InvalidHeader('Invalid header value: ' . $value);
         }

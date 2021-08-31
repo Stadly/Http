@@ -50,6 +50,17 @@ final class IfMatchTest extends TestCase
     }
 
     /**
+     * @covers ::fromValue
+     */
+    public function testCanConstructIfMatchWithoutEntityTagsFromValue(): void
+    {
+        $ifMatch = new IfMatch(new EntityTagSet());
+        $ifMatchFromValue = IfMatch::fromValue('*');
+
+        self::assertEquals($ifMatch, $ifMatchFromValue);
+    }
+
+    /**
      * @covers ::__toString
      */
     public function testCanConvertIfMatchWithoutEntityTagsToString(): void

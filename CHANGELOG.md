@@ -19,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Fixed
-- Nothing
+- Can construct If-Match and If-None-Match matching anything from value.
 
 ### Security
 - Nothing

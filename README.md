@@ -29,7 +29,7 @@ use Stadly\Http\Header\Request\IfNoneMatch;
 use Stadly\Http\Header\Response\ContentDisposition;
 
 $contentType = ContentType::fromValue($_SERVER['HTTP_CONTENT_TYPE']);
-$ifNoneMatch = IfNoneMatch::fromValue($_SERVER['HTTP_IF_MATCH']);
+$ifNoneMatch = IfNoneMatch::fromValue($_SERVER['HTTP_IF_NONE_MATCH']);
 $contentDisposition = ContentDisposition::fromValue($_SERVER['HTTP_CONTENT_DISPOSITION']);
 ```
 

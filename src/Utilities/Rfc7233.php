@@ -136,4 +136,9 @@ final class Rfc7233
      * Specification: https://tools.ietf.org/html/rfc7233#section-3.1 (other-range-set)
      */
     public const OTHER_RANGE_SET_CAPTURE = '(?<OTHER_RANGE_SET>' . Rfc5234::VCHAR . '+)';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7233#section-3.2 (If-Range)
+     */
+    public const IF_RANGE = '(?:' . Rfc7232::ENTITY_TAG . '|' . Rfc7231::HTTP_DATE . ')';
 }

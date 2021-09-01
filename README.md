@@ -131,7 +131,7 @@ The checked header fields have been implemented.
  - [x] If-None-Match           https://tools.ietf.org/html/rfc7232#section-3.2
  - [x] If-Modified-Since       https://tools.ietf.org/html/rfc7232#section-3.3
  - [x] If-Unmodified-Since     https://tools.ietf.org/html/rfc7232#section-3.4
- - [ ] If-Range                https://tools.ietf.org/html/rfc7233#section-3.2
+ - [x] If-Range                https://tools.ietf.org/html/rfc7233#section-3.2
 
 #### Content Negotiation
  - [ ] Accept                  https://tools.ietf.org/html/rfc7231#section-5.3.2

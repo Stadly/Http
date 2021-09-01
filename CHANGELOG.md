@@ -9,6 +9,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Added
 - If-Modified-Since HTTP header.
 - If-Unmodified-Since HTTP header.
+- If-Range HTTP header.
 
 ### Changed
 - Nothing

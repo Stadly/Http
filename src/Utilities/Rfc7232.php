@@ -75,4 +75,9 @@ final class Rfc7232
      * Specification: https://tools.ietf.org/html/rfc7232#section-3.4 (If-Modified-Since)
      */
     public const IF_MODIFIED_SINCE = Rfc7231::HTTP_DATE;
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7232#section-3.4 (If-Unmodified-Since)
+     */
+    public const IF_UNMODIFIED_SINCE = Rfc7231::HTTP_DATE;
 }

@@ -129,7 +129,7 @@ The checked header fields have been implemented.
 #### Conditionals
  - [x] If-Match                https://tools.ietf.org/html/rfc7232#section-3.1
  - [x] If-None-Match           https://tools.ietf.org/html/rfc7232#section-3.2
- - [ ] If-Modified-Since       https://tools.ietf.org/html/rfc7232#section-3.3
+ - [x] If-Modified-Since       https://tools.ietf.org/html/rfc7232#section-3.3
  - [ ] If-Unmodified-Since     https://tools.ietf.org/html/rfc7232#section-3.4
  - [ ] If-Range                https://tools.ietf.org/html/rfc7233#section-3.2
 

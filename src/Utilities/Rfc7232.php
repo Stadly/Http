@@ -70,4 +70,9 @@ final class Rfc7232
         = '(?:\\*|(?:' . Rfc7230::OWS . '(?:,' . Rfc7230::OWS . ')*'
         . self::ENTITY_TAG . '(?:(?:' . Rfc7230::OWS . ',)+' . Rfc7230::OWS . self::ENTITY_TAG . ')*'
         . Rfc7230::OWS . '(?:,' . Rfc7230::OWS . ')*))';
+
+    /**
+     * Specification: https://tools.ietf.org/html/rfc7232#section-3.4 (If-Modified-Since)
+     */
+    public const IF_MODIFIED_SINCE = Rfc7231::HTTP_DATE;
 }

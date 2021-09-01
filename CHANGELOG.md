@@ -7,7 +7,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## [Unreleased](https://github.com/Stadly/Http/compare/v0.8.0...HEAD)
 
 ### Added
-- Nothing
+- If-Modified-Since HTTP header.
 
 ### Changed
 - Nothing

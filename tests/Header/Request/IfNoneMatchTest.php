@@ -153,7 +153,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testAnyHeaderEvaluatesToFalseWithNoEntityTag(): void
+    public function testIfNoneMatchMatchingAnythingEvaluatesToFalseWhenEntityTagIsUnkown(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet());
 
@@ -163,7 +163,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testAnyHeaderEvaluatesToFalseWithStrongEntityTag(): void
+    public function testIfNoneMatchMatchingAnythingEvaluatesToFalseWithStrongEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet());
         $entityTag = new EntityTag('foo');
@@ -174,7 +174,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testAnyHeaderEvaluatesToFalseWithWeakEntityTag(): void
+    public function testIfNoneMatchMatchingAnythingEvaluatesToFalseWithWeakEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet());
         $entityTag = new EntityTag('foo', /*isWeak*/true);
@@ -185,7 +185,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithStrongEntityTagEvaluatesToFalseWithStrongEntityTag(): void
+    public function testIfNoneMatchWithStrongEntityTagEvaluatesToFalseWithStrongEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -201,7 +201,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithStrongEntityTagEvaluatesToFalseWithWeakEntityTag(): void
+    public function testIfNoneMatchWithStrongEntityTagEvaluatesToFalseWithWeakEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -217,7 +217,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithWeakEntityTagEvaluatesToFalseWithStrongEntityTag(): void
+    public function testIfNoneMatchWithWeakEntityTagEvaluatesToFalseWithStrongEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -233,7 +233,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithWeakEntityTagEvaluatesToFalseWithWeakEntityTag(): void
+    public function testIfNoneMatchWithWeakEntityTagEvaluatesToFalseWithWeakEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -249,7 +249,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderEvaluatesToTrueWithMissingStrongEntityTag(): void
+    public function testIfNoneMatchEvaluatesToTrueWithMissingStrongEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -265,7 +265,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderEvaluatesToTrueWithMissingWeakEntityTag(): void
+    public function testIfNoneMatchEvaluatesToTrueWithMissingWeakEntityTag(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -281,7 +281,7 @@ final class IfNoneMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderEvaluatesToTrueWithNoEntityTag(): void
+    public function testIfNoneMatchEvaluatesToTrueWhenEntityTagIsUnkown(): void
     {
         $ifNoneMatch = new IfNoneMatch(new EntityTagSet(
             new EntityTag('foo'),

@@ -153,7 +153,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testAnyHeaderEvaluatesToTrueWithNoEntityTag(): void
+    public function testIfMatchMatchingAnythingEvaluatesToTrueWhenEntityTagIsUnkown(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet());
 
@@ -163,7 +163,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testAnyHeaderEvaluatesToTrueWithStrongEntityTag(): void
+    public function testIfMatchMatchingAnythingEvaluatesToTrueWithStrongEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet());
         $entityTag = new EntityTag('foo');
@@ -174,7 +174,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testAnyHeaderEvaluatesToTrueWithWeakEntityTag(): void
+    public function testIfMatchMatchingAnythingEvaluatesToTrueWithWeakEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet());
         $entityTag = new EntityTag('foo', /*isWeak*/true);
@@ -185,7 +185,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithStrongEntityTagEvaluatesToTrueWithStrongEntityTag(): void
+    public function testIfMatchWithStrongEntityTagEvaluatesToTrueWithStrongEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -201,7 +201,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithStrongEntityTagEvaluatesToFalseWithWeakEntityTag(): void
+    public function testIfMatchWithStrongEntityTagEvaluatesToFalseWithWeakEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -217,7 +217,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithWeakEntityTagEvaluatesToFalseWithStrongEntityTag(): void
+    public function testIfMatchWithWeakEntityTagEvaluatesToFalseWithStrongEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -233,7 +233,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderWithWeakEntityTagEvaluatesToFalseWithWeakEntityTag(): void
+    public function testIfMatchWithWeakEntityTagEvaluatesToFalseWithWeakEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -249,7 +249,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderEvaluatesToFalseWithMissingStrongEntityTag(): void
+    public function testIfMatchEvaluatesToFalseWithMissingStrongEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -265,7 +265,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderEvaluatesToFalseWithMissingWeakEntityTag(): void
+    public function testIfMatchEvaluatesToFalseWithMissingWeakEntityTag(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),
@@ -281,7 +281,7 @@ final class IfMatchTest extends TestCase
     /**
      * @covers ::evaluate
      */
-    public function testHeaderEvaluatesToFalseWithNoEntityTag(): void
+    public function testIfMatchEvaluatesToFalseWhenEntityTagIsUnkown(): void
     {
         $ifMatch = new IfMatch(new EntityTagSet(
             new EntityTag('foo'),

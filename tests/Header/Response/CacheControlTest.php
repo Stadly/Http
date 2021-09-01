@@ -189,7 +189,7 @@ final class CacheControlTest extends TestCase
     /**
      * @covers ::isValid
      */
-    public function testHeaderWithoutDirectivesIsInvalid(): void
+    public function testCacheControlWithoutDirectivesIsInvalid(): void
     {
         $cacheControl = new CacheControl();
 

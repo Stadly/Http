@@ -83,8 +83,8 @@ final class IfMatch implements Header
     }
 
     /**
-     * @param EntityTag|null $entityTag Entity tag to evaluate.
-     * @return bool Whether the entity tag set strongly matches the entity tag.
+     * @param EntityTag|null $entityTag Entity tag, or null if unknown.
+     * @return bool Whether the condition is satisfied by the entity tag.
      */
     public function evaluate(?EntityTag $entityTag): bool
     {

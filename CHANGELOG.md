@@ -4,25 +4,10 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/Http/compare/v1.0.0...HEAD)
-
-### Added
-- Nothing
+## [1.1.0](https://github.com/Stadly/Http/compare/v1.0.0...v1.1.0) - 2021-09-08
 
 ### Changed
 - Possible to have If-Range header with weak validator, but the header is invalid.
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Fixed
-- Nothing
-
-### Security
-- Nothing
 
 ## [1.0.0](https://github.com/Stadly/Http/compare/v0.8.0...v1.0.0) - 2021-09-02
 

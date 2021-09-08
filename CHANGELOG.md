@@ -4,6 +4,26 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [Unreleased](https://github.com/Stadly/Http/compare/v1.1.0...HEAD)
+
+### Added
+- Nothing
+
+### Changed
+- Nothing
+
+### Deprecated
+- Nothing
+
+### Removed
+- Nothing
+
+### Fixed
+- Nothing
+
+### Security
+- Nothing
+
 ## [1.1.0](https://github.com/Stadly/Http/compare/v1.0.0...v1.1.0) - 2021-09-08
 
 ### Changed

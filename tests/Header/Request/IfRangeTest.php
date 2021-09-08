@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Stadly\Http\Header\Request;
 
 use DateTime;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\Date;
@@ -33,11 +32,13 @@ final class IfRangeTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCannotConstructIfRangeWithWeakEntityTag(): void
+    public function testCanConstructIfRangeWithWeakEntityTag(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $ifRange = new IfRange(new EntityTag('foo', /*isWeak*/true));
 
-        new IfRange(new EntityTag('foo', /*isWeak*/true));
+        // Force generation of code coverage
+        $ifRangeConstruct = new IfRange(new EntityTag('foo', /*isWeak*/true));
+        self::assertEquals($ifRange, $ifRangeConstruct);
     }
 
     /**
@@ -57,9 +58,11 @@ final class IfRangeTest extends TestCase
      */
     public function testCanConstructIfRangeWithWeakDate(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06')));
 
-        new IfRange(new Date(new DateTime('2001-02-03 04:05:06')));
+        // Force generation of code coverage
+        $ifRangeConstruct = new IfRange(new Date(new DateTime('2001-02-03 04:05:06')));
+        self::assertEquals($ifRange, $ifRangeConstruct);
     }
 
     /**
@@ -86,11 +89,12 @@ final class IfRangeTest extends TestCase
     /**
      * @covers ::fromValue
      */
-    public function testCannotConstructIfRangeWithWeakEntityTagFromValue(): void
+    public function testCanConstructIfRangeWithWeakEntityTagFromValue(): void
     {
-        $this->expectException(InvalidHeader::class);
+        $ifRange = new IfRange(new EntityTag('foo', /*isWeak*/true));
+        $ifRangeFromValue = IfRange::fromValue('W/"foo"');
 
-        IfRange::fromValue('W/"foo"');
+        self::assertEquals($ifRange, $ifRangeFromValue);
     }
 
     /**
@@ -117,6 +121,18 @@ final class IfRangeTest extends TestCase
     /**
      * @covers ::__toString
      */
+    public function testCannotConvertIfRangeWithWeakEntityTagToString(): void
+    {
+        $ifRange = new IfRange(new EntityTag('foo', /*isWeak*/true));
+
+        $this->expectException(InvalidHeader::class);
+
+        $ifRange->__toString();
+    }
+
+    /**
+     * @covers ::__toString
+     */
     public function testCanConvertIfRangeWithDateToString(): void
     {
         $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06'), /*isWeak*/false));
@@ -125,13 +141,55 @@ final class IfRangeTest extends TestCase
     }
 
     /**
+     * @covers ::__toString
+     */
+    public function testCannotConvertIfRangeWithWeakDateToString(): void
+    {
+        $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06')));
+
+        $this->expectException(InvalidHeader::class);
+
+        $ifRange->__toString();
+    }
+
+    /**
      * @covers ::isValid
      */
-    public function testHeaderIsValid(): void
+    public function testHeaderWithEntityTagIsValid(): void
     {
         $ifRange = new IfRange(new EntityTag('foo'));
 
-        self::assertTrue($ifRange->isValid()); // @phpstan-ignore-line
+        self::assertTrue($ifRange->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testHeaderWithWeakEntityTagIsInvalid(): void
+    {
+        $ifRange = new IfRange(new EntityTag('foo', /*isWeak*/true));
+
+        self::assertFalse($ifRange->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testHeaderWithDateIsValid(): void
+    {
+        $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06'), /*isWeak*/false));
+
+        self::assertTrue($ifRange->isValid());
+    }
+
+    /**
+     * @covers ::isValid
+     */
+    public function testHeaderWithWeakDateIsInvalid(): void
+    {
+        $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06')));
+
+        self::assertFalse($ifRange->isValid());
     }
 
     /**
@@ -157,11 +215,35 @@ final class IfRangeTest extends TestCase
     /**
      * @covers ::getValue
      */
+    public function testCannotGetValueForIfRangeWithWeakEntityTag(): void
+    {
+        $ifRange = new IfRange(new EntityTag('foo', /*isWeak*/true));
+
+        $this->expectException(InvalidHeader::class);
+
+        $ifRange->getValue();
+    }
+
+    /**
+     * @covers ::getValue
+     */
     public function testCanGetValueForIfRangeWithDate(): void
     {
         $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06'), /*isWeak*/false));
 
         self::assertSame('Sat, 03 Feb 2001 04:05:06 GMT', $ifRange->getValue());
+    }
+
+    /**
+     * @covers ::getValue
+     */
+    public function testCannotGetValueForIfRangeWithWeakDate(): void
+    {
+        $ifRange = new IfRange(new Date(new DateTime('2001-02-03 04:05:06')));
+
+        $this->expectException(InvalidHeader::class);
+
+        $ifRange->getValue();
     }
 
     /**
@@ -313,15 +395,15 @@ final class IfRangeTest extends TestCase
     /**
      * @covers ::setValidator
      */
-    public function testCannotSetValidatorToWeakEntityTag(): void
+    public function testCanSetValidatorToWeakEntityTag(): void
     {
         $validator = new EntityTag('foo', /*isWeak*/true);
+        $ifRange = new IfRange($validator);
 
         $ifRangeSetValidator = new IfRange(new Date(new DateTime('2001-02-03 04:05:06'), /*isWeak*/false));
-
-        $this->expectException(InvalidArgumentException::class);
-
         $ifRangeSetValidator->setValidator($validator);
+
+        self::assertEquals($ifRange, $ifRangeSetValidator);
     }
 
     /**
@@ -341,14 +423,14 @@ final class IfRangeTest extends TestCase
     /**
      * @covers ::setValidator
      */
-    public function testCannotSetValidatorToWeakDate(): void
+    public function testCanSetValidatorToWeakDate(): void
     {
         $validator = new Date(new DateTime('2001-02-03 04:05:06'));
+        $ifRange = new IfRange($validator);
 
         $ifRangeSetValidator = new IfRange(new EntityTag('foo'));
-
-        $this->expectException(InvalidArgumentException::class);
-
         $ifRangeSetValidator->setValidator($validator);
+
+        self::assertEquals($ifRange, $ifRangeSetValidator);
     }
 }

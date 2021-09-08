@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Possible to have If-Range header with weak validator, but the header is invalid.
 
 ### Deprecated
 - Nothing

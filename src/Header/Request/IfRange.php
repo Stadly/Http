@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stadly\Http\Header\Request;
 
-use InvalidArgumentException;
 use Stadly\Http\Exception\InvalidHeader;
 use Stadly\Http\Header\Value\Date;
 use Stadly\Http\Header\Value\EntityTag\EntityTag;
@@ -30,10 +29,6 @@ final class IfRange implements Header
      */
     public function __construct($validator)
     {
-        if ($validator->isWeak()) {
-            throw new InvalidArgumentException('Validator must be strong: ' . $validator);
-        }
-
         $this->validator = $validator;
     }
 
@@ -48,14 +43,7 @@ final class IfRange implements Header
     {
         $entityTagRegEx = '{^' . Rfc7232::ENTITY_TAG . '$}';
         if (utf8_decode($value) === $value && preg_match($entityTagRegEx, $value) === 1) {
-            $entityTag = EntityTag::fromString($value);
-
-            // Validator must be strong.
-            if ($entityTag->isWeak()) {
-                throw new InvalidHeader('Validator must be strong: ' . $value);
-            }
-
-            return new self($entityTag);
+            return new self(EntityTag::fromString($value));
         }
 
         $dateRegEx = '{^' . Rfc7231::HTTP_DATE . '$}';
@@ -68,7 +56,6 @@ final class IfRange implements Header
 
     /**
      * @inheritDoc
-     * @throws void The header is always valid.
      */
     public function __toString(): string
     {
@@ -76,11 +63,11 @@ final class IfRange implements Header
     }
 
     /**
-     * @return true The header is always valid.
+     * @inheritDoc
      */
     public function isValid(): bool
     {
-        return true;
+        return !$this->validator->isWeak();
     }
 
     /**
@@ -93,10 +80,13 @@ final class IfRange implements Header
 
     /**
      * @inheritDoc
-     * @throws void The header is always valid.
      */
     public function getValue(): string
     {
+        if ($this->validator->isWeak()) {
+            throw new InvalidHeader('Validator must be strong.');
+        }
+
         return (string)$this->validator;
     }
 
@@ -113,7 +103,7 @@ final class IfRange implements Header
 
         if ($validator instanceof Date && $this->validator instanceof Date) {
             // Dates must be strong and match exactly.
-            return !$validator->isWeak() && $this->validator->isEq($validator);
+            return !$validator->isWeak() && !$this->validator->isWeak() && $this->validator->isEq($validator);
         }
 
         return false;
@@ -134,10 +124,6 @@ final class IfRange implements Header
      */
     public function setValidator($validator): void
     {
-        if ($validator->isWeak()) {
-            throw new InvalidArgumentException('Validator must be strong: ' . $validator);
-        }
-
         $this->validator = $validator;
     }
 }

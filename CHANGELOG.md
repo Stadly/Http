@@ -4,25 +4,10 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/Http/compare/v1.1.0...HEAD)
-
-### Added
-- Nothing
-
-### Changed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
+## [1.1.1](https://github.com/Stadly/Http/compare/v1.1.0...v1.1.1) - 2021-09-14
 
 ### Fixed
 - Could not create Date from timestamp when using locale with `,` as decimal separator.
-
-### Security
-- Nothing
 
 ## [1.1.0](https://github.com/Stadly/Http/compare/v1.0.0...v1.1.0) - 2021-09-08
 

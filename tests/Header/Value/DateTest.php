@@ -163,6 +163,19 @@ final class DateTest extends TestCase
     }
 
     /**
+     * @covers ::fromTimestamp
+     */
+    public function testCanConstructDateFromTimestampWhenUsingLocaleWithCommaAsDecimalSeparator(): void
+    {
+        $date = new Date(new DateTime('2001-02-03 04:05:06', new DateTimeZone('GMT')));
+
+        setlocale(LC_ALL, 'de_DE');
+        $dateFromTimestamp = Date::fromTimestamp(981173106);
+
+        self::assertEquals($date, $dateFromTimestamp);
+    }
+
+    /**
      * @covers ::__construct
      */
     public function testMicrosecondsAreDiscardedWhenConstructingDateFromTimestamp(): void

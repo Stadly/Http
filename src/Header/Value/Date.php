@@ -53,7 +53,7 @@ final class Date
      */
     public static function fromTimestamp(float $timestamp, bool $isWeak = true): self
     {
-        $dateTime = DateTime::createFromFormat('U.u', sprintf('%.6f', $timestamp));
+        $dateTime = DateTime::createFromFormat('U.u', sprintf('%.6F', $timestamp));
         assert($dateTime !== false);
 
         return new self($dateTime, $isWeak);

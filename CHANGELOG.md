@@ -4,25 +4,13 @@ All notable changes to `Http` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased](https://github.com/Stadly/Http/compare/v1.1.1...HEAD)
-
-### Added
-- Nothing
+## [1.2.0](https://github.com/Stadly/Http/compare/v1.1.1...v1.2.0) - 2023-09-22
 
 ### Changed
 - Replaced deprecated `utf8_encode` and `utf8_decode` with `mb_convert_encoding`.
 
-### Deprecated
-- Nothing
-
 ### Removed
 - Removed support for PHP 7.4
-
-### Fixed
-- Nothing
-
-### Security
-- Nothing
 
 ## [1.1.1](https://github.com/Stadly/Http/compare/v1.1.0...v1.1.1) - 2021-09-14
 

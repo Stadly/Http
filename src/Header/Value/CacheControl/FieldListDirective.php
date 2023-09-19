@@ -50,7 +50,8 @@ final class FieldListDirective extends Directive implements IteratorAggregate
     public static function fromString(string $directive): self
     {
         $regEx = '{^' . Rfc7234::CACHE_DIRECTIVE_CAPTURE . '$}';
-        if (utf8_decode($directive) !== $directive || preg_match($regEx, $directive, $matches) !== 1) {
+        $plainDirective = mb_convert_encoding($directive, 'ISO-8859-1', 'UTF-8');
+        if ($plainDirective !== $directive || preg_match($regEx, $directive, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid directive: ' . $directive);
         }
 
@@ -65,7 +66,8 @@ final class FieldListDirective extends Directive implements IteratorAggregate
         }
 
         $fieldNamesRegEx = '{^' . Rfc7230::hashRule(Rfc7230::FIELD_NAME) . '$}';
-        if (utf8_decode($value) !== $value || preg_match($fieldNamesRegEx, $value) !== 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $value || preg_match($fieldNamesRegEx, $value) !== 1) {
             throw new InvalidArgumentException('Invalid value: ' . $value);
         }
 
@@ -88,7 +90,8 @@ final class FieldListDirective extends Directive implements IteratorAggregate
      */
     public function setName(string $name): void
     {
-        if (utf8_decode($name) !== $name || preg_match('{^' . Rfc7230::TOKEN . '$}', $name) !== 1) {
+        $plainName = mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8');
+        if ($plainName !== $name || preg_match('{^' . Rfc7230::TOKEN . '$}', $name) !== 1) {
             throw new InvalidArgumentException('Invalid name: ' . $name);
         }
 
@@ -118,7 +121,8 @@ final class FieldListDirective extends Directive implements IteratorAggregate
     public function add(string ...$fields): void
     {
         foreach ($fields as $field) {
-            if (utf8_decode($field) !== $field || preg_match('{^' . Rfc7230::FIELD_NAME . '$}', $field) !== 1) {
+            $plainField = mb_convert_encoding($field, 'ISO-8859-1', 'UTF-8');
+            if ($plainField !== $field || preg_match('{^' . Rfc7230::FIELD_NAME . '$}', $field) !== 1) {
                 throw new InvalidArgumentException('Invalid field: ' . $field);
             }
         }

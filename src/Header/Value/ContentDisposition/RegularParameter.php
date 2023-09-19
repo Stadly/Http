@@ -36,7 +36,8 @@ final class RegularParameter extends Parameter
     public static function fromString(string $parameter): self
     {
         $regEx = '{^' . Rfc6266::DISPOSITION_PARM_REGULAR_CAPTURE . '$}';
-        if (utf8_decode($parameter) !== $parameter || preg_match($regEx, $parameter, $matches) !== 1) {
+        $plainParameter = mb_convert_encoding($parameter, 'ISO-8859-1', 'UTF-8');
+        if ($plainParameter !== $parameter || preg_match($regEx, $parameter, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid parameter: ' . $parameter);
         }
 
@@ -62,7 +63,8 @@ final class RegularParameter extends Parameter
      */
     public function setName(string $name): void
     {
-        if (utf8_decode($name) !== $name || preg_match('{^' . Rfc2616::TOKEN . '$}', $name) !== 1) {
+        $plainName = mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8');
+        if ($plainName !== $name || preg_match('{^' . Rfc2616::TOKEN . '$}', $name) !== 1) {
             throw new InvalidArgumentException('Invalid name: ' . $name);
         }
 
@@ -77,7 +79,8 @@ final class RegularParameter extends Parameter
         $encodedValue = self::encodeValue($value);
 
         $regEx = '{^' . Rfc2616::VALUE . '$}';
-        if (utf8_decode($encodedValue) !== $encodedValue || preg_match($regEx, $encodedValue) !== 1) {
+        $plainValue = mb_convert_encoding($encodedValue, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $encodedValue || preg_match($regEx, $encodedValue) !== 1) {
             throw new InvalidArgumentException('Invalid value: ' . $value);
         }
 

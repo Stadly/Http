@@ -20,7 +20,8 @@ final class RangeSetFactory
      */
     public static function fromString(string $rangeSet): RangeSet
     {
-        if (utf8_decode($rangeSet) === $rangeSet) {
+        $plainRangeSet = mb_convert_encoding($rangeSet, 'ISO-8859-1', 'UTF-8');
+        if ($plainRangeSet === $rangeSet) {
             if (preg_match('{^' . Rfc7233::BYTE_RANGES_SPECIFIER . '$}', $rangeSet) === 1) {
                 return ByteRangeSet::fromString($rangeSet);
             }

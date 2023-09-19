@@ -45,7 +45,8 @@ final class EntityTagSet implements IteratorAggregate
         }
 
         $regEx = '{^' . Rfc7230::hashRule(Rfc7232::ENTITY_TAG, 1) . '$}';
-        if (utf8_decode($entityTagSet) !== $entityTagSet || preg_match($regEx, $entityTagSet) !== 1) {
+        $plainEntityTagSet = mb_convert_encoding($entityTagSet, 'ISO-8859-1', 'UTF-8');
+        if ($plainEntityTagSet !== $entityTagSet || preg_match($regEx, $entityTagSet) !== 1) {
             throw new InvalidArgumentException('Invalid set of entity tags: ' . $entityTagSet);
         }
 

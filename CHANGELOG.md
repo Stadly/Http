@@ -10,7 +10,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 - Nothing
 
 ### Changed
-- Nothing
+- Replaced deprecated `utf8_encode` and `utf8_decode` with `mb_convert_encoding`.
 
 ### Deprecated
 - Nothing

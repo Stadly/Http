@@ -68,7 +68,8 @@ final class Date
      */
     public static function fromString(string $date, bool $isWeak = true): self
     {
-        if (utf8_decode($date) === $date) {
+        $plainDate = mb_convert_encoding($date, 'ISO-8859-1', 'UTF-8');
+        if ($plainDate === $date) {
             if (preg_match('{^' . Rfc7231::IMF_FIXDATE . '$}', $date) === 1) {
                 $dateTime = DateTime::createFromFormat('D, d M Y H:i:s T', $date);
                 assert($dateTime !== false);

@@ -42,12 +42,14 @@ final class IfRange implements Header
     public static function fromValue(string $value): self
     {
         $entityTagRegEx = '{^' . Rfc7232::ENTITY_TAG . '$}';
-        if (utf8_decode($value) === $value && preg_match($entityTagRegEx, $value) === 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue === $value && preg_match($entityTagRegEx, $value) === 1) {
             return new self(EntityTag::fromString($value));
         }
 
         $dateRegEx = '{^' . Rfc7231::HTTP_DATE . '$}';
-        if (utf8_decode($value) === $value && preg_match($dateRegEx, $value) === 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue === $value && preg_match($dateRegEx, $value) === 1) {
             return new self(Date::fromString($value, /*isWeak*/false));
         }
 

@@ -23,7 +23,8 @@ final class HeaderFactory
     public static function fromString(string $header): Header
     {
         $regEx = '{^' . Rfc7230::HEADER_FIELD_CAPTURE . '$}';
-        if (utf8_decode($header) !== $header || preg_match($regEx, $header, $matches) !== 1) {
+        $plainHeader = mb_convert_encoding($header, 'ISO-8859-1', 'UTF-8');
+        if ($plainHeader !== $header || preg_match($regEx, $header, $matches) !== 1) {
             throw new InvalidHeader('Invalid header field: ' . $header);
         }
 

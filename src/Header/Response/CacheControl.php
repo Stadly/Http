@@ -41,7 +41,8 @@ final class CacheControl implements Header
     public static function fromValue(string $value): self
     {
         $regEx = '{^' . Rfc7234::CACHE_CONTROL . '$}';
-        if (utf8_decode($value) !== $value || preg_match($regEx, $value) !== 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $value || preg_match($regEx, $value) !== 1) {
             throw new InvalidHeader('Invalid header value: ' . $value);
         }
 

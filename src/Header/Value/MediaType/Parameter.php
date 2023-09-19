@@ -34,7 +34,8 @@ final class Parameter
     public function __construct(string $name, string $value)
     {
         // Not possible to change name, since it may be used as key in arrays.
-        if (utf8_decode($name) !== $name || preg_match('{^' . Rfc7230::TOKEN . '$}', $name) !== 1) {
+        $plainName = mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8');
+        if ($plainName !== $name || preg_match('{^' . Rfc7230::TOKEN . '$}', $name) !== 1) {
             throw new InvalidArgumentException('Invalid name: ' . $name);
         }
         $this->name = $name;
@@ -51,7 +52,8 @@ final class Parameter
     public static function fromString(string $parameter): self
     {
         $regEx = '{^' . Rfc7231::PARAMETER_CAPTURE . '$}';
-        if (utf8_decode($parameter) !== $parameter || preg_match($regEx, $parameter, $matches) !== 1) {
+        $plainParameter = mb_convert_encoding($parameter, 'ISO-8859-1', 'UTF-8');
+        if ($plainParameter !== $parameter || preg_match($regEx, $parameter, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid parameter: ' . $parameter);
         }
 
@@ -96,7 +98,8 @@ final class Parameter
         $encodedValue = self::encodeValue($value);
 
         $regEx = '{^(?:' . Rfc7230::TOKEN . '|' . Rfc7230::QUOTED_STRING . ')$}';
-        if (utf8_decode($encodedValue) !== $encodedValue || preg_match($regEx, $encodedValue) !== 1) {
+        $plainValue = mb_convert_encoding($encodedValue, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $encodedValue || preg_match($regEx, $encodedValue) !== 1) {
             throw new InvalidArgumentException('Invalid value: ' . $value);
         }
 

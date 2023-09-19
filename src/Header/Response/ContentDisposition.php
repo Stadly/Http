@@ -55,7 +55,8 @@ final class ContentDisposition implements Header
     public static function fromValue(string $value): self
     {
         $regEx = '{^' . Rfc6266::CONTENT_DISPOSITION_VALUE_CAPTURE . '$}';
-        if (utf8_decode($value) !== $value || preg_match($regEx, $value, $matches) !== 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $value || preg_match($regEx, $value, $matches) !== 1) {
             throw new InvalidHeader('Invalid header value: ' . $value);
         }
 
@@ -126,7 +127,8 @@ final class ContentDisposition implements Header
      */
     public function setType(string $type): void
     {
-        if (utf8_decode($type) !== $type || preg_match('{^' . Rfc6266::DISPOSITION_TYPE . '$}', $type) !== 1) {
+        $plainType = mb_convert_encoding($type, 'ISO-8859-1', 'UTF-8');
+        if ($plainType !== $type || preg_match('{^' . Rfc6266::DISPOSITION_TYPE . '$}', $type) !== 1) {
             throw new InvalidArgumentException('Invalid type: ' . $type);
         }
 
@@ -264,16 +266,18 @@ final class ContentDisposition implements Header
         $lastCharIsPlaceholder = false;
         $regEx = '{^(?:' . Rfc2616::QDTEXT . '|' . Rfc2616::QUOTED_PAIR . ')+$}';
         foreach ($chars as $char) {
-            $decodedChar = utf8_decode($char);
+            $plainChar = mb_convert_encoding($char, 'ISO-8859-1', 'UTF-8');
 
             // If the char is not ASCII, try converting it to one or more similar ASCII chars.
-            if (utf8_encode($decodedChar) !== $char || preg_match($regEx, addslashes($decodedChar)) !== 1) {
+            $utf8Char = mb_convert_encoding($plainChar, 'UTF-8', 'ISO-8859-1');
+            if ($utf8Char !== $char || preg_match($regEx, addslashes($plainChar)) !== 1) {
                 $char = $slugify->slugify($char);
-                $decodedChar = utf8_decode($char);
+                $plainChar = mb_convert_encoding($char, 'ISO-8859-1', 'UTF-8');
             }
 
             // If the char could not be converted to ASCII, replace it with a placeholder.
-            if (utf8_encode($decodedChar) !== $char || preg_match($regEx, addslashes($decodedChar)) !== 1) {
+            $utf8Char = mb_convert_encoding($plainChar, 'UTF-8', 'ISO-8859-1');
+            if ($utf8Char !== $char || preg_match($regEx, addslashes($plainChar)) !== 1) {
                 if (!$lastCharIsPlaceholder) {
                     $asciiString .= self::INVALID_CHAR_PLACEHOLDER;
                     $lastCharIsPlaceholder = true;

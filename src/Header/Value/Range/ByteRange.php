@@ -55,7 +55,8 @@ final class ByteRange
     public static function fromString(string $range): self
     {
         $regEx = '{^(?:' . Rfc7233::BYTE_RANGE_SPEC_CAPTURE . '|' . Rfc7233::SUFFIX_BYTE_RANGE_SPEC_CAPTURE . ')$}';
-        if (utf8_decode($range) !== $range || preg_match($regEx, $range, $matches) !== 1) {
+        $plainRange = mb_convert_encoding($range, 'ISO-8859-1', 'UTF-8');
+        if ($plainRange !== $range || preg_match($regEx, $range, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid range: ' . $range);
         }
 

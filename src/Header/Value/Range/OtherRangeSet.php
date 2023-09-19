@@ -45,7 +45,8 @@ final class OtherRangeSet implements RangeSet
     public static function fromString(string $rangeSet): self
     {
         $regEx = '{^' . Rfc7233::OTHER_RANGES_SPECIFIER_CAPTURE . '$}';
-        if (utf8_decode($rangeSet) !== $rangeSet || preg_match($regEx, $rangeSet, $matches) !== 1) {
+        $plainRangeSet = mb_convert_encoding($rangeSet, 'ISO-8859-1', 'UTF-8');
+        if ($plainRangeSet !== $rangeSet || preg_match($regEx, $rangeSet, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid set of ranges: ' . $rangeSet);
         }
 
@@ -75,7 +76,8 @@ final class OtherRangeSet implements RangeSet
      */
     public function setUnit(string $unit): void
     {
-        if (utf8_decode($unit) !== $unit || preg_match('{^' . Rfc7233::OTHER_RANGE_UNIT . '$}', $unit) !== 1) {
+        $plainUnit = mb_convert_encoding($unit, 'ISO-8859-1', 'UTF-8');
+        if ($plainUnit !== $unit || preg_match('{^' . Rfc7233::OTHER_RANGE_UNIT . '$}', $unit) !== 1) {
             throw new InvalidArgumentException('Invalid unit: ' . $unit);
         }
 
@@ -97,7 +99,8 @@ final class OtherRangeSet implements RangeSet
      */
     public function setValue(string $value): void
     {
-        if (utf8_decode($value) !== $value || preg_match('{^' . Rfc7233::OTHER_RANGE_SET . '$}', $value) !== 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $value || preg_match('{^' . Rfc7233::OTHER_RANGE_SET . '$}', $value) !== 1) {
             throw new InvalidArgumentException('Invalid value: ' . $value);
         }
 

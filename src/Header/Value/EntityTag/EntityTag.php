@@ -33,7 +33,8 @@ final class EntityTag
     public function __construct(string $value, bool $isWeak = false)
     {
         // Not possible to change value, since it may be used as key in arrays.
-        if (utf8_decode($value) !== $value || preg_match('{^' . Rfc7232::ETAGC . '*$}', $value) !== 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $value || preg_match('{^' . Rfc7232::ETAGC . '*$}', $value) !== 1) {
             throw new InvalidArgumentException('Invalid entity tag: ' . $value);
         }
         $this->value = $value;
@@ -50,7 +51,8 @@ final class EntityTag
     public static function fromString(string $entityTag): self
     {
         $regEx = '{^' . Rfc7232::ENTITY_TAG_CAPTURE . '$}';
-        if (utf8_decode($entityTag) !== $entityTag || preg_match($regEx, $entityTag, $matches) !== 1) {
+        $plainEntityTag = mb_convert_encoding($entityTag, 'ISO-8859-1', 'UTF-8');
+        if ($plainEntityTag !== $entityTag || preg_match($regEx, $entityTag, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid entity tag: ' . $entityTag);
         }
 

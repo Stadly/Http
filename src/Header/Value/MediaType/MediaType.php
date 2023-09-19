@@ -53,7 +53,8 @@ final class MediaType
     public static function fromString(string $mediaType): self
     {
         $regEx = '{^' . Rfc7231::MEDIA_TYPE_CAPTURE . '$}';
-        if (utf8_decode($mediaType) !== $mediaType || preg_match($regEx, $mediaType, $matches) !== 1) {
+        $plainMediaType = mb_convert_encoding($mediaType, 'ISO-8859-1', 'UTF-8');
+        if ($plainMediaType !== $mediaType || preg_match($regEx, $mediaType, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid media type: ' . $mediaType);
         }
 
@@ -96,7 +97,8 @@ final class MediaType
      */
     public function setType(string $type): void
     {
-        if (utf8_decode($type) !== $type || preg_match('{^' . Rfc7231::TYPE . '$}', $type) !== 1) {
+        $plainType = mb_convert_encoding($type, 'ISO-8859-1', 'UTF-8');
+        if ($plainType !== $type || preg_match('{^' . Rfc7231::TYPE . '$}', $type) !== 1) {
             throw new InvalidArgumentException('Invalid type: ' . $type);
         }
 
@@ -118,7 +120,8 @@ final class MediaType
      */
     public function setSubtype(string $subtype): void
     {
-        if (utf8_decode($subtype) !== $subtype || preg_match('{^' . Rfc7231::SUBTYPE . '$}', $subtype) !== 1) {
+        $plainSubtype = mb_convert_encoding($subtype, 'ISO-8859-1', 'UTF-8');
+        if ($plainSubtype !== $subtype || preg_match('{^' . Rfc7231::SUBTYPE . '$}', $subtype) !== 1) {
             throw new InvalidArgumentException('Invalid subtype: ' . $subtype);
         }
 

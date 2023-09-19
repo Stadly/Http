@@ -46,7 +46,8 @@ final class ByteRangeSet implements RangeSet, IteratorAggregate
     public static function fromString(string $rangeSet): self
     {
         $regEx = '{^' . Rfc7233::BYTE_RANGES_SPECIFIER_CAPTURE . '$}';
-        if (utf8_decode($rangeSet) !== $rangeSet || preg_match($regEx, $rangeSet, $matches) !== 1) {
+        $plainRangeSet = mb_convert_encoding($rangeSet, 'ISO-8859-1', 'UTF-8');
+        if ($plainRangeSet !== $rangeSet || preg_match($regEx, $rangeSet, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid set of ranges: ' . $rangeSet);
         }
 

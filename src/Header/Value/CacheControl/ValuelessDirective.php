@@ -42,7 +42,8 @@ final class ValuelessDirective extends Directive
     public static function fromString(string $directive): self
     {
         $regEx = '{^' . Rfc7234::CACHE_DIRECTIVE_CAPTURE . '$}';
-        if (utf8_decode($directive) !== $directive || preg_match($regEx, $directive, $matches) !== 1) {
+        $plainDirective = mb_convert_encoding($directive, 'ISO-8859-1', 'UTF-8');
+        if ($plainDirective !== $directive || preg_match($regEx, $directive, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid directive: ' . $directive);
         }
 
@@ -66,7 +67,8 @@ final class ValuelessDirective extends Directive
      */
     public function setName(string $name): void
     {
-        if (utf8_decode($name) !== $name || preg_match('{^' . Rfc7230::TOKEN . '$}', $name) !== 1) {
+        $plainName = mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8');
+        if ($plainName !== $name || preg_match('{^' . Rfc7230::TOKEN . '$}', $name) !== 1) {
             throw new InvalidArgumentException('Invalid name: ' . $name);
         }
 

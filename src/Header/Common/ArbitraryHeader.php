@@ -47,7 +47,8 @@ final class ArbitraryHeader implements Header
     public static function fromString(string $header): self
     {
         $regEx = '{^' . Rfc7230::HEADER_FIELD_CAPTURE . '$}';
-        if (utf8_decode($header) !== $header || preg_match($regEx, $header, $matches) !== 1) {
+        $plainHeader = mb_convert_encoding($header, 'ISO-8859-1', 'UTF-8');
+        if ($plainHeader !== $header || preg_match($regEx, $header, $matches) !== 1) {
             throw new InvalidHeader('Invalid header field: ' . $header);
         }
 
@@ -95,7 +96,8 @@ final class ArbitraryHeader implements Header
      */
     public function setName(string $name): void
     {
-        if (utf8_decode($name) !== $name || preg_match('{^' . Rfc7230::FIELD_NAME . '$}', $name) !== 1) {
+        $plainName = mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8');
+        if ($plainName !== $name || preg_match('{^' . Rfc7230::FIELD_NAME . '$}', $name) !== 1) {
             throw new InvalidArgumentException('Invalid header field name: ' . $name);
         }
 
@@ -109,7 +111,8 @@ final class ArbitraryHeader implements Header
      */
     public function setValue(string $value): void
     {
-        if (utf8_decode($value) !== $value || preg_match('{^' . Rfc7230::FIELD_VALUE . '$}', $value) !== 1) {
+        $plainValue = mb_convert_encoding($value, 'ISO-8859-1', 'UTF-8');
+        if ($plainValue !== $value || preg_match('{^' . Rfc7230::FIELD_VALUE . '$}', $value) !== 1) {
             throw new InvalidArgumentException('Invalid header field value: ' . $value);
         }
 

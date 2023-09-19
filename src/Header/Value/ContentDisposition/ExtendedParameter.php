@@ -53,7 +53,8 @@ final class ExtendedParameter extends Parameter
     public static function fromString(string $parameter): self
     {
         $regEx = '{^' . Rfc6266::DISPOSITION_PARM_EXTENDED_CAPTURE . '$}';
-        if (utf8_decode($parameter) !== $parameter || preg_match($regEx, $parameter, $matches) !== 1) {
+        $plainParameter = mb_convert_encoding($parameter, 'ISO-8859-1', 'UTF-8');
+        if ($plainParameter !== $parameter || preg_match($regEx, $parameter, $matches) !== 1) {
             throw new InvalidArgumentException('Invalid parameter: ' . $parameter);
         }
 
@@ -77,7 +78,8 @@ final class ExtendedParameter extends Parameter
     public function setName(string $name): void
     {
         // Name must end with *.
-        if (utf8_decode($name) !== $name || preg_match('{^' . Rfc6266::EXT_TOKEN . '$}', $name) !== 1) {
+        $plainName = mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8');
+        if ($plainName !== $name || preg_match('{^' . Rfc6266::EXT_TOKEN . '$}', $name) !== 1) {
             throw new InvalidArgumentException('Invalid name: ' . $name);
         }
 
@@ -112,7 +114,8 @@ final class ExtendedParameter extends Parameter
     public function setCharset(string $charset = 'UTF-8'): void
     {
         $regEx = '{^' . Rfc5987::CHARSET . '$}';
-        if (utf8_decode($charset) !== $charset || preg_match($regEx, $charset) !== 1) {
+        $plainCharset = mb_convert_encoding($charset, 'ISO-8859-1', 'UTF-8');
+        if ($plainCharset !== $charset || preg_match($regEx, $charset) !== 1) {
             throw new InvalidArgumentException('Invalid character set: ' . $charset);
         }
 
@@ -143,7 +146,8 @@ final class ExtendedParameter extends Parameter
     public function setLanguage(string $language): void
     {
         // Language can be empty.
-        if (utf8_decode($language) !== $language || preg_match('{^' . Rfc5987::LANGUAGE . '?$}', $language) !== 1) {
+        $plainLanguage = mb_convert_encoding($language, 'ISO-8859-1', 'UTF-8');
+        if ($plainLanguage !== $language || preg_match('{^' . Rfc5987::LANGUAGE . '?$}', $language) !== 1) {
             throw new InvalidArgumentException('Invalid language: ' . $language);
         }
 

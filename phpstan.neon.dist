@@ -9,12 +9,7 @@ parameters:
       tooWideThrowType: true
     uncheckedExceptionClasses:
       - LogicException
-  exceptionRules:
-    reportUnusedCatchesOfUncheckedExceptions: true
-    uncheckedExceptions:
-      - LogicException
 
 includes:
   - vendor/phpstan/phpstan-strict-rules/rules.neon
   - vendor/phpstan/phpstan-deprecation-rules/rules.neon
-  - vendor/pepakriz/phpstan-exception-rules/extension.neon
